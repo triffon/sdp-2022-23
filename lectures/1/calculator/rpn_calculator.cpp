@@ -8,8 +8,23 @@ bool RPNCalculator::isop(char c) {
     return c == '+' || c == '-' || c == '*' || c == '/';
 }
 
-double RPNCalculator::digitToValue(char c) {
-    return c - '0';
+double RPNCalculator::digitToValue(char digit) {
+    return digit - '0';
+}
+
+unsigned RPNCalculator::priority(char op) {
+    switch (op) {
+        case '+':
+        case '-':
+            return 1;
+        case '*':
+        case '/':
+            return 2;
+        case '(':
+            return 1000;
+        default:
+            return 0; 
+    }
 }
 
 double RPNCalculator::applyOperation(double left, char op, double right) {
@@ -51,8 +66,14 @@ std::string RPNCalculator::toRPN(std::string const& expr) {
     for(char c : expr) {
         if (isdigit(c))
             result += c;
-        else if (isop(c) || c == '(')
+        else if (isop(c) || c == '(') {
+            char op;
+            while (!operationStack.empty() &&
+                   operationStack.peek() != '(' &&
+                   priority(operationStack.peek()) >= priority(c))
+                result += operationStack.pop();
             operationStack.push(c);
+        }
         else if (c == ')') {
             char op;
             while ((op = operationStack.pop()) != '(')
