@@ -6,6 +6,7 @@
 class RPNCalculator {
 private:
     LinkedStack<double> resultStack;
+    LinkedStack<char> operationStack;
 
     static bool isdigit(char c);
     static bool isop(char c);

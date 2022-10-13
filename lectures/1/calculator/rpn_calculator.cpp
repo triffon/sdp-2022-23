@@ -42,10 +42,25 @@ double RPNCalculator::calculateFromRPN(std::string const& expr) {
     return result;
 }
 
-double RPNCalculator::calculate(std::string const& s) {
-    return calculateFromRPN(toRPN(s));
+double RPNCalculator::calculate(std::string const& expr) {
+    return calculateFromRPN(toRPN(expr));
 }
 
-std::string RPNCalculator::toRPN(std::string const& s) {
-    return "";
+std::string RPNCalculator::toRPN(std::string const& expr) {
+    std::string result;
+    for(char c : expr) {
+        if (isdigit(c))
+            result += c;
+        else if (isop(c) || c == '(')
+            operationStack.push(c);
+        else if (c == ')') {
+            char op;
+            while ((op = operationStack.pop()) != '(')
+                result += op;
+        } else 
+            throw std::runtime_error("Некоректен израз: непознат символ!");
+    }
+    while (!operationStack.empty())
+        result += operationStack.pop();
+    return result;
 }
