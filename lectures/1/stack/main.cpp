@@ -8,7 +8,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-#include "tests/lstack_tests.hpp"
+#include "tests/stack_tests.hpp"
 
 //using MyStack = Stack<int>;
 using MyStack = ResizingStack<int>;

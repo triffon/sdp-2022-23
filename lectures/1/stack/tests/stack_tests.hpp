@@ -1,39 +1,27 @@
+#include "doctest.h"
+#include "../stack.hpp"
+#include "../rstack.hpp"
 #include "../lstack.hpp"
 
-using TestStack = LinkedStack<int>;
+TYPE_TO_STRING(Stack<int>);
+TYPE_TO_STRING(ResizingStack<int>);
+TYPE_TO_STRING(LinkedStack<int>);
 
-TEST_CASE("LinkedStack: след създаване на стек той е празен") {
+TEST_CASE_TEMPLATE("След създаване на стек той е празен",
+                    TestStack, Stack<int>, ResizingStack<int>, LinkedStack<int>) {
     TestStack s;
     CHECK(s.empty());
-    /*
-    try {
-        int* p = new int[473264872364783268];
-    } catch (std::bad_alloc e) {
-        std::cerr << "Грешка при заделяне на памет! " << e.what() << std::endl;
-    }
-    */
-    /*
-    int *p = new (std::nothrow) int[473264872364783268];
-    if (p == nullptr)
-        std::cerr << "Грешка при заделяне на памет!\n";
-    */
 }
 
-TEST_CASE("LinkedStack: стекът не е празен след добавяне") {
+TEST_CASE_TEMPLATE("Стекът не е празен след добавяне",
+                    TestStack, Stack<int>, ResizingStack<int>, LinkedStack<int>) {
     TestStack s;
-    try {
-        // TestStack s2;
-        // s2.push(15);
-        s.push(10);
-    } catch (char const* message) {
-        std::cerr << "За съжаление push хвърли изключение: " << message << std::endl;
-        // throw;
-        // throw "вече обработих грешката, спокойно";
-    }
+    s.push(10);
     CHECK(!s.empty());
 }
 
-TEST_CASE("LinkedStack: елементите се изключват в ред обратен на включване") {
+TEST_CASE_TEMPLATE("Елементите се изключват в ред обратен на включване",
+                    TestStack, Stack<int>, ResizingStack<int>, LinkedStack<int>) {
     TestStack s;
     s.push(10); s.push(20); s.push(30);
     CHECK( !s.empty() );
@@ -43,7 +31,8 @@ TEST_CASE("LinkedStack: елементите се изключват в ред �
     CHECK( s.empty() );
 }
 
-TEST_CASE("LinkedStack: peek връща последно включения елемент") {
+TEST_CASE_TEMPLATE("Peek връща последно включения елемент",
+                    TestStack, Stack<int>, ResizingStack<int>, LinkedStack<int>) {
     TestStack s;
     s.push(10);
     CHECK_EQ( s.peek(), 10);
@@ -54,18 +43,20 @@ TEST_CASE("LinkedStack: peek връща последно включения ел
 }
 
 TEST_CASE("LinkedStack: неуспех при опит за поглеждане в празен стек") {
-    TestStack s;
+    LinkedStack<int> s;
     int x;
     CHECK( ! s.peek(x) );
 }
 
-TEST_CASE("LinkedStack: изключение при опит за поглеждане в празен стек") {
+TEST_CASE_TEMPLATE("Изключение при опит за поглеждане в или изключване от празен стек",
+                    TestStack, Stack<int>, ResizingStack<int>, LinkedStack<int>) {
     TestStack s;
-    CHECK_THROWS( s.peek() );
+    CHECK_THROWS_AS( s.peek(), std::runtime_error );
+    CHECK_THROWS_AS( s.pop(), std::runtime_error );
 }
 
 TEST_CASE("LinkedStack: безопасният peek връща последно включения елемент") {
-    TestStack s;
+    LinkedStack<int> s;
     s.push(10);
     int x;
     CHECK( s.peek(x));
@@ -78,13 +69,12 @@ TEST_CASE("LinkedStack: безопасният peek връща последно 
     CHECK_EQ( x, 10 );
 }
 
-
 TEST_CASE("LinkedStack: конструкторът за копиране не споделя памет") {
-    TestStack s1;
+    LinkedStack<int> s1;
     for(int i = 1; i <= 10; i++)
         s1.push(i);
-    TestStack s2 = s1;
-    std::cout << s2.pop() << std::endl;
+    LinkedStack<int> s2 = s1;
+    std::clog << s2.pop() << std::endl;
     s2.push(20);
     for(int i = 10; i >= 1; i--) {
         CHECK(! s1.empty());
@@ -93,42 +83,40 @@ TEST_CASE("LinkedStack: конструкторът за копиране не с
     CHECK(s1.empty());
 }
 
-TEST_CASE("LinkedStack: pop връща грешка при опит за изключване от празен стек") {
-    TestStack s;
+TEST_CASE("LinkedStack: безопасният pop връща грешка при опит за изключване от празен стек") {
+    LinkedStack<int> s;
     bool success = true;
     int x = s.pop(success);
     CHECK_FALSE( success );
 }
 
-TestStack reverse(TestStack s) {
-    TestStack result;
-    // !!! bool even = s.peek() % 2 == 0;
+template <typename T>
+LinkedStack<T> reverse(LinkedStack<T> s) {
+    LinkedStack<T> result;
     while (!s.empty())
         result.push(s.pop());
-    // !!! if (even)
-    // !!!    return s;
     return result;
 }
 
-TestStack createStack(unsigned n) {
-    TestStack result;
+LinkedStack<int> createStack(unsigned n) {
+    LinkedStack<int> result;
     for(int i = 1; i <= n; i++)
         result.push(i);
     return result;
 }
 
-TestStack doubleTop(TestStack s) {
+LinkedStack<int> doubleTop(LinkedStack<int> s) {
     s.push(s.pop() * 2);
     return s;
 }
 
 TEST_CASE("LinkedStack: копиране при reverse") {
     std::clog << "LinkedStack: копиране при reverse\n";
-    TestStack s;
+    LinkedStack<int> s;
     s.push(1);
     s.push(2);
     s.push(3);
-    TestStack s2 = reverse(s);
+    LinkedStack<int> s2 = reverse(s);
     CHECK_EQ(s2.pop(), 1);
     CHECK_EQ(s2.pop(), 2);
     CHECK_EQ(s2.pop(), 3);
@@ -137,24 +125,18 @@ TEST_CASE("LinkedStack: копиране при reverse") {
 
 TEST_CASE("LinkedStack: копиране при doubleTop") {
     std::clog << "LinkedStack: копиране при doubleTop\n";
-    // TestStack temp = createStack(10);
-    TestStack s2 = doubleTop(createStack(10));
-    //s2.push(1);
-    //s2.pop();
-    // s2.steal(doubleTop(createStack(10)));
+    LinkedStack<int> s2 = doubleTop(createStack(10));
 }
 
 TEST_CASE("LinkedStack: присвояване при doubleTop") {
     std::clog << "LinkedStack: присвояване при doubleTop\n";
-    // TestStack temp = createStack(10);
-    TestStack s2 = createStack(10);
+    LinkedStack<int> s2 = createStack(10);
     s2 = doubleTop(createStack(10));
 }
 
 TEST_CASE("LinkedStack: std::move") {
     std::clog << "LinkedStack: std::move\n";
-    TestStack temp = createStack(10);
-//    TestStack s2 = doubleTop((TestStack&&)temp);
-    TestStack s2 = doubleTop(std::move(temp));
+    LinkedStack<int> temp = createStack(10);
+    LinkedStack<int> s2 = doubleTop(std::move(temp));
     CHECK(temp.empty());
 }
