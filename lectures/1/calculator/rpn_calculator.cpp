@@ -12,7 +12,7 @@ double RPNCalculator::digitToValue(char c) {
     return c - '0';
 }
 
-double RPNCalculator::calculate(double left, char op, double right) {
+double RPNCalculator::applyOperation(double left, char op, double right) {
     switch(op) {
         case '+' : return left + right;
         case '-' : return left - right;
@@ -32,7 +32,7 @@ double RPNCalculator::calculateFromRPN(std::string const& expr) {
         else if (isop(c)) {
             double rightop = resultStack.pop();
             double leftop = resultStack.pop();
-            resultStack.push(calculate(leftop, c, rightop));
+            resultStack.push(applyOperation(leftop, c, rightop));
         } else
             throw std::runtime_error("Некоректен израз: непознат символ!");
     }
@@ -40,4 +40,12 @@ double RPNCalculator::calculateFromRPN(std::string const& expr) {
     if (!resultStack.empty())
         throw std::runtime_error("Некоректен израз: повече цифри от операции!");
     return result;
+}
+
+double RPNCalculator::calculate(std::string const& s) {
+    return calculateFromRPN(toRPN(s));
+}
+
+std::string RPNCalculator::toRPN(std::string const& s) {
+    return "";
 }
