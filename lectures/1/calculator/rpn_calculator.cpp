@@ -1,45 +1,5 @@
 #include "rpn_calculator.hpp"
 
-bool RPNCalculator::isdigit(char c) {
-    return '0' <= c && c <= '9';
-}
-
-bool RPNCalculator::isop(char c) {
-    return c == '+' || c == '-' || c == '*' || c == '/';
-}
-
-double RPNCalculator::digitToValue(char digit) {
-    return digit - '0';
-}
-
-unsigned RPNCalculator::priority(char op) {
-    switch (op) {
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-            return 2;
-        case '(':
-            return 1000;
-        default:
-            return 0; 
-    }
-}
-
-double RPNCalculator::applyOperation(double left, char op, double right) {
-    switch(op) {
-        case '+' : return left + right;
-        case '-' : return left - right;
-        case '*' : return left * right;
-        case '/' :
-                if (right == 0)
-                    throw std::runtime_error("Опит за деление на 0!");
-                return left / right;
-        default  : assert(isop(op)); return 0;
-    }
-}
-
 double RPNCalculator::calculateFromRPN(std::string const& expr) {
     for(char c : expr) {
         if (isdigit(c))
