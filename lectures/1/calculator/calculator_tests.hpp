@@ -3,6 +3,7 @@
 #include "rpn_calculator.hpp"
 #include "rpn_direct_calculator.hpp"
 #include "rpn_converter.hpp"
+#include "rpn_expression_calculator.hpp"
 
 TEST_CASE("Тестовият израз в обратен полски запис се пресмята коректно") {
     RPNCalculator c;
@@ -63,4 +64,10 @@ TEST_CASE("Тестов израз в инфиксен запис се прео�
     RPNConverter c(os);
     c << "(1+2)*(3-4/5)=";
     CHECK_EQ(os.str(), "12+345/-*");    
+}
+
+TEST_CASE("Тестовият израз в обратен полски запис се пресмята коректно чрез поток") {
+    RPNExpressionCalculator c;
+    c << "12+345/-*";
+    CHECK_EQ(c.getResult(), doctest::Approx(6.6));
 }

@@ -39,7 +39,7 @@ class RPNConverter : public std::ostream {
 private:
     RPNConverterStreamBuffer sbuf;
 public:
-    RPNConverter(std::ostream& os) : sbuf(os), std::ostream(&sbuf) {}
+    RPNConverter(std::ostream& os = std::cout) : sbuf(os), std::ostream(&sbuf) {}
 };
 
 #endif
