@@ -1,6 +1,9 @@
 #include "recursive_horsewalker.hpp"
 #include "stack_horsewalker.hpp"
 
+TYPE_TO_STRING(RecursiveHorseWalker);
+TYPE_TO_STRING(StackHorseWalker);
+
 TEST_CASE_TEMPLATE("Никъде не можем да стигнем от невалидна стартова позиция",
                     AnyHorseWalker, RecursiveHorseWalker, StackHorseWalker) {
     AnyHorseWalker horseWalker(4);
