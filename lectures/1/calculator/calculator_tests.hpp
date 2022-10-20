@@ -73,3 +73,5 @@ TEST_CASE("Тестовият израз в обратен полски запи
     expressionCalculator << "12+345/-*";
     CHECK_EQ(expressionCalculator.getResult(), doctest::Approx(6.6));
 }
+
+// TODO: шаблонизират тестовете за calculateFromRPN и toRPN

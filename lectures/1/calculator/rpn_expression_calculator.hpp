@@ -4,6 +4,8 @@
 #include "lstack.hpp"
 #include "calculator.hpp"
 
+// TODO: разделяне на HPP и CPP
+
 class RPNExpressionCalculatorStreamBuffer : public std::streambuf {
 private:
     LinkedStack<double> resultStack;

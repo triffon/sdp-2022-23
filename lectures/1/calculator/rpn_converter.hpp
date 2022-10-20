@@ -4,6 +4,8 @@
 #include "calculator.hpp"
 #include "lstack.hpp"
 
+// TODO: разделяне на HPP и CPP
+
 class RPNConverterStreamBuffer : public std::streambuf {
 private:
     std::ostream& os;
@@ -13,6 +15,7 @@ public:
     RPNConverterStreamBuffer(std::ostream& _os) : os(_os) {}
 
     int_type overflow(int_type c) {
+        // TODO: използване на EOF вместо =
         if (c == '=') {
             while (!operationStack.empty())
                 os.put(operationStack.pop());
