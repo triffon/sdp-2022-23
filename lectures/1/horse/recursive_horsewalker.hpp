@@ -1,6 +1,5 @@
 #ifndef __RECURSIVE_HORSE_WALKER
 #define __RECURSIVE_HORSE_WALKER
-#include <cstddef>
 #include "horsewalker.hpp"
 
 class RecursiveHorseWalker : public HorseWalker {
