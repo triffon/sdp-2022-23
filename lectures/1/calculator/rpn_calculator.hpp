@@ -2,8 +2,9 @@
 #define __RPN_CALCULATOR_HPP
 #include <string>
 #include "lstack.hpp"
+#include "calculator.hpp"
 
-class RPNCalculator {
+class RPNCalculator : public Calculator {
 private:
     LinkedStack<double> resultStack;
     LinkedStack<char> operationStack;
