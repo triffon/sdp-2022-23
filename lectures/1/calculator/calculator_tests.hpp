@@ -1,5 +1,8 @@
+#include <strstream>
 #include "doctest.h"
 #include "rpn_calculator.hpp"
+#include "rpn_direct_calculator.hpp"
+#include "rpn_converter.hpp"
 
 TEST_CASE("Тестовият израз в обратен полски запис се пресмята коректно") {
     RPNCalculator c;
@@ -43,12 +46,14 @@ TEST_CASE("Тестов израз в инфиксен запис се прео�
     CHECK_EQ(c.toRPN("(1+2)*(3-4/5)"), "12+345/-*");    
 }
 
-TEST_CASE("Тестов израз в инфиксен запис се пресмята коректно") {
-    RPNCalculator c;
+TEST_CASE_TEMPLATE("Тестов израз в инфиксен запис се пресмята коректно",
+                    SomeCalculator, RPNCalculator, RPNDirectCalculator) {
+    SomeCalculator c;
     CHECK_EQ(c.calculate("(1+2)*(3-4/5)"), doctest::Approx(6.6));    
 }
 
-TEST_CASE("Друг тестов израз в инфиксен запис се пресмята коректно") {
-    RPNCalculator c;
+TEST_CASE_TEMPLATE("Друг тестов израз в инфиксен запис се пресмята коректно",
+                    SomeCalculator, RPNCalculator, RPNDirectCalculator) {
+    SomeCalculator c;
     CHECK_EQ(c.calculate("(1+2)*(3/4-5)"), doctest::Approx(-12.75));    
 }
