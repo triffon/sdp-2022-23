@@ -4,6 +4,7 @@
 #include "rpn_direct_calculator.hpp"
 #include "rpn_converter.hpp"
 #include "rpn_expression_calculator.hpp"
+#include "rpn_stream_calculator.hpp"
 
 TEST_CASE("Тестовият израз в обратен полски запис се пресмята коректно") {
     RPNCalculator c;
@@ -54,20 +55,21 @@ TEST_CASE_TEMPLATE("Тестов израз в инфиксен запис се 
 }
 
 TEST_CASE_TEMPLATE("Друг тестов израз в инфиксен запис се пресмята коректно",
-                    SomeCalculator, RPNCalculator, RPNDirectCalculator) {
+                    SomeCalculator, RPNCalculator, RPNDirectCalculator,
+                    RPNStreamCalculator) {
     SomeCalculator c;
     CHECK_EQ(c.calculate("(1+2)*(3/4-5)"), doctest::Approx(-12.75));    
 }
 
 TEST_CASE("Тестов израз в инфиксен запис се преобразува коректно до обратен полски запис чрез поток") {
     std::ostringstream os;
-    RPNConverter c(os);
-    c << "(1+2)*(3-4/5)=";
+    RPNConverter converter(os);
+    converter << "(1+2)*(3-4/5)=";
     CHECK_EQ(os.str(), "12+345/-*");    
 }
 
 TEST_CASE("Тестовият израз в обратен полски запис се пресмята коректно чрез поток") {
-    RPNExpressionCalculator c;
-    c << "12+345/-*";
-    CHECK_EQ(c.getResult(), doctest::Approx(6.6));
+    RPNExpressionCalculator expressionCalculator;
+    expressionCalculator << "12+345/-*";
+    CHECK_EQ(expressionCalculator.getResult(), doctest::Approx(6.6));
 }

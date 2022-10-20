@@ -1,6 +1,7 @@
 #ifndef __RPN_CONVERTER
 #define __RPN_CONVERTER
 #include <iostream>
+#include "calculator.hpp"
 #include "lstack.hpp"
 
 class RPNConverterStreamBuffer : public std::streambuf {
