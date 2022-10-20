@@ -1,3 +1,4 @@
+#include <iostream>
 #include "recursive_horsewalker.hpp"
 #include "stack_horsewalker.hpp"
 
@@ -44,4 +45,15 @@ TEST_CASE_TEMPLATE("На дъска 3x3 не можем да стигнем от
                     AnyHorseWalker, RecursiveHorseWalker, StackHorseWalker) {
     AnyHorseWalker horseWalker(3);
     CHECK_FALSE(horseWalker.existsWalk({0, 0}, {1, 1}));
+}
+
+TEST_CASE_TEMPLATE("На дъска 4x4 всички позиции да достижими от (0,0)",
+                    AnyHorseWalker, RecursiveHorseWalker, StackHorseWalker) {
+    size_t SIZE = 4;
+    for(int i = 0; i < SIZE; i++)
+        for(int j = 0; j < SIZE; j++) {
+            AnyHorseWalker horseWalker(SIZE);
+            // std::clog << "Търсим разходка до (" << i << "," << j << ")\n";
+            CHECK(horseWalker.existsWalk({0, 0}, {i, j}));
+        }
 }
