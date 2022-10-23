@@ -1,4 +1,3 @@
-
 #include <iostream>
 
 template <typename T>
@@ -6,16 +5,16 @@ T quick_power( const T& elem, uint32_t power )
 {
 	if ( power == 0 )
 	{
-		return T();
+		return T{};
 	}
 	if ( power == 1 )
 	{
 		return elem;
 	}
 
-	if ( power & 1 ) // odd power
+	if ( power % 2 == 1 ) // odd power
 	{
-		return elem * quick_power( elem, power -1 );
+		return elem * quick_power( elem, power - 1 );
 	}
 	else // even power
 	{
@@ -36,9 +35,9 @@ double quick_power( const double& elem, uint32_t power )
 		return elem;
 	}
 
-	if ( power & 1 ) // odd power
+	if ( power % 2 == 1 ) // odd power
 	{
-		return elem * quick_power( elem, power / 2 );
+		return elem * quick_power( elem, power - 1 );
 	}
 	else // even power
 	{
@@ -49,7 +48,7 @@ double quick_power( const double& elem, uint32_t power )
 
 
 
-template < class T >
+template <class T>
 class Matrix
 {
 public:
@@ -60,32 +59,6 @@ public:
 			for ( short j = 0; j < 3; ++j )
 				fMat[ i ][ j ] = ( i == j ? 1 : 0 );
 		}
-	}
-
-	Matrix( const Matrix<T>& other )
-	{
-		for ( size_t i = 0; i < 3; i++ )
-		{
-			for ( size_t j = 0; j < 3; j++ )
-			{
-				fMat[ i ][ j ] = other.fMat[ i ][ j ];
-			}
-		}
-	}
-
-	Matrix<T>& operator=( const Matrix<T>& other )
-	{
-		if ( this != &other )
-		{
-			for ( size_t i = 0; i < 3; i++ )
-			{
-				for ( size_t j = 0; j < 3; j++ )
-				{
-					fMat[ i ][ j ] = other.fMat[ i ][ j ];
-				}
-			}
-		}
-		return *this;
 	}
 
 	Matrix<T>& operator*=( const Matrix<T>& rhs )
@@ -111,6 +84,7 @@ public:
 		}
 		return *this;
 	}
+
 	T* operator[](size_t ind)
 	{
 		return reinterpret_cast<T*>(&fMat[ind]);
