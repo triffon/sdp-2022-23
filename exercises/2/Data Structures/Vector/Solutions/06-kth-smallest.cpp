@@ -4,14 +4,12 @@
 
 template <class T>
 typename std::vector<T>::const_iterator
-    kthElement( const std::vector<T>& vec, size_t kth )
+kthElement( const std::vector<T>& vec, size_t kth )
 {
     using iter  = typename std::vector<T>::iterator;
 
     if ( kth > vec.size() || kth == 0 )
-    {
         throw std::logic_error( "Invalid kth element range!" );
-    }
 
     // Space complexity: O(n)
     std::vector<T>  helper  = vec;      // Copies the vector in O(n) time

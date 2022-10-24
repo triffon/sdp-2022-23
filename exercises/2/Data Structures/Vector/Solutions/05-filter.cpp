@@ -5,13 +5,11 @@ template <class T, class Pred>
 std::vector<T> filter( const std::vector<T>& vec, const Pred& predicate )
 {
     std::vector<T>  res;
-    res.reserve( vec.size() );
 
     for ( const T& elem : vec )
         if ( predicate( elem ) )
             res.push_back( elem );
 
-    res.shrink_to_fit();
     return res;
 }
 

@@ -4,7 +4,8 @@
 template <class T>
 typename std::vector<T>::const_iterator find( const std::vector<T>& vec, const T& elem )
 {
-    typename std::vector<T>::const_iterator   it = vec.begin();
+    //typename std::vector<T>::const_iterator   it = vec.begin();
+    auto    it  = vec.begin();
 
     for ( ; it != vec.end(); it++ )
         if ( *it == elem )
