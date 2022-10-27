@@ -39,7 +39,15 @@ TEST_CASE_TEMPLATE("При последователно добавяне на е
     AnyQueue q;
     for(int i = 1; i <= 10; i++)
         q.enqueue(i);
+    CHECK_FALSE(q.empty());
     for(int i = 1; i <= 10; i++)
+        CHECK_EQ(q.dequeue(), i);
+    CHECK(q.empty());
+
+    for(int i = 11; i <= 20; i++)
+        q.enqueue(i);
+    CHECK_FALSE(q.empty());
+    for(int i = 11; i <= 20; i++)
         CHECK_EQ(q.dequeue(), i);
     CHECK(q.empty());
 }
