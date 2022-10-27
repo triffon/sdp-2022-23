@@ -51,3 +51,17 @@ TEST_CASE_TEMPLATE("При последователно добавяне на е
         CHECK_EQ(q.dequeue(), i);
     CHECK(q.empty());
 }
+
+TEST_CASE_TEMPLATE("Многократно добавяне и изключване на елементи",
+                    AnyQueue, StaticQueue<int>) {
+    AnyQueue q;
+    for(int j = 0; j < 100; j++) {
+        for(int i = 1; i <= 10; i++)
+            q.enqueue(i);
+        CHECK_FALSE(q.empty());
+        for(int i = 1; i <= 10; i++)
+            CHECK_EQ(q.dequeue(), i);
+        CHECK(q.empty());
+    }
+
+}
