@@ -7,10 +7,11 @@ using Walk = LinkedStack<Position>;
 
 class StackHorseWalker : public HorseWalker {
 private:
+    HorseWalk hwalk;
     Walk walk;
 public:
     StackHorseWalker(size_t size = 8);
-    bool existsWalk(Position const& start, Position const& end);
+    HorseWalk const& findWalk(Position const& start, Position const& end);
 };
 
 

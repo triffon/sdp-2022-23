@@ -3,7 +3,9 @@
 
 RecursiveHorseWalker::RecursiveHorseWalker(size_t size) : HorseWalker(size) {}
 
-bool RecursiveHorseWalker::existsWalk(Position const& start, Position const& end) {
+HorseWalk const& RecursiveHorseWalker::findWalk(Position const& start, Position const& end) {
+    return walk;
+    /*
     if (!insideBoard(start) || !insideBoard(end) || board[start.first][start.second])
         // стъпка назад
         return false;
@@ -26,4 +28,5 @@ bool RecursiveHorseWalker::existsWalk(Position const& start, Position const& end
 
     // стъпка назад
     return false;
+    */
 }

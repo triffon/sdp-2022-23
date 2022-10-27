@@ -3,7 +3,9 @@
 
 StackHorseWalker::StackHorseWalker(size_t size) : HorseWalker(size) {}
 
-bool StackHorseWalker::existsWalk(Position const& start, Position const& end) {
+HorseWalk const& StackHorseWalker::findWalk(Position const& start, Position const& end) {
+    return hwalk;
+    /*
     walk.push(start);
     while(!walk.empty()) {
         Position current = walk.peek();
@@ -27,4 +29,5 @@ bool StackHorseWalker::existsWalk(Position const& start, Position const& end) {
     }
 
     return false;
+    */
 }

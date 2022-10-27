@@ -1,4 +1,5 @@
 #include <iostream>
+#include "doctest.h"
 #include "recursive_horsewalker.hpp"
 #include "stack_horsewalker.hpp"
 
@@ -56,4 +57,41 @@ TEST_CASE_TEMPLATE("На дъска 4x4 всички позиции да дос�
             // std::clog << "Търсим разходка до (" << i << "," << j << ")\n";
             CHECK(horseWalker.existsWalk({0, 0}, {i, j}));
         }
+}
+
+// TODO: да преизползваме HorseWalker::insideBoard
+bool isValidPosition(Position const& pos, size_t boardSize) {
+    return pos.first >= 0  && pos.first < boardSize &&
+           pos.second >= 0 && pos.second < boardSize;
+}
+
+bool isValidMove(Position const& from, Position const& to, size_t boardSize) {
+    return isValidPosition(from, boardSize) &&
+           isValidPosition(to, boardSize) &&
+            std::abs(to.first - from.first) == 2 &&
+           std::abs(to.second - from.second) == 1
+           ||
+           std::abs(to.first - from.first) == 1 &&
+           std::abs(to.second - from.second) == 2;
+}
+
+bool isValidWalk(HorseWalk const& walk, size_t boardSize,
+                 Position const& from, Position const& to) {
+    // !!! for(Position p : walk)
+    if (walk.empty() ||
+        walk[0] != from || walk[walk.size() - 1] != to)
+        return false;
+
+    int i = 0;
+    while(i < walk.size() - 1 && isValidMove(walk[i], walk[i+1], boardSize))
+        i++;
+    // i == walk.size() - 1 || !isValidMove(walk[i], walk[i+1])
+    return i == walk.size() - 1;
+}
+
+TEST_CASE_TEMPLATE("На дъска 4x4 можем да стигнем от (0,0) до (3,3)",
+                    AnyHorseWalker, RecursiveHorseWalker, StackHorseWalker) {
+    AnyHorseWalker horseWalker(4);
+    Position from{0, 0}, to{3, 3};
+    CHECK(isValidWalk(horseWalker.findWalk(from, to), 4, from, to));
 }

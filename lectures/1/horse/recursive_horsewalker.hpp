@@ -3,9 +3,10 @@
 #include "horsewalker.hpp"
 
 class RecursiveHorseWalker : public HorseWalker {
+    HorseWalk walk;
 public:
     RecursiveHorseWalker(size_t size = 8);
-    bool existsWalk(Position const& start, Position const& end);
+    HorseWalk const& findWalk(Position const& start, Position const& end);
 };
 
 #endif

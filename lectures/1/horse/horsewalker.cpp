@@ -13,3 +13,7 @@ bool HorseWalker::insideBoard(Position const& pos) const {
     return pos.first >= 0  && pos.first < board.size() &&
            pos.second >= 0 && pos.second < board.size();
 }
+
+bool HorseWalker::existsWalk(const Position &start, const Position &end) {
+    return !findWalk(start, end).empty();
+}
