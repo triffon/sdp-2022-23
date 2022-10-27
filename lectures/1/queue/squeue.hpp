@@ -37,6 +37,7 @@ T StaticQueue<T>::dequeue() {
     if (empty())
         throw std::runtime_error("Опит за изваждане от празна опашка");
     T result = queue[front];
+    // front %= SIZE  <---> front = (front == SIZE) ? 0 : front;
     ++front %= SIZE;
     return result;
 }
