@@ -7,6 +7,7 @@ class RecursiveHorseWalker : public HorseWalker {
 public:
     RecursiveHorseWalker(size_t size = 8);
     HorseWalk const& findWalk(Position const& start, Position const& end);
+    bool findWalkHelper(Position const& start, Position const& end);
 };
 
 #endif

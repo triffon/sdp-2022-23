@@ -17,3 +17,15 @@ bool HorseWalker::insideBoard(Position const& pos) const {
 bool HorseWalker::existsWalk(const Position &start, const Position &end) {
     return !findWalk(start, end).empty();
 }
+
+std::ostream& operator<<(std::ostream& os, Position const& pos) {
+    return os << '(' << pos.first << ',' << pos.second << ')';
+}
+
+std::ostream& operator<<(std::ostream& os, HorseWalk const& walk) {
+    os << walk.size() << std::endl;
+    for(Position const& pos : walk) {
+        os << pos << " -> ";
+    }
+    return os << std::endl;
+}

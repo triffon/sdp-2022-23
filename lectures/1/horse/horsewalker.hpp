@@ -3,6 +3,7 @@
 #include <cstddef>
 #include <utility>
 #include <vector>
+#include <iostream>
 
 using Position = std::pair<int, int>;
 // TODO: да се реализира чрез std::array
@@ -26,5 +27,8 @@ public:
     virtual HorseWalk const& findWalk(Position const& start, Position const& end) = 0;
     virtual ~HorseWalker() {}
 };
+
+std::ostream& operator<<(std::ostream& os, Position const& pos);
+std::ostream& operator<<(std::ostream& os, HorseWalk const& walk);
 
 #endif
