@@ -34,11 +34,12 @@ TEST_CASE_TEMPLATE("При последователно добавяне на е
     CHECK_NE(q.head(), 1);
 }
 
-TEST_CASE_TEMPLATE("При последователно добавяне на елементи в опашката след изключване на първия добавен, останалите остават в опашката",
+TEST_CASE_TEMPLATE("При последователно добавяне на елементи в опашката, се изключват в същия ред и след това опашката остава празна",
                     AnyQueue, StaticQueue<int>) {
     AnyQueue q;
     for(int i = 1; i <= 10; i++)
         q.enqueue(i);
     for(int i = 1; i <= 10; i++)
         CHECK_EQ(q.dequeue(), i);
+    CHECK(q.empty());
 }

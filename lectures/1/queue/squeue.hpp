@@ -17,7 +17,7 @@ public:
     StaticQueue() : front(0), back(-1) {}
 
     // проверява дали опашка е празна
-    virtual bool empty() const { return back == -1; }
+    virtual bool empty() const { return back < front; }
 
     // включване на елемент в края на опашката
     virtual void enqueue(T const&);
