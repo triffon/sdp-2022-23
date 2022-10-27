@@ -108,3 +108,15 @@ TEST_CASE_TEMPLATE("На дъска 4x4 намираме правилна раз
     Position from{0, 0}, to{2, 2};
     CHECK(isValidWalk(horseWalker.findWalk(from, to), 4, from, to));
 }
+
+TEST_CASE_TEMPLATE("На дъска 4x4 за всички позиции намираме правилна разходка от (0,0)",
+                    AnyHorseWalker, RecursiveHorseWalker, StackHorseWalker) {
+    size_t SIZE = 4;
+    for(int i = 0; i < SIZE; i++)
+        for(int j = 0; j < SIZE; j++) {
+            AnyHorseWalker horseWalker(SIZE);
+            // std::clog << "Търсим разходка до (" << i << "," << j << ")\n";
+            CHECK(isValidWalk(horseWalker.findWalk({0, 0}, {i, j}), SIZE, {0, 0}, {i, j}));
+        }
+}
+
