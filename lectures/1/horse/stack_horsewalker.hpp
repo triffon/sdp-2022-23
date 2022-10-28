@@ -3,14 +3,16 @@
 #include "lstack.hpp"
 #include "horsewalker.hpp"
 
-using Walk = LinkedStack<Position>;
+using StackFrame = LinkedStack<Position>;
+using HorseStack = LinkedStack<StackFrame>;
 
 class StackHorseWalker : public HorseWalker {
 private:
-    Walk walk;
+    HorseStack stack;
+    HorseWalk walk;
 public:
     StackHorseWalker(size_t size = 8);
-    bool existsWalk(Position const& start, Position const& end);
+    HorseWalk const& findWalk(Position const& start, Position const& end);
 };
 
 

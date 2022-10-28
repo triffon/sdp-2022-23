@@ -15,6 +15,9 @@ public:
 
     // изключване на последния включен елемент
     virtual T pop() = 0;
+
+    // виртуален деструктор
+    virtual ~AbstractStack() {}
 };
 
 #endif

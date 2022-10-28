@@ -52,6 +52,9 @@ public:
     // намиране на последния включен елемент
     T const& peek() const;
 
+    // намиране на последния включен елемент с възможност за промяна
+    T& peek();
+
     // безопасно намиране на последния включен елемент с индикация за успех
     bool peek(T&) const;
 
@@ -80,7 +83,7 @@ LinkedStack<T>::LinkedStack() : top(nullptr) {}
 // копиране на стек
 template <typename T>
 LinkedStack<T>::LinkedStack(LinkedStack const& other) : top(nullptr) {
-    std::clog << "Копиране на LinkedStack" << std::endl;
+    //std::clog << "Копиране на LinkedStack" << std::endl;
     copyStack(other);
 }
 
@@ -112,7 +115,7 @@ void LinkedStack<T>::copyStack(LinkedStack const& other) {
 
 template <typename T>
 LinkedStack<T>& LinkedStack<T>::operator=(LinkedStack const& other) {
-    std::clog << "Присвояване на LinkedStack" << std::endl;
+    //std::clog << "Присвояване на LinkedStack" << std::endl;
     if (this != &other) {
         erase();
         copyStack(other);
@@ -143,6 +146,16 @@ T const& LinkedStack<T>::peek() const {
         throw std::runtime_error("Опит за поглеждане на елемент в празен стек");    
    return top->data;
 }
+
+// поглеждане на последния включен елемент с възможност  за промяна
+// O(1)
+template <typename T>
+T& LinkedStack<T>::peek() {
+    if (empty())
+        throw std::runtime_error("Опит за поглеждане на елемент в празен стек");    
+   return top->data;
+}
+
 
 // поглеждане на последния включен елемент
 // O(1)
