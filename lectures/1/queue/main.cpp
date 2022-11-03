@@ -2,3 +2,4 @@
 #include "doctest.h"
 
 #include "queue_tests.hpp"
+#include "hamming_tests.hpp"
