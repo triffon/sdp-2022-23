@@ -7,8 +7,9 @@ enable_testing()
 add_executable(horse main.cpp
                 horsewalker.cpp
                 recursive_horsewalker.cpp
-                stack_horsewalker.cpp)
-include_directories(../common ../stack)
+                stack_horsewalker.cpp
+                queue_horsewalker.cpp)
+include_directories(../common ../stack ../queue)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
