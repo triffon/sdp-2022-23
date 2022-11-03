@@ -18,8 +18,14 @@ private:
     QueueElement<T> *front, *back;
     // инвариант на класа:
     // front == nullptr && back == nullptr || front != nullptr && back != nullptr
+
+    void copy(LinkedQueue<T> const&);
+    void erase();
 public:
     LinkedQueue() : front(nullptr), back(nullptr) {}
+    LinkedQueue(LinkedQueue<T> const&);
+    LinkedQueue& operator=(LinkedQueue<T> const&);
+    ~LinkedQueue();
 
     // проверява дали опашка е празна
     virtual bool empty() const { return front == nullptr; }
@@ -73,6 +79,50 @@ T LinkedQueue<T>::dequeue() {
     T result = oldElement->data;
     delete oldElement;
     return result;
+}
+
+template <typename T>
+LinkedQueue<T>::LinkedQueue(LinkedQueue<T> const& other) {
+    copy(other);
+}
+
+template <typename T>
+LinkedQueue<T>& LinkedQueue<T>::operator=(LinkedQueue<T> const& other) {
+    if (this != &other) {
+        erase();
+        copy(other);
+    }
+    return *this;
+}
+
+template <typename T>
+LinkedQueue<T>::~LinkedQueue() {
+    erase();
+}
+
+template <typename T>
+void LinkedQueue<T>::copy(LinkedQueue<T> const& other) {
+    /*
+    !!! 
+    while (!other.empty())
+        enqueue(other.dequeue());
+    */
+    if (other.front != nullptr) {
+        // other не е празен
+        back = front = new QueueElement<T>{other.front->data, nullptr};
+        QueueElement<T>* nextToCopy = other.front->next;
+        while (nextToCopy) {
+            back = back->next = new QueueElement<T>{nextToCopy->data, nullptr};
+            nextToCopy = nextToCopy->next;
+        }
+    } else
+        front = back = nullptr;
+}
+
+template <typename T>
+void LinkedQueue<T>::erase() {
+    while(!empty())
+        dequeue();
 }
 
 #endif

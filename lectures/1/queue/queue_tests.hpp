@@ -65,5 +65,29 @@ TEST_CASE_TEMPLATE("Многократно добавяне и изключва�
             CHECK_EQ(q.dequeue(), i);
         CHECK(q.empty());
     }
-
 }
+
+
+TEST_CASE_TEMPLATE("Конструкторът за копиране не споделя памет",
+                    AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
+    AnyQueue q1;
+    for(int i = 1; i <= 10; i++)
+        q1.enqueue(i);
+    AnyQueue q2 = q1;
+//    std::clog << s2.pop() << std::endl;
+    q2.enqueue(20);
+    for(int i = 1; i <= 10; i++) {
+        CHECK(! q1.empty());
+        CHECK_EQ(q1.dequeue(), i);
+    }
+    CHECK(q1.empty());
+}
+
+TEST_CASE_TEMPLATE("Копиране на празна опашка",
+                    AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
+    AnyQueue q1;
+    AnyQueue q2 = q1;
+    CHECK(q2.empty());
+}
+
+// TODO: тест за операция за присвояване
