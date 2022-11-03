@@ -1,31 +1,33 @@
 #include "doctest.h"
 
 #include "squeue.hpp"
+#include "lqueue.hpp"
 
 TYPE_TO_STRING(StaticQueue<int>);
+TYPE_TO_STRING(LinkedQueue<int>);
 
 TEST_CASE_TEMPLATE("След създаване на опашка, тя е празна",
-                   AnyQueue, StaticQueue<int>) {
+                   AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
     AnyQueue q;
     CHECK(q.empty());
 }
 
 TEST_CASE_TEMPLATE("След добавяне на елемент в опашка, тя не е празна",
-                   AnyQueue, StaticQueue<int>) {
+                   AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
     AnyQueue q;
     q.enqueue(42);
     CHECK_FALSE(q.empty());
 }
 
 TEST_CASE_TEMPLATE("Опит за поглеждане в или изключване на елемент от празна опашка хвърля изключение",
-                   AnyQueue, StaticQueue<int>) {
+                   AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
     AnyQueue q;
     CHECK_THROWS(q.head());
     CHECK_THROWS(q.dequeue());
 }
 
 TEST_CASE_TEMPLATE("При последователно добавяне на елементи в опашката се изключва първият добавен",
-                    AnyQueue, StaticQueue<int>) {
+                    AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
     AnyQueue q;
     for(int i = 1; i <= 10; i++)
         q.enqueue(i);
@@ -35,7 +37,7 @@ TEST_CASE_TEMPLATE("При последователно добавяне на е
 }
 
 TEST_CASE_TEMPLATE("При последователно добавяне на елементи в опашката, се изключват в същия ред и след това опашката остава празна",
-                    AnyQueue, StaticQueue<int>) {
+                    AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
     AnyQueue q;
     for(int i = 1; i <= 10; i++)
         q.enqueue(i);
@@ -53,7 +55,7 @@ TEST_CASE_TEMPLATE("При последователно добавяне на е
 }
 
 TEST_CASE_TEMPLATE("Многократно добавяне и изключване на елементи",
-                    AnyQueue, StaticQueue<int>) {
+                    AnyQueue, StaticQueue<int>, LinkedQueue<int>) {
     AnyQueue q;
     for(int j = 0; j < 100; j++) {
         for(int i = 1; i <= 10; i++)
