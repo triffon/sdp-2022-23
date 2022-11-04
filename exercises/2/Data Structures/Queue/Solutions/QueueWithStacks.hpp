@@ -37,6 +37,34 @@ public:
         return resElem;
     }
 
+    T dequeue2()
+    {
+        if ( fLeftStack.empty() )
+            throw std::logic_error( "Queue2Stacks: Called .dequeue2() on an empty queue!" );
+
+        T   resElem;
+        if ( !fRightStack.empty() )
+        {
+            resElem = fRightStack.top();
+        }
+        else
+        {
+            // Move all elements from fLeftStack to fRightStack
+            while ( fLeftStack.size() > 1 )
+            {
+                fRightStack.push( fLeftStack.top() );
+                fLeftStack.pop();
+            }
+
+            // Save the last element
+            resElem     = fLeftStack.top();
+            fLeftStack.pop();
+        }
+
+
+        return resElem;
+    }
+
     bool empty() const
     {
         return fLeftStack.empty();
