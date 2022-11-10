@@ -24,7 +24,7 @@ public:
     // преместваме се на следващата позиция
     // ++it
     ConcretePosition& operator++() {
-        return *this = next();
+        return (ConcretePosition&)(*this = next());
     }
 
     // it++

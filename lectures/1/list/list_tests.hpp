@@ -9,3 +9,22 @@ TEST_CASE_TEMPLATE("При създаване на списък той е пра
     AnyList l;
     CHECK(l.empty());
 }
+
+TEST_CASE_TEMPLATE("При добавяне на елемент в списък той вече не е празен",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    l.insertLast(42);
+    CHECK(!l.empty());
+}
+
+TEST_CASE_TEMPLATE("Последователно добавяне на елементи в списъка и обхождането му",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        l.insertLast(i);
+    
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);
+}
