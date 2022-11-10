@@ -14,9 +14,13 @@ struct LinkedListElement {
 };
 
 template <typename T>
+class LinkedList;
+
+template <typename T>
 class LinkedListIterator : public Position<T, LinkedListIterator<T>> {
 private:
     LinkedListElement<T>* ptr;
+    friend class LinkedList<T>;
 public:
     LinkedListIterator(LinkedListElement<T>* _ptr = nullptr) : ptr(_ptr) {}
 
@@ -46,6 +50,11 @@ public:
         throw std::logic_error("В едносвързания списък нямаме достъп до предишен елемент");
     }
 
+    // виртуална операция за присвояване
+    LinkedListIterator& assign(LinkedListIterator const& pos) {
+        return *this = pos;
+    }
+
     // сравнение на итератори
     bool operator==(Position<T, LinkedListIterator> const& pos) const {
         // !!! не се прави проверка дали pos е обект от LinkedListIterator
@@ -73,7 +82,20 @@ public:
 
     // включване на елемент след дадена позиция 
     bool insertAfter(T const& x, I const& pos) {
-        return false;
+        if (this->empty()) {
+            // включване в празен списък
+            front = back = new E(x);
+            return true;
+        }
+        if (!pos.ptr) {
+            // включваме последен елемент
+            return insertAfter(x, I(back));
+        }
+        pos.ptr->next = new E(x, pos.ptr->next);
+        if (pos.ptr == back)
+            // трябва да обновим back, понеже вмъкваме след последния елемент
+            back = back->next;
+        return true;
     }
 
     // изключване на елемент преди дадена позиция 

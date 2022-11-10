@@ -21,10 +21,13 @@ public:
     // предишна позиция
     virtual ConcretePosition prev() const = 0;
 
+    // виртуална операция за присвояване
+    virtual ConcretePosition& assign(ConcretePosition const& pos) = 0;
+
     // преместваме се на следващата позиция
     // ++it
     ConcretePosition& operator++() {
-        return (ConcretePosition&)(*this = next());
+        return this->assign(next());
     }
 
     // it++

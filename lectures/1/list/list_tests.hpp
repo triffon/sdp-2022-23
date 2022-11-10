@@ -24,7 +24,10 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
         l.insertLast(i);
     
     int i = 1;
-    for(int x : l)
+    //for(int x : l)
+    for(typename AnyList::I it = l.begin(); it != l.end(); ++it) {
+        int x = *it;
         CHECK_EQ(i++, x);
+    }
     CHECK_EQ(i, 11);
 }
