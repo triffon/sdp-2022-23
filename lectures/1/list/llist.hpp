@@ -70,6 +70,15 @@ public:
     using E = LinkedListElement<T>;
 private:
     E *front, *back;
+
+    // връща предишната позиция
+    // или невалидна  позиция, ако предишна няма
+    I findPrev(I const& it) {
+        I result = front;
+        while (result.valid() && result.next() != it)
+            ++result;
+        return result;
+    }
 public:
 
     // TODO: голяма четворка
@@ -77,10 +86,16 @@ public:
 
     // включване на елемент преди дадена позиция 
     bool insertBefore(T const& x, I const& pos) {
-        return false;
+        if (pos.ptr == front) {
+            // специална реализация за вмъкване в началото
+            front = new E{x, front};
+            return true;
+        }
+        return insertAfter(x, findPrev(pos));
     }
 
     // включване на елемент след дадена позиция 
+    // O(1)
     bool insertAfter(T const& x, I const& pos) {
         if (this->empty()) {
             // включване в празен списък
