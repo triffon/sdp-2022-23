@@ -20,12 +20,32 @@ public:
 
     // предишна позиция
     virtual ConcretePosition prev() const = 0;
+
+    // преместваме се на следващата позиция
+    // ++it
+    ConcretePosition& operator++() {
+        return *this = next();
+    }
+
+    // it++
+    ConcretePosition operator++(int) {
+        ConcretePosition save = *this;
+        ++*this;
+        return save;
+    }
+
+    // операции за сравнение
+    virtual bool operator==(Position const& pos) const = 0;
+    bool operator!=(Position const& pos) { return !(*this == pos); }
+
+    T const& operator*() const { return get(); } 
+    T&       operator*()       { return get(); } 
 };
 
 template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
 public:
-    virtual bool empty() const = 0;
+    virtual bool empty() const { return !begin().valid(); }
 
     // включване на първи елемент
     virtual void insertFirst(T const& x) { insertBefore(x, begin()); }
@@ -40,10 +60,16 @@ public:
     virtual bool insertAfter(T const& x, P const& pos) = 0;  
 
     // изключване на първи елемент
-    virtual bool deleteFirst(T& x) { deleteAt(x, begin()); }
+    virtual bool deleteFirst(T& x) {
+        P pos = begin();
+        return deleteAt(x, pos);
+    }
 
     // изключване на последен елемент
-    virtual bool deleteLast(T& x) { deleteAt(x, end()); }
+    virtual bool deleteLast(T& x) {
+        P pos = end();
+        return deleteAt(x, pos);
+    }
 
     // изключване на елемент преди дадена позиция 
     virtual bool deleteBefore(T& x, P const& pos) = 0;  
@@ -56,14 +82,14 @@ public:
 
     // константен достъп до елемент на дадена позиция
     virtual T const& getAt(P const& pos) const {
-        if (!valid(pos))
+        if (!pos.valid())
             throw std::runtime_error("Опит за достъп през невалидна позиция!");
         return pos.get();
     }
 
     // достъп до елемент на дадена позиция с възможност за промяна
     virtual T& getAt(P& pos) {
-        if (!valid(pos))
+        if (!pos.valid())
             throw std::runtime_error("Опит за достъп през невалидна позиция!");
         return pos.get();
     }
@@ -71,7 +97,12 @@ public:
     // !!! пробив във класа, можем да променяме елементите на константен
     // списък
     // TODO: да се реализира ConstPosition
+
+    // връща позицията в началото
     virtual P begin() const = 0;
+
+    // връща позцията СЛЕД края
+    // [begin; end)
     virtual P end() const = 0;
 
     virtual ~AbstractList() {}
