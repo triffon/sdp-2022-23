@@ -50,11 +50,6 @@ public:
         throw std::logic_error("В едносвързания списък нямаме достъп до предишен елемент");
     }
 
-    // виртуална операция за присвояване
-    LinkedListIterator& assign(LinkedListIterator const& pos) {
-        return *this = pos;
-    }
-
     // сравнение на итератори
     bool operator==(Position<T, LinkedListIterator> const& pos) const {
         // !!! не се прави проверка дали pos е обект от LinkedListIterator
