@@ -28,22 +28,22 @@ public:
     virtual bool empty() const = 0;
 
     // включване на първи елемент
-    virtual void insertFirst(T const& x) = 0;  
+    virtual void insertFirst(T const& x) { insertBefore(x, begin()); }
 
     // включване на последен елемент
-    virtual void insertLast(T const& x) = 0; 
+    virtual void insertLast(T const& x) { insertAfter(x, end()); }
 
     // включване на елемент преди дадена позиция 
-    virtual bool insertBefore(T const& x, P const& pos) = 0;  
+    virtual bool insertBefore(T const& x, P const& pos) = 0;
 
     // включване на елемент след дадена позиция 
     virtual bool insertAfter(T const& x, P const& pos) = 0;  
 
     // изключване на първи елемент
-    virtual bool deleteFirst(T& x) = 0;  
+    virtual bool deleteFirst(T& x) { deleteAt(x, begin()); }
 
     // изключване на последен елемент
-    virtual bool deleteLast(T& x) = 0; 
+    virtual bool deleteLast(T& x) { deleteAt(x, end()); }
 
     // изключване на елемент преди дадена позиция 
     virtual bool deleteBefore(T& x, P const& pos) = 0;  
