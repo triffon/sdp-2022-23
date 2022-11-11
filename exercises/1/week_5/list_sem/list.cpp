@@ -16,11 +16,11 @@ class LList{
     public:
     class ListIterator {
         Node* current;
+
         public:
+        ListIterator(Node*);
         bool operator !=(const ListIterator&);
-        T operator*() {
-            return current->data
-        }
+        T operator*();
         ListIterator& operator++();
     };
 
@@ -33,6 +33,27 @@ class LList{
     ListIterator begin() const;
     ListIterator end() const;
 };
+
+template<class T>
+LList<T>::ListIterator::ListIterator(Node* _pos): current{_pos} {}
+
+template<class T>
+bool LList<T>::ListIterator::operator!=(const LList<T>::ListIterator& other) {
+    return current != other.current;
+}
+
+template<class T>
+T LList<T>::ListIterator::operator*(){
+    return current->data;
+}
+template<class T>
+typename LList<T>::ListIterator& LList<T>::ListIterator::operator++() {
+    if(current) {
+        current = current->next;
+    }
+
+    return *this;
+}
 
 template<class T>
 LList<T>::Node::Node(const T& _data, Node* _next): data{_data}, next{_next} {}
@@ -94,6 +115,16 @@ void LList<T>::print() const {
     }
 }
 
+template<class T>
+typename LList<T>::ListIterator LList<T>::begin() const {
+    return LList<T>::ListIterator{start};
+}
+
+template<class T>
+typename LList<T>::ListIterator LList<T>::end() const {
+    return LList<T>::ListIterator{nullptr};
+}
+
 int main() {
     LList<int> list;
     list.addElement(1);
@@ -101,12 +132,12 @@ int main() {
     list.addElement(3);
     list.addElement(4);
 
-    std::cout << std::boolalpha << list.empty() << std::endl;
-    std::cout << list.size() << std::endl;
-    list.print();
+    // std::cout << std::boolalpha << list.empty() << std::endl;
+    // std::cout << list.size() << std::endl;
+    // list.print();
     list.addAfter(10, 1);
     std::cout << std::endl;
-    list.print();
+    // list.print();
     std::cout << std::endl;
     std::vector<int> v{1,2,3,4,5};
 
@@ -115,9 +146,6 @@ int main() {
     // }
     for (auto e : list) {
         std::cout << e << " ";
-    }
-    for(LList<int>::ListIterator it = list.begin(); it != list.end()); it++) {
-        std::cout<< *it << std::endl;
     }
     // begin, end, ++, --, *, !=
     return 0;
