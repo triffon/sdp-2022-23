@@ -207,7 +207,6 @@ LinkedStack<T>::LinkedStack(LinkedStack &&other) : top(other.top)
 template <typename T>
 LinkedStack<T> &LinkedStack<T>::operator=(LinkedStack &&other)
 {
-    std::cout << "Операция за преместване на LinkedStack" << std::endl;
     if (this != &other)
     {
         erase();

@@ -82,7 +82,6 @@ LinkedStack<T>::LinkedStack() : top(nullptr) {}
 template <typename T>
 LinkedStack<T>::LinkedStack(LinkedStack const &other) : top(nullptr)
 {
-    std::clog << "Копиране на LinkedStack" << std::endl;
     copyStack(other);
 }
 
@@ -207,7 +206,6 @@ LinkedStack<T>::LinkedStack(LinkedStack &&other) : top(other.top)
 template <typename T>
 LinkedStack<T> &LinkedStack<T>::operator=(LinkedStack &&other)
 {
-    std::cout << "Операция за преместване на LinkedStack" << std::endl;
     if (this != &other)
     {
         erase();

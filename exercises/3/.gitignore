@@ -1,3 +1,5 @@
 .vscode/
 build/
+main.dSYM/
+main
 
