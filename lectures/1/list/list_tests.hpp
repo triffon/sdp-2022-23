@@ -214,3 +214,24 @@ TEST_CASE_TEMPLATE("Конструкторът за копиране не спо
     }
     CHECK(l1.empty());
 }
+
+TEST_CASE_TEMPLATE("Обръщане на списък от един елемент",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    l.insertLast(42);
+    l.reverse();
+    for(int x : l)
+        CHECK_EQ(x, 42);
+}
+
+TEST_CASE_TEMPLATE("Обръщане на списък",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+    l.reverse();
+    int i = 10;
+    for(int x : l)
+        CHECK_EQ(x, i--);
+    CHECK_EQ(i, 0);
+}

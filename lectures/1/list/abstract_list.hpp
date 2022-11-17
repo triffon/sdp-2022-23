@@ -128,6 +128,28 @@ public:
             insertLast(x);
     }
 
+    void reverse() {
+        T x;
+        /*
+        P originalFront = begin();
+        // O(n²)
+        while (originalFront != last()) {
+            // O(n)
+            deleteLast(x);
+            // O(n)
+            insertBefore(x, originalFront);
+        }
+        */
+        P originalBack = last();
+        // O(n) по памет и по време
+        while (originalBack != begin()) {
+            // O(1)
+            deleteFirst(x);
+            // O(1)
+            insertAfter(x, originalBack);
+        }
+    }
+
     virtual ~AbstractList() {}
 };
 
