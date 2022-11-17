@@ -29,7 +29,7 @@ public:
 
     // it++
     ConcretePosition operator++(int) {
-        ConcretePosition save = *this;
+        ConcretePosition save = (ConcretePosition&)*this;
         ++*this;
         return save;
     }
