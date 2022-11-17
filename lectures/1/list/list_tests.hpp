@@ -167,3 +167,34 @@ TEST_CASE_TEMPLATE("Изключване на елементи на нечетн
         CHECK_EQ(i += 2, x);
     CHECK_EQ(i, 10);    
 }
+
+TEST_CASE_TEMPLATE("Конкатениране на два списъка с append",
+                    AnyList, ALL_LISTS) {
+    AnyList l1, l2;
+    int i = 1;
+    for(; i <= 10; i++)
+        l1.insertLast(i);
+    for(; i <= 20; i++)
+        l2.insertLast(i);
+    l1.append(l2);
+    i = 1;
+    for(int x : l1)
+        CHECK_EQ(x, i++);
+    CHECK_EQ(i, 21);
+}
+
+TEST_CASE_TEMPLATE("Конкатениране на два списъка с appendAndDestroy",
+                    AnyList, ALL_LISTS) {
+    AnyList l1, l2;
+    int i = 1;
+    for(; i <= 10; i++)
+        l1.insertLast(i);
+    for(; i <= 20; i++)
+        l2.insertLast(i);
+    l1.appendAndDestroy(l2);
+    CHECK(l2.empty());
+    i = 1;
+    for(int x : l1)
+        CHECK_EQ(x, i++);
+    CHECK_EQ(i, 21);
+}

@@ -114,6 +114,13 @@ public:
     // [begin; end)
     virtual P end() const = 0;
 
+    // конкатениране на списък на края на дадения
+    // O(|other|)
+    void append(AbstractList const& other) {
+        for(T const& x : other)
+            insertLast(x);
+    }
+
     virtual ~AbstractList() {}
 };
 

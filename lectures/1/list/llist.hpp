@@ -170,6 +170,11 @@ public:
     I last()  const { return I(back); }
     I end()   const { return I(); }
 
+    void appendAndDestroy(LinkedList& other) {
+        back->next = other.front;
+        back = other.back;
+        other.back = other.front = nullptr;
+    }
 
 };
 
