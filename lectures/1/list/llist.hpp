@@ -121,9 +121,11 @@ public:
 
     // изключване на елемент на дадена позиция, унищавайки позицията 
     bool deleteAt(T& x, I& pos) {
-        if (!pos.valid())
-            // опит за изтриване на невалиден елемент
+        if (this->empty())
             return false;
+        if (!pos.valid())
+            // третираме като заявка за изтриване на последния елемент
+            pos.ptr = back;
         I prev = findPrev(pos);
         if (!prev.valid()) {
             // опит за изтриване на първия елемент

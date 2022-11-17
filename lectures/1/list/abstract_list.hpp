@@ -68,6 +68,7 @@ public:
     // изключване на последен елемент
     virtual bool deleteLast(T& x) {
         P pos = end();
+        // разчитаме, че deleteAt с невалидна позиция ще изтрие последния елемент
         return deleteAt(x, pos);
     }
 

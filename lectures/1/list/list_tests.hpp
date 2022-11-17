@@ -94,7 +94,35 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     CHECK_EQ(i, 9);    
 }
 
-// TODO: тестове за deleteFirst и deleteLast
+TEST_CASE_TEMPLATE("Последователно изтриване на последния елемент в списъка",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        l.insertLast(i);
+    
+    int x;
+    for(int i = 10; i >= 1; i--) {
+        l.deleteLast(x);
+        CHECK_EQ(x, i);
+    }
+    CHECK(l.empty());
+}
+
+TEST_CASE_TEMPLATE("Последователно изтриване на първия елемент в списъка",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        l.insertLast(i);
+    
+    int x;
+    for(int i = 1; i <= 10; i++) {
+        l.deleteFirst(x);
+        CHECK_EQ(x, i);
+    }
+    CHECK(l.empty());
+}
+
+
 
 TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции с deleteAt",
                     AnyList, ALL_LISTS) {
