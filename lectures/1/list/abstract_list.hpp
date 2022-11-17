@@ -9,6 +9,12 @@ public:
     // проверка за валидност на позицията
     virtual bool valid() const = 0;
 
+    // if (it) ...
+    // if (!it) ...
+
+    operator bool() const { return valid(); }
+    bool operator!() const { return !valid(); } 
+
     // константен достъп до елемента на позицията
     virtual T const& get() const = 0;
 
@@ -48,10 +54,10 @@ public:
     virtual bool empty() const { return !begin().valid(); }
 
     // включване на първи елемент
-    virtual void insertFirst(T const& x) { insertBefore(x, begin()); }
+    virtual bool insertFirst(T const& x) { return insertBefore(x, begin()); }
 
     // включване на последен елемент
-    virtual void insertLast(T const& x) { insertAfter(x, end()); }
+    virtual bool insertLast(T const& x) { return insertAfter(x, end()); }
 
     // включване на елемент преди дадена позиция 
     virtual bool insertBefore(T const& x, P const& pos) = 0;
@@ -67,8 +73,7 @@ public:
 
     // изключване на последен елемент
     virtual bool deleteLast(T& x) {
-        P pos = end();
-        // разчитаме, че deleteAt с невалидна позиция ще изтрие последния елемент
+        P pos = last();
         return deleteAt(x, pos);
     }
 
@@ -101,6 +106,9 @@ public:
 
     // връща позицията в началото
     virtual P begin() const = 0;
+
+    // връща позицията в края
+    virtual P last() const = 0;
 
     // връща позцията СЛЕД края
     // [begin; end)

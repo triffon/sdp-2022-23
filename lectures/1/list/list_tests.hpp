@@ -13,7 +13,7 @@ TEST_CASE_TEMPLATE("При създаване на списък той е пра
 TEST_CASE_TEMPLATE("При добавяне на елемент в списък той вече не е празен",
                     AnyList, ALL_LISTS) {
     AnyList l;
-    l.insertLast(42);
+    REQUIRE(l.insertLast(42));
     CHECK(!l.empty());
 }
 
@@ -21,7 +21,7 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i++)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
     
     int i = 1;
     for(int x : l)
@@ -33,7 +33,7 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i++)
-        l.insertFirst(i);
+        REQUIRE(l.insertFirst(i));
     
     int i = 10;
     for(int x : l)
@@ -45,11 +45,11 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i += 2)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
     
     // TODO: it += 2;
     for(typename AnyList::I it = l.begin(); it != l.end(); ++it, ++it)
-        l.insertAfter(*it + 1, it);
+        REQUIRE(l.insertAfter(*it + 1, it));
 
     int i = 1;
     for(int x : l)
@@ -57,11 +57,11 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
     CHECK_EQ(i, 11);    
 }
 
-TEST_CASE_TEMPLATE("Включване на елементи на нечетни позиции",
+TEST_CASE_TEMPLATE("Включване на елементи на нечетни позиции с insertBefore",
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 2; i <= 10; i += 2)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
     
     // TODO: it += 2;
     for(typename AnyList::I it = l.begin(); it != l.end(); ++it)
@@ -77,13 +77,13 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i ++)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
     
     int x;
     int i = 2;
 
     for(typename AnyList::I it = l.begin(); it != l.end(); i += 2, ++it) {
-        l.deleteAfter(x, it);
+        REQUIRE(l.deleteAfter(x, it));
         CHECK_EQ(x, i);
     }
     CHECK_EQ(i, 12);
@@ -98,11 +98,11 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пос�
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i++)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
     
     int x;
     for(int i = 10; i >= 1; i--) {
-        l.deleteLast(x);
+        REQUIRE(l.deleteLast(x));
         CHECK_EQ(x, i);
     }
     CHECK(l.empty());
@@ -112,30 +112,28 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пър�
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i++)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
     
     int x;
     for(int i = 1; i <= 10; i++) {
-        l.deleteFirst(x);
+        REQUIRE(l.deleteFirst(x));
         CHECK_EQ(x, i);
     }
     CHECK(l.empty());
 }
 
-
-
 TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции с deleteAt",
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i ++)
-        l.insertLast(i);
+        REQUIRE(l.insertLast(i));
 
     int x;
     int i = 2;
 
-    for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2, it.valid() ? ++it : it) {
+    for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2, it && ++it) {
         typename AnyList::I toDelete = it++;
-        l.deleteAt(x, toDelete);
+        REQUIRE(l.deleteAt(x, toDelete));
         CHECK(!toDelete.valid());
         CHECK_EQ(x, i);
     }
@@ -145,4 +143,24 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     for(int x : l)
         CHECK_EQ(i += 2, x);
     CHECK_EQ(i, 9);
+}
+
+TEST_CASE_TEMPLATE("Изключване на елементи на нечетни позиции с deleteBefore",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+    
+    int i = 1;
+    int x;
+    for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2,  ++it && ++it) {
+        REQUIRE(l.deleteBefore(x, it));
+        CHECK_EQ(x, i);
+    }
+    CHECK_EQ(i, 11);
+
+    i = 0;
+    for(int x : l)
+        CHECK_EQ(i += 2, x);
+    CHECK_EQ(i, 10);    
 }

@@ -87,6 +87,10 @@ public:
     // включване на елемент преди дадена позиция
     // O(n)
     bool insertBefore(T const& x, I const& pos) {
+        if (this->empty())
+            // искаме позицията да е невалидна понеже списъкът е празен
+            assert(!pos.valid());
+
         if (pos.ptr == front) {
             // специална реализация за вмъкване в началото
             front = new E{x, front};
@@ -116,21 +120,27 @@ public:
 
     // изключване на елемент преди дадена позиция 
     bool deleteBefore(T& x, I const& pos) {
-        return false;
+        if (pos.ptr == front)
+            // опит за изтриване преди първия елемент
+            return false;
+        I prev = findPrev(pos);
+        return deleteAt(x, prev);
     }
 
-    // изключване на елемент на дадена позиция, унищавайки позицията 
+    // изключване на елемент на дадена позиция, унищавайки позицията
+    // O(n)
     bool deleteAt(T& x, I& pos) {
         if (this->empty())
             return false;
         if (!pos.valid())
-            // третираме като заявка за изтриване на последния елемент
-            pos.ptr = back;
+            // опит за изтриване на невалидна позиция
+            return false;
         I prev = findPrev(pos);
         if (!prev.valid()) {
             // опит за изтриване на първия елемент
             x = *pos;
             front = front->next;
+            back = nullptr;
             delete pos.ptr;
             return true;
         }
@@ -156,6 +166,7 @@ public:
     }
 
     I begin() const { return I(front); }
+    I last()  const { return I(back); }
     I end()   const { return I(); }
 
 
