@@ -57,7 +57,7 @@ public:
     virtual bool insertFirst(T const& x) { return insertBefore(x, begin()); }
 
     // включване на последен елемент
-    virtual bool insertLast(T const& x) { return insertAfter(x, end()); }
+    virtual bool insertLast(T const& x) { return insertAfter(x, last()); }
 
     // включване на елемент преди дадена позиция 
     virtual bool insertBefore(T const& x, P const& pos) = 0;

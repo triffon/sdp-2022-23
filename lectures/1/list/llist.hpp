@@ -107,10 +107,6 @@ public:
             front = back = new E(x);
             return true;
         }
-        if (!pos.ptr) {
-            // включваме последен елемент
-            return insertAfter(x, I(back));
-        }
         pos.ptr->next = new E(x, pos.ptr->next);
         if (pos.ptr == back)
             // трябва да обновим back, понеже вмъкваме след последния елемент
