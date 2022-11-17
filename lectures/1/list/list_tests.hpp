@@ -22,7 +22,7 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
-    
+
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
@@ -34,7 +34,7 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertFirst(i));
-    
+
     int i = 10;
     for(int x : l)
         CHECK_EQ(i--, x);
@@ -46,7 +46,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
     AnyList l;
     for(int i = 1; i <= 10; i += 2)
         REQUIRE(l.insertLast(i));
-    
+
     // TODO: it += 2;
     for(typename AnyList::I it = l.begin(); it != l.end(); ++it, ++it)
         REQUIRE(l.insertAfter(*it + 1, it));
@@ -54,7 +54,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
-    CHECK_EQ(i, 11);    
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Включване на елементи на нечетни позиции с insertBefore",
@@ -62,7 +62,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на нечетни
     AnyList l;
     for(int i = 2; i <= 10; i += 2)
         REQUIRE(l.insertLast(i));
-    
+
     // TODO: it += 2;
     for(typename AnyList::I it = l.begin(); it != l.end(); ++it)
         l.insertBefore(*it - 1, it);
@@ -70,7 +70,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на нечетни
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
-    CHECK_EQ(i, 11);    
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции с deleteAfter",
@@ -78,7 +78,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     AnyList l;
     for(int i = 1; i <= 10; i ++)
         REQUIRE(l.insertLast(i));
-    
+
     int x;
     int i = 2;
 
@@ -94,7 +94,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     i = -1;
     for(int x : l)
         CHECK_EQ(i += 2, x);
-    CHECK_EQ(i, 11);    
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Последователно изтриване на последния елемент в списъка",
@@ -102,7 +102,7 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пос�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
-    
+
     int x;
     for(int i = 10; i >= 1; i--) {
         REQUIRE(l.deleteLast(x));
@@ -116,7 +116,7 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пър�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
-    
+
     int x;
     for(int i = 1; i <= 10; i++) {
         REQUIRE(l.deleteFirst(x));
@@ -153,7 +153,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на нечетн
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
-    
+
     int i = 1;
     int x;
     for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2,  ++it && ++it) {
@@ -165,7 +165,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на нечетн
     i = 0;
     for(int x : l)
         CHECK_EQ(i += 2, x);
-    CHECK_EQ(i, 10);    
+    CHECK_EQ(i, 10);
 }
 
 TEST_CASE_TEMPLATE("Конкатениране на два списъка с append",

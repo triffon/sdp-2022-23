@@ -13,7 +13,7 @@ public:
     // if (!it) ...
 
     operator bool() const { return valid(); }
-    bool operator!() const { return !valid(); } 
+    bool operator!() const { return !valid(); }
 
     // константен достъп до елемента на позицията
     virtual T const& get() const = 0;
@@ -44,8 +44,8 @@ public:
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }
 
-    T const& operator*() const { return get(); } 
-    T&       operator*()       { return get(); } 
+    T const& operator*() const { return get(); }
+    T&       operator*()       { return get(); }
 };
 
 template <typename T, typename P /* extends Position<T> */>
@@ -66,11 +66,11 @@ public:
     // включване на последен елемент
     virtual bool insertLast(T const& x) { return insertAfter(x, last()); }
 
-    // включване на елемент преди дадена позиция 
+    // включване на елемент преди дадена позиция
     virtual bool insertBefore(T const& x, P const& pos) = 0;
 
-    // включване на елемент след дадена позиция 
-    virtual bool insertAfter(T const& x, P const& pos) = 0;  
+    // включване на елемент след дадена позиция
+    virtual bool insertAfter(T const& x, P const& pos) = 0;
 
     // изключване на първи елемент
     virtual bool deleteFirst(T& x) {
@@ -84,14 +84,14 @@ public:
         return deleteAt(x, pos);
     }
 
-    // изключване на елемент преди дадена позиция 
-    virtual bool deleteBefore(T& x, P const& pos) = 0;  
+    // изключване на елемент преди дадена позиция
+    virtual bool deleteBefore(T& x, P const& pos) = 0;
 
-    // изключване на елемент на дадена позиция, унищавайки позицията 
-    virtual bool deleteAt(T& x, P& pos) = 0;  
+    // изключване на елемент на дадена позиция, унищавайки позицията
+    virtual bool deleteAt(T& x, P& pos) = 0;
 
-    // изключване на елемент след дадена позиция 
-    virtual bool deleteAfter(T& x, P const& pos) = 0;  
+    // изключване на елемент след дадена позиция
+    virtual bool deleteAfter(T& x, P const& pos) = 0;
 
     // константен достъп до елемент на дадена позиция
     virtual T const& getAt(P const& pos) const {
