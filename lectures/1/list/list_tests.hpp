@@ -24,11 +24,8 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
         l.insertLast(i);
     
     int i = 1;
-    //for(int x : l)
-    for(typename AnyList::I it = l.begin(); it != l.end(); ++it) {
-        int x = *it;
+    for(int x : l)
         CHECK_EQ(i++, x);
-    }
     CHECK_EQ(i, 11);
 }
 
@@ -39,11 +36,8 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
         l.insertFirst(i);
     
     int i = 10;
-    //for(int x : l)
-    for(typename AnyList::I it = l.begin(); it != l.end(); ++it) {
-        int x = *it;
+    for(int x : l)
         CHECK_EQ(i--, x);
-    }
     CHECK_EQ(i, 0);
 }
 
