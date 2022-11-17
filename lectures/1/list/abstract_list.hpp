@@ -42,6 +42,9 @@ public:
 
 	ConcretePosition& operator += (int x)
 	{
+		if (x < 0)
+			return (ConcretePosition&)*this = prev();
+
 		while (x > 0)
 		{
 			(ConcretePosition&)(*this) = next();

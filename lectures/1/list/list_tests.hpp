@@ -110,6 +110,17 @@ TEST_CASE_TEMPLATE("Прилагане на operator += с аргумент, к�
 	REQUIRE_THROWS(it += 5);
 }
 
+TEST_CASE_TEMPLATE("Прилагане на operator += с отрицателен аргумент",
+	AnyList, ALL_LISTS) {
+	AnyList l;
+	for (int i = 1; i <= 5; i++)
+		REQUIRE(l.insertLast(i));
+
+	typename AnyList::I it = l.begin();
+	REQUIRE_THROWS(it += -2);
+}
+
+
 TEST_CASE_TEMPLATE("Включване на елементи на нечетни позиции с insertBefore",
                     AnyList, ALL_LISTS) {
     AnyList l;
