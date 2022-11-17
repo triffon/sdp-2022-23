@@ -116,6 +116,8 @@ public:
 
     // изключване на елемент преди дадена позиция 
     bool deleteBefore(T& x, I const& pos) {
+        if (this->empty())
+            return false;
         if (pos.ptr == front)
             // опит за изтриване преди първия елемент
             return false;
@@ -147,10 +149,13 @@ public:
     // изключване на елемент след дадена позиция 
     // O(1)
     bool deleteAfter(T& x, I const& pos) {
+        if (this->empty())
+            return false;
         if (!pos.valid())
             return false;
         E* toDelete = pos.ptr->next;
         if (toDelete == nullptr)
+            // опит за изключване след последния елемент
             return false;
         if (toDelete == back)
             // изтриваме последния елемент, трябва да пренасочим back
