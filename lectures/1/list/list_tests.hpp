@@ -73,7 +73,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на нечетни
     CHECK_EQ(i, 11);    
 }
 
-TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции",
+TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции с deleteAfter",
                     AnyList, ALL_LISTS) {
     AnyList l;
     for(int i = 1; i <= 10; i ++)
@@ -92,4 +92,29 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     for(int x : l)
         CHECK_EQ(i += 2, x);
     CHECK_EQ(i, 9);    
+}
+
+// TODO: тестове за deleteFirst и deleteLast
+
+TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции с deleteAt",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i ++)
+        l.insertLast(i);
+
+    int x;
+    int i = 2;
+
+    for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2, ++it) {
+        typename AnyList::I toDelete = it++;
+        l.deleteAt(x, toDelete);
+        CHECK(!toDelete.valid());
+        CHECK_EQ(x, i);
+    }
+    CHECK_EQ(i, 12);
+
+    i = -1;
+    for(int x : l)
+        CHECK_EQ(i += 2, x);
+    CHECK_EQ(i, 9);
 }
