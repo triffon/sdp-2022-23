@@ -37,13 +37,14 @@ public:
     // достъп до елемента на позицията с възможност за промяна
     T& get() {
         if (!valid())
-            throw std::runtime_error("Опит за преместване на невалидна позиция!");
+            throw std::runtime_error("Опит за достъп през невалидна позиция!");
         return ptr->data;
     }
 
     // следваща позиция
     LinkedListIterator next() const {
-        assert(valid());
+        if (!valid())
+            throw std::runtime_error("Опит за преместване на невалидна позиция!");
         return ptr->next;
     }
 
@@ -75,6 +76,7 @@ private:
         I result = front;
         while (result.valid() && result.next() != it)
             ++result;
+        // !result.valid() || result.next() == it
         return result;
     }
 public:
@@ -119,7 +121,22 @@ public:
 
     // изключване на елемент на дадена позиция, унищавайки позицията 
     bool deleteAt(T& x, I& pos) {
-        return false;
+        if (!pos.valid())
+            // опит за изтриване на невалиден елемент
+            return false;
+        I prev = findPrev(pos);
+        if (!prev.valid()) {
+            // опит за изтриване на първия елемент
+            x = *pos;
+            front = front->next;
+            delete pos.ptr;
+            return true;
+        }
+        if (pos.ptr == back)
+            // опит за изтриване на последния елемент, трябва да преместим back
+            back = prev.ptr;
+        pos = I();
+        return deleteAfter(x, prev);
     }
 
     // изключване на елемент след дадена позиция 
