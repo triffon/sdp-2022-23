@@ -40,6 +40,16 @@ public:
         return save;
     }
 
+	ConcretePosition& operator += (int x)
+	{
+		while (x > 0)
+		{
+			(ConcretePosition&)(*this) = next();
+			x--;
+		}
+		return (ConcretePosition&)*this;
+	}
+
     // операции за сравнение
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }

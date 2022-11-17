@@ -81,7 +81,6 @@ private:
     }
 public:
 
-    // TODO: голяма четворка
     LinkedList() : front(nullptr), back(nullptr) {}
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
