@@ -150,6 +150,45 @@ public:
         }
     }
 
+    void reverseWithPointers(P*& front, P*& back)
+    {
+        //Предполагаме, че са ни подали елементите правилно и front няма елемент преди това
+        //и че back e последния елемент на листа.
+        P* start = front;
+        P* previous = nullptr;
+        P* next = nullptr;
+
+        while(start!= back) //Докато не стигнем края на листа - итерираме:
+        {
+            next = start->next();      //Взимаме следващия елемент в списъка.
+            start->next() = previous;  //Обръщаме пойнтъра към предишния елемент.
+            previous = start;          //Взимаме сегашния за предишния.
+            start = next;              //Сегашният се мести напред и цикълът продължава.
+        }
+
+        //Понеже сега сме на последния елемент (back), той все още не е бил обърнат. Затова:
+        //В случай, че ни е подаден края на листа с .end(), проверяваме дали back e nullptr
+        //(С други думи, дали са ни казали, че няма значение къде е края искаме просто да го обърнем)
+        if(back.valid())back->next() = previous;
+
+        //И сега разменяме back и front, за да са на местата си.
+        back = front;
+        front = start;
+
+        //най-правилнен би бил този цикъл според мен: (защото елиминираме предпоследното действие)
+        /*
+            while(start.valid())
+            {
+                next = start->next();
+                start->next() = previous;
+                previous = start;
+                start = next;
+            }
+            back = previous;
+            front = start;
+        */
+    }
+
     virtual ~AbstractList() {}
 };
 
