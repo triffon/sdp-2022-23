@@ -72,3 +72,24 @@ TEST_CASE_TEMPLATE("Включване на елементи на нечетни
         CHECK_EQ(i++, x);
     CHECK_EQ(i, 11);    
 }
+
+TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i ++)
+        l.insertLast(i);
+    
+    int x;
+    int i = 2;
+
+    for(typename AnyList::I it = l.begin(); it != l.end(); i += 2, ++it) {
+        l.deleteAfter(x, it);
+        CHECK_EQ(x, i);
+    }
+    CHECK_EQ(i, 12);
+
+    i = -1;
+    for(int x : l)
+        CHECK_EQ(i += 2, x);
+    CHECK_EQ(i, 9);    
+}

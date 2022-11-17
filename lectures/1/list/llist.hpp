@@ -70,6 +70,7 @@ private:
 
     // връща предишната позиция
     // или невалидна  позиция, ако предишна няма
+    // O(n)
     I findPrev(I const& it) {
         I result = front;
         while (result.valid() && result.next() != it)
@@ -81,7 +82,8 @@ public:
     // TODO: голяма четворка
     LinkedList() : front(nullptr), back(nullptr) {}
 
-    // включване на елемент преди дадена позиция 
+    // включване на елемент преди дадена позиция
+    // O(n)
     bool insertBefore(T const& x, I const& pos) {
         if (pos.ptr == front) {
             // специална реализация за вмъкване в началото
@@ -121,8 +123,17 @@ public:
     }
 
     // изключване на елемент след дадена позиция 
+    // O(1)
     bool deleteAfter(T& x, I const& pos) {
-        return false;
+        if (!pos.valid())
+            return false;
+        E* toDelete = pos.ptr->next;
+        if (toDelete == nullptr)
+            return false;
+        pos.ptr->next = toDelete->next;
+        x = toDelete->data;
+        delete toDelete;
+        return true;
     }
 
     I begin() const { return I(front); }
