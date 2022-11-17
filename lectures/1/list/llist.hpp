@@ -144,9 +144,6 @@ public:
             delete pos.ptr;
             return true;
         }
-        if (pos.ptr == back)
-            // опит за изтриване на последния елемент, трябва да преместим back
-            back = prev.ptr;
         pos = I();
         return deleteAfter(x, prev);
     }
@@ -159,6 +156,9 @@ public:
         E* toDelete = pos.ptr->next;
         if (toDelete == nullptr)
             return false;
+        if (toDelete == back)
+            // изтриваме последния елемент, трябва да пренасочим back
+            back = pos.ptr;
         pos.ptr->next = toDelete->next;
         x = toDelete->data;
         delete toDelete;
