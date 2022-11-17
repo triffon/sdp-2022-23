@@ -105,7 +105,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     int x;
     int i = 2;
 
-    for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2, ++it) {
+    for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2, it.valid() ? ++it : it) {
         typename AnyList::I toDelete = it++;
         l.deleteAt(x, toDelete);
         CHECK(!toDelete.valid());
