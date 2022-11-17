@@ -50,6 +50,13 @@ public:
 
 template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
+protected:
+    void erase() {
+        T x;
+        while (!empty())
+            deleteFirst(x);
+    }
+
 public:
     virtual bool empty() const { return !begin().valid(); }
 

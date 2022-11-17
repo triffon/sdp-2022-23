@@ -84,6 +84,22 @@ public:
     // TODO: голяма четворка
     LinkedList() : front(nullptr), back(nullptr) {}
 
+    LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
+        this->append(other);
+    }
+
+    LinkedList& operator=(LinkedList const& other) {
+        if (this != &other) {
+            this->erase();
+            append(other);
+        }
+        return *this;
+    }
+
+    ~LinkedList() {
+        this->erase();
+    }
+
     // включване на елемент преди дадена позиция
     // O(n)
     bool insertBefore(T const& x, I const& pos) {

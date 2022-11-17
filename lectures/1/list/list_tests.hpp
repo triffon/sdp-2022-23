@@ -198,3 +198,19 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
         CHECK_EQ(x, i++);
     CHECK_EQ(i, 21);
 }
+
+TEST_CASE_TEMPLATE("Конструкторът за копиране не споделя памет",
+                    AnyList, ALL_LISTS) {
+    AnyList l1;
+    for(int i = 1; i <= 10; i++)
+        l1.insertLast(i);
+    AnyList l2 = l1;
+    l2.insertLast(20);
+    for(int i = 1; i <= 10; i++) {
+        CHECK(! l1.empty());
+        int x;
+        REQUIRE(l1.deleteFirst(x));
+        CHECK_EQ(x, i);
+    }
+    CHECK(l1.empty());
+}
