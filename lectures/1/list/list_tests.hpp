@@ -41,4 +41,34 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     CHECK_EQ(i, 0);
 }
 
-// TODO: тест за insertBefore
+TEST_CASE_TEMPLATE("Включване на елементи на четни позиции",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i += 2)
+        l.insertLast(i);
+    
+    // TODO: it += 2;
+    for(typename AnyList::I it = l.begin(); it != l.end(); ++it, ++it)
+        l.insertAfter(*it + 1, it);
+
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);    
+}
+
+TEST_CASE_TEMPLATE("Включване на елементи на нечетни позиции",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 2; i <= 10; i += 2)
+        l.insertLast(i);
+    
+    // TODO: it += 2;
+    for(typename AnyList::I it = l.begin(); it != l.end(); ++it)
+        l.insertBefore(*it - 1, it);
+
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);    
+}

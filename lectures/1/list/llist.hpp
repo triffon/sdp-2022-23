@@ -29,13 +29,15 @@ public:
 
     // константен достъп до елемента на позицията
     T const& get() const {
-        assert(valid());
+        if (!valid())
+            throw std::runtime_error("Опит за достъп през невалидна позиция!");
         return ptr->data;
     }
 
     // достъп до елемента на позицията с възможност за промяна
     T& get() {
-        assert(valid());
+        if (!valid())
+            throw std::runtime_error("Опит за преместване на невалидна позиция!");
         return ptr->data;
     }
 
