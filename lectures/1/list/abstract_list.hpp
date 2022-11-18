@@ -40,6 +40,22 @@ public:
         return save;
     }
 
+    //it+=(int)
+    ConcretePosition& operator+=(int value)
+    {
+        while(value>0)
+        {
+            ++*this;
+            value--;
+        }
+        while(value<0)
+        {
+            this = this->prev();
+            value++;
+        }
+        return *this;
+    }
+
     // операции за сравнение
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }
@@ -47,6 +63,7 @@ public:
     T const& operator*() const { return get(); }
     T&       operator*()       { return get(); }
 };
+
 
 template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
@@ -107,8 +124,7 @@ public:
         return pos.get();
     }
 
-    // !!! пробив във класа, можем да променяме елементите на константен
-    // списък
+    // !!! пробив в класа, можем да променяме елементите на константен списък
     // TODO: да се реализира ConstPosition
 
     // връща позицията в началото
