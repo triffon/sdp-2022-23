@@ -1,24 +1,32 @@
 ﻿#include <iostream>
 
-// Basic forward list Node structure
+// Basic forward list Node structure containing integers
 struct Node
 {
     int     fData;
     Node*   fpNext;
 };
 
-// problem solutions
+// problem 1
 void fillgaps( Node* pHead );
-//void removeIdx( Node* pHead );              // TODO:
-//bool dupsub( Node<T>* pHead, unsigned k );  // TODO:
-void mirror1( Node* pHead );
-void mirror2( Node* pHead );
-//void mirror( Node<T>* pHead );              // TODO:
-//void removedups( Node* pHead );             // TODO:
 
-// basic forward list functions
-void insertAfter( Node* pHead, int num );
+// problem 2
+void removeIdx( Node*& pHead );              // Note the reference!
+
+// problem 4 variant 1
+void mirror1( Node* pHead );
+
+// problem 4 variant 2
+void mirror2( Node* pHead );
+
+// problem 5
+void removedups( Node* pHead );
+
+/* basic forward list functions */
+void insertAfter( Node* pNode, int num );
+void eraseAfter( Node* pNode );
 void pushFront( Node*& pHead, int num );    // Note the reference!
+void popFront( Node*& pHead );              // Note the reference!
 void clearList( Node*& pHead );             // Note the reference!
 
 // utility functions
@@ -51,11 +59,40 @@ int main()
     printList( pList );
     std::cout << '\n';
 
+    std::cout << "removeIdx: \t";
+    removeIdx( pList );
+    printList( pList );
+    std::cout << '\n';
+
+    Node*   pList2   = 
+        new Node { 1,
+            new Node { 2,
+                new Node { 2,
+                    new Node { 5, 
+                        new Node { 7,
+                            new Node { 7, nullptr }
+                        }
+                    }
+                }
+            }
+        };
+
+    std::cout << "list 2: \t";
+    printListRec( pList2 );
+    std::cout << '\n';
+
+    std::cout << "removedups: \t";
+    removedups( pList2 );
+    printList( pList2 );
+    std::cout << '\n';
+
     // Do NOT forget to delete your memory!!!
-    clearList( pList ); 
+    clearList( pList );
+    clearList( pList2 );
 
     std::cout << "deleted: \t";
     printList( pList );
+    printList( pList2 );
     std::cout << '\n';
 
     return 0;
@@ -66,6 +103,7 @@ int main()
  * Problems solutions
  */
 
+// problem 1
 void fillgaps( Node* pHead )
 {
     if ( pHead == nullptr )
@@ -82,6 +120,35 @@ void fillgaps( Node* pHead )
     }
 }
 
+
+// problem 2
+void removeIdx( Node*& pHead )
+{
+    if ( pHead == nullptr )
+        return;
+
+    int length  = 0;
+    Node*   pCurr   = pHead;
+    while ( pCurr != nullptr )
+    {
+        ++length;
+        pCurr   = pCurr->fpNext;
+    }
+
+    
+    Node*   pEraser = pHead;
+
+    for ( int i = length - 2; i >= 0; --i )
+    {
+        if ( pEraser->fpNext->fData == i )
+            eraseAfter( pEraser );
+        else
+            pEraser = pEraser->fpNext;
+    }
+
+    if ( pHead->fData == length - 1 )
+        popFront( pHead );
+}
 
 // variant 1
 void mirror1( Node* pHead )
@@ -133,17 +200,52 @@ void mirror2( Node* pHead )
 }
 
 
-/*
- * Basic forward list functions
- */
-
-void insertAfter( Node* pHead, int num )
+void removedups( Node* pHead )
 {
     if ( pHead == nullptr )
         return;
 
-    Node*   newNode = new Node { num, pHead->fpNext };
-    pHead->fpNext   = newNode;
+    Node*   pCurr   = pHead;
+    Node*   pNext   = pHead->fpNext;
+
+    while ( pNext )
+    {
+        if ( pCurr->fData == pNext->fData )
+        {
+            eraseAfter( pCurr );
+        }
+        else
+        {
+            pCurr   = pCurr->fpNext;
+        }
+
+        pNext   = pCurr->fpNext;
+    }
+}
+
+
+/*
+ * Basic forward list functions
+ */
+
+void insertAfter( Node* pNode, int num )
+{
+    if ( pNode == nullptr )
+        return;
+
+    Node*   newNode = new Node { num, pNode->fpNext };
+    pNode->fpNext   = newNode;
+}
+
+
+void eraseAfter( Node* pNode )
+{
+    if ( pNode == nullptr || pNode->fpNext == nullptr )
+        return;
+
+    Node*   pToDel          = pNode->fpNext;
+            pNode->fpNext   = pNode->fpNext->fpNext;
+    delete  pToDel;
 }
 
 
@@ -165,15 +267,29 @@ void pushFront( Node*& pHead, int num )
 }
 
 
+void popFront( Node*& pHead )
+{
+    // pHead is a reference so we can change the original head
+
+    if ( pHead == nullptr )
+        return;
+
+    Node*   pToDel  = pHead;
+            pHead   = pHead->fpNext;
+    delete  pToDel;
+}
+
+
 void clearList( Node*& pHead )
 {
-    Node*   pToDel  = pHead;
+    // pHead is a reference so we can set it to nullptr
+    // after the list has been cleared
 
-    while ( pToDel )
+    while ( pHead )
     {
-        pHead   = pHead->fpNext;
-        delete pToDel;
-        pToDel  = pHead;
+        Node*   pToDel  = pHead;
+                pHead   = pHead->fpNext;
+        delete  pToDel;
     }
 }
 
