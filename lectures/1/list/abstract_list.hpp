@@ -65,6 +65,56 @@ public:
 };
 
 
+//template <typename T, typename ConcretePosition /* extends Position<T> */>
+/*class ConstPosition {
+private:
+    friend ConcretePosition;
+public:
+
+    virtual bool valid() const = 0;
+    operator bool() const { return valid(); }
+    bool operator!() const { return !valid(); }
+
+    virtual T const& get() const = 0;
+
+    virtual const ConcretePosition next() const = 0;
+    virtual const ConcretePosition prev() const = 0;
+
+    const ConcretePosition& operator++(){
+        return (ConcretePosition&)(*this) = next();
+    }
+
+    const ConcretePosition operator++(int) {
+        const ConcretePosition save = (ConcretePosition&)*this;
+        ++*this;
+        return save;
+    }
+
+    const ConcretePosition& operator+=(int value)
+    {
+        while(value>0)
+        {
+            ++*this;
+            value--;
+        }
+        while(value<0)
+        {
+            this = this->prev();
+            value++;
+        }
+        return *this;
+    }
+
+    virtual bool operator==(ConstPosition const& pos) const = 0;
+    bool operator!=(ConstPosition const& pos) { return !(*this == pos); }
+
+    const T& operator*() const { return get(); }
+};*/
+
+
+
+
+
 template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
 protected:
@@ -164,45 +214,6 @@ public:
             // O(1)
             insertAfter(x, originalBack);
         }
-    }
-
-    void reverseWithPointers(P*& front, P*& back)
-    {
-        //Предполагаме, че са ни подали елементите правилно и front няма елемент преди това
-        //и че back e последния елемент на листа.
-        P* start = front;
-        P* previous = nullptr;
-        P* next = nullptr;
-
-        while(start!= back) //Докато не стигнем края на листа - итерираме:
-        {
-            next = start->next();      //Взимаме следващия елемент в списъка.
-            start->next() = previous;  //Обръщаме пойнтъра към предишния елемент.
-            previous = start;          //Взимаме сегашния за предишния.
-            start = next;              //Сегашният се мести напред и цикълът продължава.
-        }
-
-        //Понеже сега сме на последния елемент (back), той все още не е бил обърнат. Затова:
-        //В случай, че ни е подаден края на листа с .end(), проверяваме дали back e nullptr
-        //(С други думи, дали са ни казали, че няма значение къде е края искаме просто да го обърнем)
-        if(back.valid())back->next() = previous;
-
-        //И сега разменяме back и front, за да са на местата си.
-        back = front;
-        front = start;
-
-        //най-правилнен би бил този цикъл според мен: (защото елиминираме предпоследното действие)
-        /*
-            while(start.valid())
-            {
-                next = start->next();
-                start->next() = previous;
-                previous = start;
-                start = next;
-            }
-            back = previous;
-            front = start;
-        */
     }
 
     virtual ~AbstractList() {}

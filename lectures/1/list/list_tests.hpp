@@ -1,4 +1,4 @@
-#include "doctest.h"
+#include "../../../../doctest/doctest/doctest.h"
 #include "llist.hpp"
 
 TYPE_TO_STRING(LinkedList<int>);
@@ -243,13 +243,14 @@ TEST_CASE_TEMPLATE("Обръщане на списък чрез препратк
     int i = 1;
     for(i ; i <= 10; i++)
         REQUIRE(l.insertLast(i));
-    l.reverseWithPointers(l.begin(), l. last());
+
+    l.reverseWithPointers(l.begin(), l.last());
 
     for(int x : l)
         CHECK_EQ(x, i--);
     CHECK_EQ(i, 0);
 
-    l.reverseWithPointers(l.begin(), l. last());
+    l.reverseWithPointers(l.begin(), l.last());
 
     i=1;
     for(int x : l)

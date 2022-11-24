@@ -191,6 +191,25 @@ public:
         other.back = other.front = nullptr;
     }
 
+    void reverseWithPointers()
+    {
+        //взимаме началото и създаваме указател за предишния и следващия елемент.
+        E* start = this->begin()->ptr;
+        E* previous = nullptr;
+        E* next = nullptr;
+
+        while(start.valid()) //Докато не стигнем края на листа - итерираме:
+        {
+            next = start->next;      //Взимаме следващия елемент в списъка.
+            start->next = previous;  //Обръщаме пойнтъра към предишния елемент.
+            previous = start;          //Взимаме сегашния за предишния.
+            start = next;              //Сегашният се мести напред и цикълът продължава.
+        }
+
+        // трябва да се разменят back и front накрая, за да са си на местата.
+        back = front;
+        front = start;
+    }
 };
 
 
