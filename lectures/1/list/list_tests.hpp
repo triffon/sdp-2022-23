@@ -7,6 +7,7 @@ TYPE_TO_STRING(LinkedList<int>);
 TYPE_TO_STRING(DoubleLinkedList<int>);
 #define ALL_LISTS LinkedList<int>, DoubleLinkedList<int>
 
+
 TEST_CASE_TEMPLATE("При създаване на списък той е празен",
                     AnyList, ALL_LISTS) {
     AnyList l;
@@ -186,7 +187,7 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
     CHECK_EQ(i, 21);
 }
 
-TEST_CASE_TEMPLATE("Конкатениране на два списъка с appendAndDestroy",
+TEST_CASE_TEMPLATE("Конкатениране на два списъка с appendAssign",
                     AnyList, ALL_LISTS) {
     AnyList l1, l2;
     int i = 1;

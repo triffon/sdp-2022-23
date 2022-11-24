@@ -40,6 +40,19 @@ public:
         return save;
     }
 
+    // преместваме се на предишната позиция
+    // --it
+    ConcretePosition& operator--() {
+        return (ConcretePosition&)(*this) = prev();
+    }
+
+    // it--
+    ConcretePosition operator--(int) {
+        ConcretePosition save = (ConcretePosition&)*this;
+        --*this;
+        return save;
+    }
+
     // операции за сравнение
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }

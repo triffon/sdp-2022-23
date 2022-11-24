@@ -73,6 +73,9 @@ public:
 private:
     E *front, *back;
 
+    void insertInEmptyList(T const& x) {
+        front = back = new E(x);
+    }
 public:
 
     // голяма четворка
@@ -95,30 +98,84 @@ public:
     }
 
     // включване на елемент преди дадена позиция
-    // O(n)
+    // O(1)
     bool insertBefore(T const& x, I const& pos) {
-        return false;
+        if (this->empty()) {
+            insertInEmptyList(x);
+            return true;
+        }
+        // включване на невалидна позиция в непразен списък
+        if (!pos.valid())
+            return false;
+        // включване преди първия елемент
+        if (!pos.prev().valid()) {
+            pos.ptr->prev = front = new E(x, pos.ptr, nullptr);
+            return true;
+        }
+        // общ случай
+        return insertAfter(x, pos.prev());
     }
 
     // включване на елемент след дадена позиция 
     // O(1)
     bool insertAfter(T const& x, I const& pos) {
-        return false;
+        // включване на елемент в празен списък
+        if (this->empty()) {
+            insertInEmptyList(x);
+            return true;
+        }
+        // включване на невалидна позиция в непразен списък
+        if (!pos.valid())
+            return false;
+        // включване след последния елемент
+        if (!pos.next().valid()) {
+            pos.ptr->next = back = new E(x, nullptr, pos.ptr);
+            return true;
+        }
+        // общ случай
+        pos.ptr->next = pos.ptr->next->prev = new E(x, pos.ptr->next, pos.ptr);
+        return true;
     }
 
     // изключване на елемент преди дадена позиция 
     bool deleteBefore(T& x, I const& pos) {
-        return false;
+        // опит за изключване от невалидна позиция
+        if (!pos.valid())
+            return false;
+        I prev = pos.prev();   
+        // общ случай
+        return deleteAt(x, prev);
     }
 
     // изключване на елемент на дадена позиция, унищавайки позицията
     bool deleteAt(T& x, I& pos) {
-        return false;
+        // опит за изключване от празен списък или невалидна позиция
+        if (this->empty() || !pos.valid())
+            return false;
+        // общ случай
+        (pos.ptr->prev ? pos.ptr->prev->next : front) = pos.ptr->next;
+        (pos.ptr->next ? pos.ptr->next->prev : back)  = pos.ptr->prev;
+        /*
+        if (pos.ptr->next != nullptr)
+            pos.ptr->next->prev = pos.ptr->prev;
+        else
+            back = pos.ptr->prev;
+        */
+        x = pos.ptr->data;
+        delete pos.ptr;
+        // трябва да инвалидираме позицията
+        pos.ptr = nullptr;
+        return true;
     }
 
     // изключване на елемент след дадена позиция 
     bool deleteAfter(T& x, I const& pos) {
-        return false;
+        // опит за изключване от невалидна позиция
+        if (!pos.valid())
+            return false;
+        I next = pos.next();
+        // общ случай
+        return deleteAt(x, next);
     }
 
     I begin() const { return I(front); }
@@ -126,6 +183,10 @@ public:
     I end()   const { return I(); }
 
     void appendAssign(DoubleLinkedList& other) {
+        back->next = other.front;
+        other.front->prev = back;
+        back = other.back;
+        other.back = other.front = nullptr;
     }
 
     // TODO: reverseAssign
