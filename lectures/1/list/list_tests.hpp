@@ -308,3 +308,17 @@ TEST_CASE_TEMPLATE("Разделяне на списък с нечетен бр�
         CHECK_EQ(i++, x);
     CHECK_EQ(i, 11);    
 }
+
+TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int x : {1, 5, 7, 2, 6, 4, 9, 10, 8, 3})
+        l.insertLast(x);
+    
+    l.mergeSort();
+
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);    
+}

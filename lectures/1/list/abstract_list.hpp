@@ -175,6 +175,13 @@ public:
             insertLast(*it2++);
     }
 
+    // TODO: merge с един параметър
+    // l1.merge(l2)
+
+    void mergeSort() {
+        
+    }
+
     virtual ~AbstractList() {}
 };
 
