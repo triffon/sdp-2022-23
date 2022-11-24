@@ -151,8 +151,13 @@ public:
     }
 
     // разделя списъка на приблизително равни части
-    void split(AbstractList& l1, AbstractList& l2) {
-
+    // O(n) по време и по памет
+    void split(AbstractList& l1, AbstractList& l2) const {
+        AbstractList *me = &l1, *you = &l2;
+        for(T x : *this) {
+            you->insertLast(x);
+            std::swap(me, you);
+        }
     }
 
     virtual ~AbstractList() {}
