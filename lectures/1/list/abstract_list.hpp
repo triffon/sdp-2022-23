@@ -185,7 +185,13 @@ template <typename L /* extends AbstractList */>
 class ListUtils {
 public:
     static L mergeSort(L const& l) {
-        return l;
+        if (l.empty() || !l.begin().next().valid())
+            return l;
+        L l1, l2;
+        l.split(l1, l2);
+        L result;
+        result.merge(mergeSort(l1), mergeSort(l2));
+        return result;
     }
 };
 
