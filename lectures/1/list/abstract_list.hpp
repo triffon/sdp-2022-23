@@ -160,6 +160,11 @@ public:
         }
     }
 
+    // слива два списъка в текущия
+    void merge(AbstractList const& l1, AbstractList const& l2) {
+
+    }
+
     virtual ~AbstractList() {}
 };
 

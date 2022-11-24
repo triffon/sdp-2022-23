@@ -291,5 +291,20 @@ TEST_CASE_TEMPLATE("Разделяне на списък с нечетен бр�
     int i = 0;
     while (i < N && used[i++]);
     CHECK(i == N);
+}
 
+TEST_CASE_TEMPLATE("Разделяне на списък с нечетен брой елементи на две равни части",
+                    AnyList, ALL_LISTS) {
+    AnyList l, l1, l2;
+    for(int x : {1, 2, 3, 5, 8})
+        l1.insertLast(x);
+    for(int x : {4, 6, 7, 9, 10})
+        l2.insertLast(x);
+
+    l.merge(l1, l2);
+
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);    
 }
