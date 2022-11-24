@@ -1,5 +1,6 @@
 #include "doctest.h"
 #include "llist.hpp"
+#include <cmath>
 
 TYPE_TO_STRING(LinkedList<int>);
 #define ALL_LISTS LinkedList<int>
@@ -191,7 +192,7 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
         l1.insertLast(i);
     for(; i <= 20; i++)
         l2.insertLast(i);
-    l1.appendAndDestroy(l2);
+    l1.appendAssign(l2);
     CHECK(l2.empty());
     i = 1;
     for(int x : l1)
@@ -234,4 +235,61 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
     for(int x : l)
         CHECK_EQ(x, i--);
     CHECK_EQ(i, 0);
+}
+
+TEST_CASE_TEMPLATE("Разделяне на списък с четен брой елементи на две равни части",
+                    AnyList, ALL_LISTS) {
+    const size_t N = 10;
+    AnyList l, l1, l2;
+    for(int i = 0; i < N; i++)
+        l.insertLast(i);
+    l.split(l1, l2);
+
+    bool used[N] = { false };
+    size_t n1 = 0, n2 = 0;
+    for(int x : l1) {
+        n1++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    for(int x : l2) {
+        n2++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    CHECK(n1 == n2);
+    int i = 0;
+    while (i < N && used[i++]);
+    CHECK(i == N);
+}
+
+TEST_CASE_TEMPLATE("Разделяне на списък с нечетен брой елементи на две равни части",
+                    AnyList, ALL_LISTS) {
+    const size_t N = 11;
+    AnyList l, l1, l2;
+    for(int i = 0; i < N; i++)
+        l.insertLast(i);
+    l.split(l1, l2);
+
+    bool used[N] = { false };
+    size_t n1 = 0, n2 = 0;
+    for(int x : l1) {
+        n1++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    for(int x : l2) {
+        n2++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    CHECK(abs(n1 - n2) == 1);
+    int i = 0;
+    while (i < N && used[i++]);
+    CHECK(i == N);
+
 }

@@ -150,6 +150,11 @@ public:
         }
     }
 
+    // разделя списъка на приблизително равни части
+    void split(AbstractList& l1, AbstractList& l2) {
+
+    }
+
     virtual ~AbstractList() {}
 };
 
