@@ -58,6 +58,70 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
     CHECK_EQ(i, 11);    
 }
 
+
+TEST_CASE_TEMPLATE("Включване на елементи на четни позиции с operator +=",
+	AnyList, ALL_LISTS) {
+	AnyList l;
+	for (int i = 1; i <= 10; i += 2)
+		REQUIRE(l.insertLast(i));
+
+	// TODO: it += 2;
+	for (typename AnyList::I it = l.begin(); it != l.end(); it += 2)
+		REQUIRE(l.insertAfter(*it + 1, it));
+
+	int i = 1;
+	for (int x : l)
+		CHECK_EQ(i++, x);
+	CHECK_EQ(i, 11);
+}
+
+
+TEST_CASE_TEMPLATE("Вколючване на елементи към лист с operator += вместо ++",
+	AnyList, ALL_LISTS) {
+	AnyList l;
+	for (int i = 1; i <= 10; i++)
+		REQUIRE(l.insertLast(i));
+
+	int i = 1;
+	for (typename AnyList::I it = l.begin(); it != l.end(); it += 1, i++)
+	{
+		CHECK_EQ(i, *it);
+	}
+		
+}
+
+TEST_CASE_TEMPLATE("Прилагане на operator += с аргумент, който ще излезе извън списъка",
+	AnyList, ALL_LISTS) {
+	AnyList l;
+	for (int i = 1; i <= 5; i++)
+		REQUIRE(l.insertLast(i));
+	
+	typename AnyList::I it = l.begin();
+	REQUIRE_THROWS(it += 8);
+}
+
+TEST_CASE_TEMPLATE("Прилагане на operator += с аргумент, който ще излезе извън списъка",
+	AnyList, ALL_LISTS) {
+	AnyList l;
+	for (int i = 1; i <= 5; i++)
+		REQUIRE(l.insertLast(i));
+
+	typename AnyList::I it = l.begin();
+	it += 2;
+	REQUIRE_THROWS(it += 5);
+}
+
+TEST_CASE_TEMPLATE("Прилагане на operator += с отрицателен аргумент",
+	AnyList, ALL_LISTS) {
+	AnyList l;
+	for (int i = 1; i <= 5; i++)
+		REQUIRE(l.insertLast(i));
+
+	typename AnyList::I it = l.begin();
+	REQUIRE_THROWS(it += -2);
+}
+
+
 TEST_CASE_TEMPLATE("Включване на елементи на нечетни позиции с insertBefore",
                     AnyList, ALL_LISTS) {
     AnyList l;
