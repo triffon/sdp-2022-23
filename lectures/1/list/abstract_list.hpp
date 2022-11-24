@@ -162,7 +162,17 @@ public:
 
     // слива два списъка в текущия
     void merge(AbstractList const& l1, AbstractList const& l2) {
-
+        P it1 = l1.begin(), it2 = l2.begin();
+        while(it1 != l1.end() && it2 != l2.end())
+            if (*it1 < *it2)
+                insertLast(*it1++);
+            else
+                insertLast(*it2++);
+        // прехвърляме от първия списък каквото е останало
+        while(it1 != l1.end())
+            insertLast(*it1++);
+        while(it2 != l2.end())
+            insertLast(*it2++);
     }
 
     virtual ~AbstractList() {}
