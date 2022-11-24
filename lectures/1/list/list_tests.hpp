@@ -1,3 +1,6 @@
+#ifndef __LIST_TESTS_HPP
+#define __LIST_TESTS_HPP
+
 #include "doctest.h"
 #include "llist.hpp"
 #include "dllist.hpp"
@@ -375,3 +378,5 @@ TEST_CASE("Коректно засичане на непалиндром") {
         l.insertLast(x);
     CHECK(!l.isPalindrome());
 }
+
+#endif
