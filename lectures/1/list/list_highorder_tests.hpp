@@ -37,4 +37,34 @@ TEST_CASE_TEMPLATE("Добавяне на 1 към всеки елемент н�
         CHECK_EQ(x, i++);
     CHECK_EQ(i, 12);
 }
+
+TEST_CASE_TEMPLATE("Филтриране на нечетните елементи в списъка с filter",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+
+    AnyList result = LHO::filter(LHO::odd, l);
+
+    int i = -1;
+    for(int x : result)
+        CHECK_EQ(x, i += 2);
+    CHECK_EQ(i, 9);
+}
+
+TEST_CASE_TEMPLATE("Изтриване на нечетните елементи в списъка с filterAssign",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+
+    LHO::filterAssign(LHO::odd, l);
+
+    int i = -1;
+    for(int x : l)
+        CHECK_EQ(x, i += 2);
+    CHECK_EQ(i, 9);
+}
+
+
 #endif
