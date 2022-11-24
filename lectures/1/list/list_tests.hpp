@@ -1,9 +1,11 @@
 #include "doctest.h"
 #include "llist.hpp"
+#include "dllist.hpp"
 #include <cmath>
 
 TYPE_TO_STRING(LinkedList<int>);
-#define ALL_LISTS LinkedList<int>
+TYPE_TO_STRING(DoubleLinkedList<int>);
+#define ALL_LISTS LinkedList<int>, DoubleLinkedList<int>
 
 TEST_CASE_TEMPLATE("При създаване на списък той е празен",
                     AnyList, ALL_LISTS) {
@@ -274,7 +276,7 @@ TEST_CASE_TEMPLATE("Разделяне на списък с нечетен бр�
     l.split(l1, l2);
 
     bool used[N] = { false };
-    size_t n1 = 0, n2 = 0;
+    int n1 = 0, n2 = 0;
     for(int x : l1) {
         n1++;
         CHECK(!used[x]);
