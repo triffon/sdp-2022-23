@@ -192,6 +192,15 @@ public:
     // TODO: reverseAssign
     // TODO: splitAssign
     // TODO: mergeAssign
+
+    bool isPalindrome() const {
+        I fi = begin(), bi = last();
+        while(fi != bi && fi.next() != bi && *fi == *bi) {
+            ++fi;
+            --bi;
+        }
+        return fi == bi || fi.next() == bi;
+    }
 };
 
 #endif

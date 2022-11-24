@@ -354,3 +354,24 @@ TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане
         CHECK_EQ(i++, x);
     CHECK_EQ(i, 11);    
 }
+
+TEST_CASE("Коректно засичане на нечетен палиндром") {
+    DoubleLinkedList<int> l;
+    for(int x : { 1, 2, 3, 2, 1})
+        l.insertLast(x);
+    CHECK(l.isPalindrome());
+}
+
+TEST_CASE("Коректно засичане на четен палиндром") {
+    DoubleLinkedList<int> l;
+    for(int x : { 1, 2, 3, 3, 2, 1})
+        l.insertLast(x);
+    CHECK(l.isPalindrome());
+}
+
+TEST_CASE("Коректно засичане на непалиндром") {
+    DoubleLinkedList<int> l;
+    for(int x : { 1, 4, 3, 2, 1})
+        l.insertLast(x);
+    CHECK(!l.isPalindrome());
+}
