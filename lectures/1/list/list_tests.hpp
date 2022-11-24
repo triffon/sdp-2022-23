@@ -45,6 +45,35 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     CHECK_EQ(i, 0);
 }
 
+TEST_CASE("Последователно добавяне на елементи в двусвързан списък и обхождането му отзад напред") {
+    DoubleLinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+
+    int i = 10;
+    for(DoubleLinkedList<int>::I it = l.last(); it.valid(); --it)
+        CHECK_EQ(*it, i--);
+    CHECK_EQ(i, 0);
+    // TODO: DoubleLinkedListReverseIterator
+    /*
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);
+    */
+}
+
+TEST_CASE("Последователно добавяне на елементи в списъка от началото и обхождането му отзад напред") {
+    DoubleLinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertFirst(i));
+    
+    int i = 1;
+    for(DoubleLinkedList<int>::I it = l.last(); it.valid(); --it)
+        CHECK_EQ(*it, i++);
+    CHECK_EQ(i, 11);
+}
+
 TEST_CASE_TEMPLATE("Включване на елементи на четни позиции",
                     AnyList, ALL_LISTS) {
     AnyList l;
