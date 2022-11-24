@@ -315,7 +315,7 @@ TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане
     for(int x : {1, 5, 7, 2, 6, 4, 9, 10, 8, 3})
         l.insertLast(x);
     
-    l.mergeSort();
+    l = ListUtils<AnyList>::mergeSort(l);
 
     int i = 1;
     for(int x : l)

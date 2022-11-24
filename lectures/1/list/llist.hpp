@@ -91,7 +91,7 @@ public:
     LinkedList& operator=(LinkedList const& other) {
         if (this != &other) {
             this->erase();
-            append(other);
+            this->append(other);
         }
         return *this;
     }

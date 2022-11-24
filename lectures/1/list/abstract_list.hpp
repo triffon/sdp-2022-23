@@ -178,11 +178,15 @@ public:
     // TODO: merge с един параметър
     // l1.merge(l2)
 
-    void mergeSort() {
-        
-    }
-
     virtual ~AbstractList() {}
+};
+
+template <typename L /* extends AbstractList */>
+class ListUtils {
+public:
+    static L mergeSort(L const& l) {
+        return l;
+    }
 };
 
 #endif
