@@ -190,8 +190,7 @@ public:
         back = other.back;
         other.back = other.front = nullptr;
     }
-
-    void reverseWithPointers()
+     void reverseWithPointers()
     {
         //взимаме началото и създаваме указател за предишния и следващия елемент.
         E* start = this->begin()->ptr;
