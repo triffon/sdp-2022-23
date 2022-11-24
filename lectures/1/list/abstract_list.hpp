@@ -216,7 +216,49 @@ public:
         }
     }
 
+    // разделя списъка на приблизително равни части
+    // O(n) по време и по памет
+    void split(AbstractList& l1, AbstractList& l2) const {
+        AbstractList *me = &l1, *you = &l2;
+        for(T x : *this) {
+            you->insertLast(x);
+            std::swap(me, you);
+        }
+    }
+
+    // слива два списъка в текущия
+    void merge(AbstractList const& l1, AbstractList const& l2) {
+        P it1 = l1.begin(), it2 = l2.begin();
+        while(it1 != l1.end() && it2 != l2.end())
+            if (*it1 < *it2)
+                insertLast(*it1++);
+            else
+                insertLast(*it2++);
+        // прехвърляме от първия списък каквото е останало
+        while(it1 != l1.end())
+            insertLast(*it1++);
+        while(it2 != l2.end())
+            insertLast(*it2++);
+    }
+
+    // TODO: merge с един параметър
+    // l1.merge(l2)
+
     virtual ~AbstractList() {}
+};
+
+template <typename L /* extends AbstractList */>
+class ListUtils {
+public:
+    static L mergeSort(L const& l) {
+        if (l.empty() || !l.begin().next().valid())
+            return l;
+        L l1, l2;
+        l.split(l1, l2);
+        L result;
+        result.merge(mergeSort(l1), mergeSort(l2));
+        return result;
+    }
 };
 
 #endif

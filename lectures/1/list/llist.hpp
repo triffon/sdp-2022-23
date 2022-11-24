@@ -90,7 +90,7 @@ public:
     LinkedList& operator=(LinkedList const& other) {
         if (this != &other) {
             this->erase();
-            append(other);
+            this->append(other);
         }
         return *this;
     }
@@ -185,7 +185,7 @@ public:
     I last()  const { return I(back); }
     I end()   const { return I(); }
 
-    void appendAndDestroy(LinkedList& other) {
+    void appendAssign(LinkedList& other) {
         back->next = other.front;
         back = other.back;
         other.back = other.front = nullptr;
@@ -209,6 +209,9 @@ public:
         back = front;
         front = start;
     }
+    // TODO: reverseAssign
+    // TODO: splitAssign
+    // TODO: mergeAssign
 };
 
 
