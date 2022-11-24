@@ -199,7 +199,7 @@ public:
             ++fi;
             --bi;
         }
-        return fi == bi || fi.next() == bi;
+        return *fi == *bi;
     }
 };
 
