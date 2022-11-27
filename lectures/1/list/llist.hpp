@@ -191,8 +191,8 @@ public:
         other.back = other.front = nullptr;
     }
 
-    void reverseWithPointers()
-    {
+    //O(n) време. O|1| памет.
+    void reverseWithPointers(){
         //взимаме началото и създаваме указател за предишния и следващия елемент.
         E* start = this->begin()->ptr;
         E* previous = nullptr;
