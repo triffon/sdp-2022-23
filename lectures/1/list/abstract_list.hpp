@@ -40,22 +40,6 @@ public:
         return save;
     }
 
-    //it+=(int)
-    ConcretePosition& operator+=(int value)
-    {
-        while(value>0)
-        {
-            ++*this;
-            value--;
-        }
-        while(value<0)
-        {
-            this = this->prev();
-            value++;
-        }
-        return *this;
-    }
-
     // операции за сравнение
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }
@@ -63,54 +47,6 @@ public:
     T const& operator*() const { return get(); }
     T&       operator*()       { return get(); }
 };
-
-
-//template <typename T, typename ConcretePosition /* extends Position<T> */>
-/*class ConstPosition {
-private:
-    friend ConcretePosition;
-public:
-
-    virtual bool valid() const = 0;
-    operator bool() const { return valid(); }
-    bool operator!() const { return !valid(); }
-
-    virtual T const& get() const = 0;
-
-    virtual const ConcretePosition next() const = 0;
-    virtual const ConcretePosition prev() const = 0;
-
-    const ConcretePosition& operator++(){
-        return (ConcretePosition&)(*this) = next();
-    }
-
-    const ConcretePosition operator++(int) {
-        const ConcretePosition save = (ConcretePosition&)*this;
-        ++*this;
-        return save;
-    }
-
-    const ConcretePosition& operator+=(int value)
-    {
-        while(value>0)
-        {
-            ++*this;
-            value--;
-        }
-        while(value<0)
-        {
-            this = this->prev();
-            value++;
-        }
-        return *this;
-    }
-
-    virtual bool operator==(ConstPosition const& pos) const = 0;
-    bool operator!=(ConstPosition const& pos) { return !(*this == pos); }
-
-    const T& operator*() const { return get(); }
-};*/
-
 
 
 
