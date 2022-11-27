@@ -1,4 +1,4 @@
-#include "../../../../doctest/doctest/doctest.h"
+#include "doctest.h"
 #include "llist.hpp"
 #include <cmath>
 
@@ -238,20 +238,20 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
 }
 
 
-TEST_CASE_TEMPLATE("Обръщане на списък чрез препратки",
-                    AnyList, ALL_LISTS) {
-    AnyList l;
+TEST_CASE("Обръщане на списък чрез препратки") {
+    LinkedList<int> l;
     int i = 1;
     for(i ; i <= 10; i++)
-        REQUIRE(l.insertLast(i));
+        l.insertLast(i);
 
-    l.reverseWithPointers(l.begin(), l.last());
+    l.reverseWithPointers();
+    CHECK_EQ(10, l.begin().get());
 
     for(int x : l)
         CHECK_EQ(x, i--);
     CHECK_EQ(i, 0);
 
-    l.reverseWithPointers(l.begin(), l.last());
+    l.reverseWithPointers();
 
     i=1;
     for(int x : l)
@@ -328,7 +328,7 @@ TEST_CASE_TEMPLATE("Разделяне на списък с нечетен бр�
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
-    CHECK_EQ(i, 11);    
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане",
@@ -336,11 +336,11 @@ TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане
     AnyList l;
     for(int x : {1, 5, 7, 2, 6, 4, 9, 10, 8, 3})
         l.insertLast(x);
-    
+
     l = ListUtils<AnyList>::mergeSort(l);
 
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
-    CHECK_EQ(i, 11);    
+    CHECK_EQ(i, 11);
 }
