@@ -1,9 +1,15 @@
+#ifndef __LIST_TESTS_HPP
+#define __LIST_TESTS_HPP
+
 #include "doctest.h"
 #include "llist.hpp"
+#include "dllist.hpp"
 #include <cmath>
 
 TYPE_TO_STRING(LinkedList<int>);
-#define ALL_LISTS LinkedList<int>
+TYPE_TO_STRING(DoubleLinkedList<int>);
+#define ALL_LISTS LinkedList<int>, DoubleLinkedList<int>
+
 
 TEST_CASE_TEMPLATE("При създаване на списък той е празен",
                     AnyList, ALL_LISTS) {
@@ -40,6 +46,35 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     for(int x : l)
         CHECK_EQ(i--, x);
     CHECK_EQ(i, 0);
+}
+
+TEST_CASE("Последователно добавяне на елементи в двусвързан списък и обхождането му отзад напред") {
+    DoubleLinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+
+    int i = 10;
+    for(DoubleLinkedList<int>::I it = l.last(); it.valid(); --it)
+        CHECK_EQ(*it, i--);
+    CHECK_EQ(i, 0);
+    // TODO: DoubleLinkedListReverseIterator
+    /*
+    int i = 1;
+    for(int x : l)
+        CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);
+    */
+}
+
+TEST_CASE("Последователно добавяне на елементи в списъка от началото и обхождането му отзад напред") {
+    DoubleLinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertFirst(i));
+
+    int i = 1;
+    for(DoubleLinkedList<int>::I it = l.last(); it.valid(); --it)
+        CHECK_EQ(*it, i++);
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Включване на елементи на четни позиции",
@@ -184,7 +219,7 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
     CHECK_EQ(i, 21);
 }
 
-TEST_CASE_TEMPLATE("Конкатениране на два списъка с appendAndDestroy",
+TEST_CASE_TEMPLATE("Конкатениране на два списъка с appendAssign",
                     AnyList, ALL_LISTS) {
     AnyList l1, l2;
     int i = 1;
@@ -296,7 +331,7 @@ TEST_CASE_TEMPLATE("Разделяне на списък с нечетен бр�
     l.split(l1, l2);
 
     bool used[N] = { false };
-    size_t n1 = 0, n2 = 0;
+    int n1 = 0, n2 = 0;
     for(int x : l1) {
         n1++;
         CHECK(!used[x]);
@@ -344,3 +379,26 @@ TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане
         CHECK_EQ(i++, x);
     CHECK_EQ(i, 11);
 }
+
+TEST_CASE("Коректно засичане на нечетен палиндром") {
+    DoubleLinkedList<int> l;
+    for(int x : { 1, 2, 3, 2, 1})
+        l.insertLast(x);
+    CHECK(l.isPalindrome());
+}
+
+TEST_CASE("Коректно засичане на четен палиндром") {
+    DoubleLinkedList<int> l;
+    for(int x : { 1, 2, 3, 3, 2, 1})
+        l.insertLast(x);
+    CHECK(l.isPalindrome());
+}
+
+TEST_CASE("Коректно засичане на непалиндром") {
+    DoubleLinkedList<int> l;
+    for(int x : { 1, 4, 3, 2, 1})
+        l.insertLast(x);
+    CHECK(!l.isPalindrome());
+}
+
+#endif
