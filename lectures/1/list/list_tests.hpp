@@ -244,14 +244,14 @@ TEST_CASE("Обръщане на списък чрез препратки") {
     for(i ; i <= 10; i++)
         l.insertLast(i);
 
-    l.reverseWithPointers();
+    l.reverseAssign();
     CHECK_EQ(10, l.begin().get());
 
     for(int x : l)
         CHECK_EQ(x, i--);
     CHECK_EQ(i, 0);
 
-    l.reverseWithPointers();
+    l.reverseAssign();
 
     i=1;
     for(int x : l)

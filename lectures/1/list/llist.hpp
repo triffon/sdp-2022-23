@@ -192,7 +192,7 @@ public:
     }
 
     //O(n) време. O|1| памет.
-    void reverseWithPointers(){
+    void reverseAssign() {
         //взимаме началото и създаваме указател за предишния и следващия елемент.
         E* start = this->begin()->ptr;
         E* previous = nullptr;
@@ -210,7 +210,6 @@ public:
         back = front;
         front = start;
     }
-    // TODO: reverseAssign
     // TODO: splitAssign
     // TODO: mergeAssign
 };
