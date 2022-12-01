@@ -66,5 +66,27 @@ TEST_CASE_TEMPLATE("Изтриване на нечетните елементи 
     CHECK_EQ(i, 9);
 }
 
+TEST_CASE_TEMPLATE("Сума на елементите на списък чрез foldr и foldl",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
 
+    CHECK_EQ(LHO::foldr(LHO::plus, 0, l), 55);
+    CHECK_EQ(LHO::foldl(LHO::plus, 0, l), 55);
+}
+
+TEST_CASE_TEMPLATE("Сумата на квадратите на нечетните елементи на списък",
+                    AnyList, ALL_LISTS) {
+
+    AnyList l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+
+    CHECK_EQ(LHO::foldr(LHO::plus, 0,
+                        LHO::map(LHO::square,
+                                LHO::filter(LHO::odd, l))), 165);
+}
+
+// TODO: направете тестове, в които foldr и foldl дават различен резултат
 #endif

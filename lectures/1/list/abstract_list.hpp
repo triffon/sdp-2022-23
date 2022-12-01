@@ -71,6 +71,10 @@ protected:
     }
 
 public:
+    // даваме възможност да подаваме списък където се очаква итератор
+    // така се връща итератор към началото на списъка
+    operator P() const { return begin(); }
+
     virtual bool empty() const { return !begin().valid(); }
 
     // включване на първи елемент
