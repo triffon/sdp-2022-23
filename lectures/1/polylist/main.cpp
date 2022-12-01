@@ -2,3 +2,4 @@
 #include "doctest.h"
 
 #include "sqlist_tests.hpp"
+#include "slist_tests.hpp"
