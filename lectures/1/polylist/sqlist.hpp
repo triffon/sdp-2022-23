@@ -5,6 +5,13 @@
 #include "llist.hpp"
 
 template<typename T>
-using StackQueueList = LinkedList<SimpleContainer<T>*>;
+class StackQueueList : public LinkedList<SimpleContainer<T>*> {
+public:
+    // TODO: да се реализират другите елементи на голямата 4
+    ~StackQueueList() {
+        for(SimpleContainer<T>* c : *this)
+            delete c;
+    }
+};
 
 #endif

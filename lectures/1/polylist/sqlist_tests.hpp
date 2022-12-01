@@ -7,25 +7,28 @@
 #include "simple_queue.hpp"
 
 TEST_CASE("Включване на елементи в списък от един стек и една опашка") {
-    SimpleStack<int> stack;
-    SimpleQueue<int> queue;
     StackQueueList<int> sql;
-
-    sql.insertLast(&stack);
-    sql.insertLast(&queue);
-
+    // считаме, че списъкът притежава обектите, към които сочат указателите
+    sql.insertLast(new SimpleStack<int>);
+    sql.insertLast(new SimpleQueue<int>);
     for (SimpleContainer<int>* c : sql)
         for(int i = 1; i <= 10; i++)
             c->insert(i);
-    
+
+    typename StackQueueList<int>::I it = sql.begin();
+
+    // първият елемент е стек
     int i = 10;
-    while (!stack.empty())
-        CHECK_EQ(stack.pop(), i--);
+    int x;
+    while ((*it)->remove(x))
+        CHECK_EQ(x, i--);
     CHECK_EQ(i, 0);
 
+    // вторият елемент е опашка
+    ++it;
     i = 1;
-    while (!queue.empty())
-        CHECK_EQ(queue.dequeue(), i++);
+    while ((*it)->remove(x))
+        CHECK_EQ(x, i++);
     CHECK_EQ(i, 11);
 }
 
