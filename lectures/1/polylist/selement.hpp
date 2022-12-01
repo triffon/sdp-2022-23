@@ -14,7 +14,7 @@ public:
     // събиране на елемeнти
     virtual void collect(LinkedList<int>&) = 0;
 
-    ~SElement() {}
+    virtual ~SElement() {}
 };
 
 #endif
