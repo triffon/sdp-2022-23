@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "stack"
+		},
+		{
+			"path": "calculator"
+		},
+		{
+			"path": "horse"
+		},
+		{
+			"path": "queue"
+		},
+		{
+			"path": "list"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"cassert": "cpp",
+			"iostream": "cpp"
+		}
+	}
+}
