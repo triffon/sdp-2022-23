@@ -16,7 +16,7 @@ TEST_CASE_TEMPLATE("Добавяне на 1 към всеки елемент н�
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
-    AnyList result = LHO::map(LHO::plus1, l);
+    AnyList result = LHO::map([](auto x) -> auto { return x + 1; }, l);
 
     int i = 2;
     for(int x : result)
@@ -30,7 +30,7 @@ TEST_CASE_TEMPLATE("Добавяне на 1 към всеки елемент н�
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
-    LHO::mapAssign(LHO::plus1, l);
+    LHO::mapAssign([](auto x) -> auto { return x + 1; }, l);
 
     int i = 2;
     for(int x : l)
@@ -44,7 +44,7 @@ TEST_CASE_TEMPLATE("Филтриране на нечетните елемент�
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
-    AnyList result = LHO::filter(LHO::odd, l);
+    AnyList result = LHO::filter([](auto x) -> auto { return x % 2 != 0; }, l);
 
     int i = -1;
     for(int x : result)
@@ -58,7 +58,7 @@ TEST_CASE_TEMPLATE("Изтриване на нечетните елементи 
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
-    LHO::filterAssign(LHO::odd, l);
+    LHO::filterAssign([](auto x) -> auto { return x % 2 != 0; }, l);
 
     int i = -1;
     for(int x : l)
@@ -72,8 +72,9 @@ TEST_CASE_TEMPLATE("Сума на елементите на списък чре�
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
-    CHECK_EQ(LHO::foldr(LHO::plus, 0, l), 55);
-    CHECK_EQ(LHO::foldl(LHO::plus, 0, l), 55);
+    auto plus = [](auto x, auto y) -> auto { return x + y; };
+    CHECK_EQ(LHO::foldr(plus, 0, l), 55);
+    CHECK_EQ(LHO::foldl(plus, 0, l), 55);
 }
 
 TEST_CASE_TEMPLATE("Сумата на квадратите на нечетните елементи на списък",
@@ -83,9 +84,9 @@ TEST_CASE_TEMPLATE("Сумата на квадратите на нечетнит
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
-    CHECK_EQ(LHO::foldr(LHO::plus, 0,
-                        LHO::map(LHO::square,
-                                LHO::filter(LHO::odd, l))), 165);
+    CHECK_EQ(LHO::foldr([](auto x, auto y) -> auto { return x + y; }, 0,
+                        LHO::map([](auto x) -> auto { return x * x; },
+                                LHO::filter([](auto x) -> auto { return x % 2 != 0; }, l))), 165);
 }
 
 // TODO: направете тестове, в които foldr и foldl дават различен резултат
