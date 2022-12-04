@@ -24,5 +24,14 @@
 			"cassert": "cpp",
 			"iostream": "cpp"
 		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-ceintl.vscode-language-pack-bg",
+			"llvm-vs-code-extensions.vscode-clangd",
+			"twxs.cmake",
+			"ms-vscode.cmake-tools",
+			"vadimcn.vscode-lldb"
+		]
 	}
 }
