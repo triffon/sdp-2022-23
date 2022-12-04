@@ -5,7 +5,7 @@
 	},
 
 	"customizations": {
-        // Configure default extenstions
+        // Configure default extensions
         "vscode": {
             "extensions": [
                 // C++ support
