@@ -192,8 +192,7 @@ public:
             insertLast(*it2++);
     }
 
-    // TODO: merge с един параметър
-    // l1.merge(l2)
+    // merge с един параметър
     void merge(AbstractList const& l2){
         P it2 = l2.begin();
         P it1 = begin();
