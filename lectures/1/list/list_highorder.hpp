@@ -72,7 +72,7 @@ public:
     (define (foldl op nv l)
       (if (null? l) nv (foldl op (op nv (car l)) (cdr l))))
     */
-    // O(|l|) по време и O(1) по памет 
+    // O(|l|) по време и O(1) по памет
     static T foldl(BinaryOperation op, T const& nv, L const& l) {
         T result = nv;
         for(T const& x : l)
