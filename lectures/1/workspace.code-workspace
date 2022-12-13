@@ -1,0 +1,37 @@
+{
+	"folders": [
+		{
+			"path": "stack"
+		},
+		{
+			"path": "calculator"
+		},
+		{
+			"path": "horse"
+		},
+		{
+			"path": "queue"
+		},
+		{
+			"path": "list"
+		},
+		{
+			"path": "polylist"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"cassert": "cpp",
+			"iostream": "cpp"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"ms-ceintl.vscode-language-pack-bg",
+			"llvm-vs-code-extensions.vscode-clangd",
+			"twxs.cmake",
+			"ms-vscode.cmake-tools",
+			"vadimcn.vscode-lldb"
+		]
+	}
+}

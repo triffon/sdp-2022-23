@@ -13,7 +13,7 @@ public:
     // if (!it) ...
 
     operator bool() const { return valid(); }
-    bool operator!() const { return !valid(); }
+    bool operator!() const { return !valid(); } 
 
     // константен достъп до елемента на позицията
     virtual T const& get() const = 0;
@@ -40,29 +40,13 @@ public:
         return save;
     }
 
-    // преместваме се на предишната позиция
-    // --it
-    ConcretePosition& operator--() {
-        return (ConcretePosition&)(*this) = prev();
-    }
-
-    // it--
-    ConcretePosition operator--(int) {
-        ConcretePosition save = (ConcretePosition&)*this;
-        --*this;
-        return save;
-    }
-
     // операции за сравнение
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }
 
-    T const& operator*() const { return get(); }
-    T&       operator*()       { return get(); }
+    T const& operator*() const { return get(); } 
+    T&       operator*()       { return get(); } 
 };
-
-
-
 
 template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
@@ -74,10 +58,6 @@ protected:
     }
 
 public:
-    // даваме възможност да подаваме списък където се очаква итератор
-    // така се връща итератор към началото на списъка
-    operator P() const { return begin(); }
-
     virtual bool empty() const { return !begin().valid(); }
 
     // включване на първи елемент
@@ -86,11 +66,11 @@ public:
     // включване на последен елемент
     virtual bool insertLast(T const& x) { return insertAfter(x, last()); }
 
-    // включване на елемент преди дадена позиция
+    // включване на елемент преди дадена позиция 
     virtual bool insertBefore(T const& x, P const& pos) = 0;
 
-    // включване на елемент след дадена позиция
-    virtual bool insertAfter(T const& x, P const& pos) = 0;
+    // включване на елемент след дадена позиция 
+    virtual bool insertAfter(T const& x, P const& pos) = 0;  
 
     // изключване на първи елемент
     virtual bool deleteFirst(T& x) {
@@ -104,14 +84,14 @@ public:
         return deleteAt(x, pos);
     }
 
-    // изключване на елемент преди дадена позиция
-    virtual bool deleteBefore(T& x, P const& pos) = 0;
+    // изключване на елемент преди дадена позиция 
+    virtual bool deleteBefore(T& x, P const& pos) = 0;  
 
-    // изключване на елемент на дадена позиция, унищавайки позицията
-    virtual bool deleteAt(T& x, P& pos) = 0;
+    // изключване на елемент на дадена позиция, унищавайки позицията 
+    virtual bool deleteAt(T& x, P& pos) = 0;  
 
-    // изключване на елемент след дадена позиция
-    virtual bool deleteAfter(T& x, P const& pos) = 0;
+    // изключване на елемент след дадена позиция 
+    virtual bool deleteAfter(T& x, P const& pos) = 0;  
 
     // константен достъп до елемент на дадена позиция
     virtual T const& getAt(P const& pos) const {
@@ -127,7 +107,8 @@ public:
         return pos.get();
     }
 
-    // !!! пробив в класа, можем да променяме елементите на константен списък
+    // !!! пробив във класа, можем да променяме елементите на константен
+    // списък
     // TODO: да се реализира ConstPosition
 
     // връща позицията в началото
@@ -169,49 +150,7 @@ public:
         }
     }
 
-    // разделя списъка на приблизително равни части
-    // O(n) по време и по памет
-    void split(AbstractList& l1, AbstractList& l2) const {
-        AbstractList *me = &l1, *you = &l2;
-        for(T x : *this) {
-            you->insertLast(x);
-            std::swap(me, you);
-        }
-    }
-
-    // слива два списъка в текущия
-    void merge(AbstractList const& l1, AbstractList const& l2) {
-        P it1 = l1.begin(), it2 = l2.begin();
-        while(it1 != l1.end() && it2 != l2.end())
-            if (*it1 < *it2)
-                insertLast(*it1++);
-            else
-                insertLast(*it2++);
-        // прехвърляме от първия списък каквото е останало
-        while(it1 != l1.end())
-            insertLast(*it1++);
-        while(it2 != l2.end())
-            insertLast(*it2++);
-    }
-
-    // TODO: merge с един параметър
-    // l1.merge(l2)
-
     virtual ~AbstractList() {}
-};
-
-template <typename L /* extends AbstractList */>
-class ListUtils {
-public:
-    static L mergeSort(L const& l) {
-        if (l.empty() || !l.begin().next().valid())
-            return l;
-        L l1, l2;
-        l.split(l1, l2);
-        L result;
-        result.merge(mergeSort(l1), mergeSort(l2));
-        return result;
-    }
 };
 
 #endif
