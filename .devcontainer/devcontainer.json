@@ -1,0 +1,18 @@
+{
+	"name": "C++",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+
+	"customizations": {
+        // Configure default extensions
+        "vscode": {
+            "extensions": [
+                // C++ support
+                "ms-vscode.cpptools-extension-pack",
+                // Bulgarian support
+                "ms-ceintl.vscode-language-pack-bg"
+            ]
+        }
+	}
+}
