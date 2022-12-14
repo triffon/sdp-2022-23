@@ -186,6 +186,16 @@ public:
     I last()  const { return I(back); }
     I end()   const { return I(); }
 
+    //O(n) по време, O(1) по памет
+    unsigned long long getLength() const{
+        I current = this->begin();
+        unsigned long long length = 0;
+        while(current!=this->end){
+            current++;
+            length++;
+        }
+        return length;
+    }
     void appendAssign(LinkedList& other) {
         back->next = other.front;
         back = other.back;
