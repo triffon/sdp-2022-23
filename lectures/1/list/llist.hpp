@@ -206,6 +206,7 @@ public:
 
     // O(n) по време
     //splitAssign чрез индекс на списъка
+    //Подаваме индекс, от който искаме всеки елелемнт нататък да бъде чааст от новия списък
     LinkedList splitAssign(unsigned long long index_to_split){
         unsigned long long length = this->getLength();
         if(index_to_split == length) //Понеже правим разделянето преди индексирания елемнт
@@ -234,10 +235,41 @@ public:
         if(previous)
             this->back->next = nullptr; //късаме връзката
         else
-            //ако предишен елемент не е взет, значи front вече нямаме
+            //ако предишен елемент не е взет, значи front вече няма
             this->front = nullptr;
 
         return new_list();
+    }
+
+
+    //splitAssign чрез итератор на списъка
+    //Искаме да вземем тази позиция, която ни е подадена, и всички останали след тази.
+    LinkedList splitAssign(I& pos_to_split){
+
+        if(pos_to_split == this->end())
+            return LinkedList(); // няма какво да разделим
+
+        I previous = findPrev(pos_to_split);
+
+        if(!(previous.valid()) && pos_to_split!=this->begin())
+            throw std::runtime_error("E! Как стана това?...");
+
+        LinkedList new_list();
+        new_list.front = pos_to_split.get();
+        new_list.back = this->back;
+
+        if(pos_to_split == this->begin()){
+            //Предполагам искаме да хвърлим целия списък в новия
+            this->front = nullptr;
+            this->back = nullptr;
+        }
+        else
+        {
+            this->back = previous.get();
+            this->back->next = nullptr; //Късаме връзката.
+        }
+
+        return new_list;
     }
     // TODO: mergeAssign
 };
