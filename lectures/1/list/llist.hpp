@@ -205,29 +205,23 @@ public:
     // TODO: reverseAssign
 
     // O(n) по време
-    //splitAssign
-    LinkedList splitAssign(){
+    //splitAssign чрез индекс на списъка
+    LinkedList splitAssign(unsigned long long index_to_split){
         unsigned long long length = this->getLength();
-        unsigned long long new_length = length/2;
-        if(new_length == 0)// не ми се занимава да мисля това изключение
-        {
-            //това ще се случи само когато нашият списък има един или нула елементи
+        if(index_to_split == length) //Понеже правим разделянето преди индексирания елемнт
             return LinkedList();
-        }
 
-
-        //Това ми подсигурява, че новият списък ще бъде по-късият.
-        //А иначе ще са равни, ако елементите на сегашния са четен брой.
-        new_length += length%2;
+        if(index_to_split > length || index_to_split < 0)
+            throw std::invalid_argument("Грешна дължина на новия списък");
 
 
         E* new_front = front;
-        E* previous;
-        while(new_length!=0){
-            if(new_length==1)
+        E* previous = nullptr;
+        while(index_to_split!=0){
+            if(index_to_split==1)
                 previous = new_front; //взимаме предишния елемент преди да итерираме
             new_front = new_front->next;
-            new_length--;
+            index_to_split--;
         }
 
 
@@ -237,8 +231,11 @@ public:
 
 
         this->back = previous;      //слагаме новия край на първия списък
-        this->back->next = nullptr; //късаме връзката
-
+        if(previous)
+            this->back->next = nullptr; //късаме връзката
+        else
+            //ако предишен елемент не е взет, значи front вече нямаме
+            this->front = nullptr;
 
         return new_list();
     }
