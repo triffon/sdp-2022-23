@@ -203,7 +203,45 @@ public:
     }
 
     // TODO: reverseAssign
-    // TODO: splitAssign
+
+    // O(n) по време
+    //splitAssign
+    LinkedList splitAssign(){
+        unsigned long long length = this->getLength();
+        unsigned long long new_length = length/2;
+        if(new_length == 0)// не ми се занимава да мисля това изключение
+        {
+            //това ще се случи само когато нашият списък има един или нула елементи
+            return LinkedList();
+        }
+
+
+        //Това ми подсигурява, че новият списък ще бъде по-късият.
+        //А иначе ще са равни, ако елементите на сегашния са четен брой.
+        new_length += length%2;
+
+
+        E* new_front = front;
+        E* previous;
+        while(new_length!=0){
+            if(new_length==1)
+                previous = new_front; //взимаме предишния елемент преди да итерираме
+            new_front = new_front->next;
+            new_length--;
+        }
+
+
+        LinkedList new_list();      //създаваме нов списък от средата на другия.
+        new_list.front = new_front;
+        new_list.back = this->back;
+
+
+        this->back = previous;      //слагаме новия край на първия списък
+        this->back->next = nullptr; //късаме връзката
+
+
+        return new_list();
+    }
     // TODO: mergeAssign
 };
 
