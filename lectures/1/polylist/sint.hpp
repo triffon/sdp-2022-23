@@ -12,12 +12,12 @@ public:
     SInt(int _data = 0) : data(_data) {}
 
     // извеждане
-    void print(std::ostream& os) {
+    void print(std::ostream& os) const {
         os << data;
     }
 
     // събиране на елемeнти
-    void collect(LinkedList<int>& l) {
+    void collect(LinkedList<int>& l) const {
         l.insertLast(data);
     }
 };

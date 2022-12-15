@@ -31,7 +31,6 @@ public:
         print(std::clog);
         std::clog << std::endl;
         cloneAll();
-        std::clog << std::endl;
     }
 
     SList& operator=(SList const& other) {
@@ -44,7 +43,6 @@ public:
     }
 
     ~SList() {
-        std::clog << std::endl;
         deleteAll();
     }
 
@@ -63,7 +61,7 @@ public:
     }
 
     // извеждане
-    void print(std::ostream& os) {
+    void print(std::ostream& os) const {
         os << '(';
         /*
         for(SElement* se : *this) {
@@ -83,7 +81,7 @@ public:
     }
 
     // събиране на елемeнти
-    void collect(LinkedList<int>& l) {
+    void collect(LinkedList<int>& l) const {
         for(SElement* se : *this)
             se->collect(l);
     }
