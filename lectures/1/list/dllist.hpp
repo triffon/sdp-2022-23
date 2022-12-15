@@ -199,8 +199,12 @@ public:
             previous = current->prev;       // взимаме предишния.
             current->prev = current->next;  // местим указателя за предишния елемент напред.
             current->next = previous;       // местим указателя за следващия елемент назад.
-            current = current->prev;        // местим сегашния елемент към 'следващия', който сега е предишен
+            current = current->prev;        // местим сегашния елемент към 'следващия', който сега е предишен.
         }
+
+        E* temp = back;
+        back = front;
+        front = temp;                   //връщаме си back и front на местата им.
     }
     // TODO: splitAssign
     // TODO: mergeAssign
