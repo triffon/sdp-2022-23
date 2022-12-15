@@ -7,10 +7,6 @@
 #include "slist.hpp"
 
 TEST_CASE("Извеждане и събиране на елементи от дълбок списък") {
-    SList()
-            <<  SList()
-            <<  SList(SInt(7));
-
     SList sl = SList()
     << 
         SList(SInt(1), SList(SInt(2)))
