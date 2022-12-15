@@ -65,9 +65,10 @@ template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
 protected:
     void erase() {
-        T x;
-        while (!empty())
+        while (!empty()) {
+            T x;
             deleteFirst(x);
+        }
     }
 
 public:
