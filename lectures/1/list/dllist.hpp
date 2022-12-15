@@ -189,11 +189,10 @@ public:
         other.back = other.front = nullptr;
     }
 
-    // TODO: reverseAssign
-    void reverseAssign()
-    {
+    // reverseAssign
+    void reverseAssign(){
         E* current = front;
-        E* previous = nullptr; //взимаме два елемента, които са и нужни
+        E* previous = nullptr;              //взимаме два елемента, които са и нужни
 
         while(current)                      // итерираме, докато не е nullptr
         {
