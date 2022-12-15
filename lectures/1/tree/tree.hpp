@@ -36,12 +36,21 @@ public:
         os << ')';
     }
 
-    int depth() const {
-        return 0;
+    unsigned depth() const {
+        unsigned maxDepth = 0;
+        for(Tree const& subtree : subtrees())
+            maxDepth = std::max(maxDepth, subtree.depth());
+        return 1 + maxDepth;
     }
 
-    int breadth() const {
-        return 0;
+    unsigned breadth() const {
+        unsigned maxBreadth = 0;
+        unsigned nChildren = 0;
+        for(Tree const& subtree : subtrees()) {
+            maxBreadth = std::max(maxBreadth, subtree.breadth());
+            nChildren++;
+        }
+        return std::max(nChildren, maxBreadth);
     }
 
 };
