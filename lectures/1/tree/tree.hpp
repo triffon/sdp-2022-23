@@ -35,6 +35,15 @@ public:
         }
         os << ')';
     }
+
+    int depth() const {
+        return 0;
+    }
+
+    int breadth() const {
+        return 0;
+    }
+
 };
 
 #endif
