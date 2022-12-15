@@ -11,20 +11,6 @@ struct BinTreeNode {
 
     BinTreeNode(T const& _data = T(), BinTreeNode* _left = nullptr, BinTreeNode* _right = nullptr) : 
         data(_data), left(_left), right(_right) {}
-
-    void print(std::ostream& os = std::cout) const {
-        os << '(' << data << ' ';
-        if (left == nullptr)
-            os << "()";
-        else
-            left->print(os);
-        os << ' ';
-        if (right == nullptr)
-            os << "()";
-        else
-            right->print(os);
-        os << ')';
-    }
 };
 
 template <typename T>
@@ -73,12 +59,6 @@ public:
         rootNode = new BinTreeNode<T>(root, left.rootNode, right.rootNode);
         left.rootNode = right.rootNode = nullptr;
     }
-
-    /*
-    void print(std::ostream& os = std::cout) const {
-        rootNode->print(os);
-    }
-    */
 
     void print(std::ostream& os = std::cout) const {
         print(os, root());
