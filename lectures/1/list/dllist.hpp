@@ -116,7 +116,7 @@ public:
         return insertAfter(x, pos.prev());
     }
 
-    // включване на елемент след дадена позиция 
+    // включване на елемент след дадена позиция
     // O(1)
     bool insertAfter(T const& x, I const& pos) {
         // включване на елемент в празен списък
@@ -137,12 +137,12 @@ public:
         return true;
     }
 
-    // изключване на елемент преди дадена позиция 
+    // изключване на елемент преди дадена позиция
     bool deleteBefore(T& x, I const& pos) {
         // опит за изключване от невалидна позиция
         if (!pos.valid())
             return false;
-        I prev = pos.prev();   
+        I prev = pos.prev();
         // общ случай
         return deleteAt(x, prev);
     }
@@ -168,7 +168,7 @@ public:
         return true;
     }
 
-    // изключване на елемент след дадена позиция 
+    // изключване на елемент след дадена позиция
     bool deleteAfter(T& x, I const& pos) {
         // опит за изключване от невалидна позиция
         if (!pos.valid())
@@ -190,6 +190,19 @@ public:
     }
 
     // TODO: reverseAssign
+    void reverseAssign()
+    {
+        E* current = front;
+        E* previous = nullptr; //взимаме два елемента, които са и нужни
+
+        while(current)                      // итерираме, докато не е nullptr
+        {
+            previous = current->prev;       // взимаме предишния.
+            current->prev = current->next;  // местим указателя за предишния елемент напред.
+            current->next = previous;       // местим указателя за следващия елемент назад.
+            current = current->prev;        // местим сегашния елемент към 'следващия', който сега е предишен
+        }
+    }
     // TODO: splitAssign
     // TODO: mergeAssign
 
