@@ -25,10 +25,15 @@ public:
 
     T root() const { return data; }
 
-    LinkedList<Tree> const& subtrees() const { return subtrees; }
+    LinkedList<Tree> const& subtrees() const { return trees; }
 
     void print(std::ostream& os = std::cout) const {
-
+        os << '(' << root();
+        for(Tree const& subtree : subtrees()) {
+            os << ' ';
+            subtree.print(os);
+        }
+        os << ')';
     }
 };
 
