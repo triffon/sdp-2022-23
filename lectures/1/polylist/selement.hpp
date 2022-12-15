@@ -9,12 +9,12 @@ public:
     virtual SElement* clone() const = 0;
 
     // извеждане
-    virtual void print(std::ostream& = std::cout) = 0;
+    virtual void print(std::ostream& = std::cout) const = 0;
 
     // събиране на елемeнти
-    virtual void collect(LinkedList<int>&) = 0;
+    virtual void collect(LinkedList<int>&) const = 0;
 
-    ~SElement() {}
+    virtual ~SElement() {}
 };
 
 #endif

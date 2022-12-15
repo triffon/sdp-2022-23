@@ -65,17 +65,12 @@ template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
 protected:
     void erase() {
-        while (!empty()) {
-            T x;
+        T x;
+        while (!empty())
             deleteFirst(x);
-        }
     }
 
 public:
-    // даваме възможност да подаваме списък където се очаква итератор
-    // така се връща итератор към началото на списъка
-    operator P() const { return begin(); }
-
     virtual bool empty() const { return !begin().valid(); }
 
     // включване на първи елемент
