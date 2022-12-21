@@ -102,6 +102,15 @@ public:
         return *this;
     }
 
+    LinkedList& operator=(LinkedList && other) {
+        if (this != &other) {
+            this->front = other.front;
+            this->back = other.back;
+            other.front = other.back = nullptr;
+        }
+        return *this;
+    }
+
     ~LinkedList() {
         this->erase();
     }
