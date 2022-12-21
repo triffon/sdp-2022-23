@@ -87,7 +87,7 @@ public:
     LinkedList(LinkedList && other) :
         front(other.front),
         back(other.back) {
-        other.front = other.back = nullptr;                                    
+        other.front = other.back = nullptr;
     }
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
@@ -121,7 +121,7 @@ public:
         return insertAfter(x, findPrev(pos));
     }
 
-    // включване на елемент след дадена позиция 
+    // включване на елемент след дадена позиция
     // O(1)
     bool insertAfter(T const& x, I const& pos) {
         if (this->empty()) {
@@ -136,7 +136,7 @@ public:
         return true;
     }
 
-    // изключване на елемент преди дадена позиция 
+    // изключване на елемент преди дадена позиция
     bool deleteBefore(T& x, I const& pos) {
         if (this->empty())
             return false;
@@ -168,7 +168,7 @@ public:
         return deleteAfter(x, prev);
     }
 
-    // изключване на елемент след дадена позиция 
+    // изключване на елемент след дадена позиция
     // O(1)
     bool deleteAfter(T& x, I const& pos) {
         if (this->empty())
