@@ -81,8 +81,14 @@ private:
     }
 public:
 
-    // TODO: голяма четворка
+    // голяма петица
     LinkedList() : front(nullptr), back(nullptr) {}
+
+    LinkedList(LinkedList && other) :
+        front(other.front),
+        back(other.back) {
+        other.front = other.back = nullptr;                                    
+    }
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
         this->append(other);
