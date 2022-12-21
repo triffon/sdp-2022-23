@@ -5,7 +5,7 @@
 #include "simple_container.hpp"
 
 template <typename T>
-class SimpleQueue : public LinkedQueue<T>, 
+class SimpleQueue : public LinkedQueue<T>,
                     public SimpleContainer<T> {
 public:
     // включва елемент в контейнера
