@@ -8,6 +8,7 @@ private:
     int data;
 public:
     SInt* clone() const { return new SInt(*this); }
+    SInt* steal() { return new SInt(*this); }
 
     SInt(int _data = 0) : data(_data) {}
 

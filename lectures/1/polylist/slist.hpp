@@ -23,6 +23,7 @@ private:
 
 public:
     SList* clone() const { return new SList(*this); }
+    SList* steal() { return new SList(std::move(*this)); }
 
     SList() {}
 
@@ -31,6 +32,12 @@ public:
         print(std::clog);
         std::clog << std::endl;
         cloneAll();
+    }
+
+    SList(SList&& other) : LinkedList<SElement*>(std::move(other)) {
+        std::clog << "Преместваме списък: ";
+        print(std::clog);
+        std::clog << std::endl;
     }
 
     SList& operator=(SList const& other) {
@@ -47,17 +54,40 @@ public:
     }
 
     SList& operator<<(SElement const& se) {
+        std::clog << "Добавяме с копиране: ";
+        se.print(std::clog);
+        std::clog << std::endl;
         LinkedList<SElement*>::insertLast(se.clone());
         return *this;
     }
 
+    SList&& operator<<(SElement&& se) {
+        std::clog << "Добавяме с преместване: ";
+        se.print(std::clog);
+        std::clog << std::endl;
+        LinkedList<SElement*>::insertLast(se.steal());
+        return std::move(*this);
+    }
+
+    // конструктор за списък с копиране на един елемент
     SList(SElement const& x) {
         *this << x;
     }
 
+    // конструктор за списък с копиране на два елемента
     SList(SElement const& x,
           SElement const& y) {
         *this << x << y;
+    }
+
+    // конструктор за списък с преместване на един елемент
+    SList(SElement&& x) {
+        *this << std::move(x);
+    }
+
+    // конструктор за списък с преместване на два елемента
+    SList(SElement&& x, SElement&& y) {
+        *this << std::move(x) << std::move(y);
     }
 
     // извеждане

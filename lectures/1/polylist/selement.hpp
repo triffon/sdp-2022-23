@@ -7,6 +7,7 @@
 class SElement {
 public:
     virtual SElement* clone() const = 0;
+    virtual SElement* steal() = 0;
 
     // извеждане
     virtual void print(std::ostream& = std::cout) const = 0;
