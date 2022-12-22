@@ -15,6 +15,8 @@ TEST_CASE("Включване и търсене на елементи") {
     REQUIRE(bst.insert(6));
     REQUIRE(bst.insert(2));
 
+    // bst.print(std::clog);
+
     // не можем да включваме същия елемент повторно
     REQUIRE(!bst.insert(3));
 
