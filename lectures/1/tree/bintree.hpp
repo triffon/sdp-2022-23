@@ -125,6 +125,14 @@ public:
         P(*this).erase();
         *ptr = new N(x);
     }
+
+    void transfer(MP other) { 
+        // изтриване на старата информация на тази позиция
+        P(*this).erase();
+        // прехвърлям цялото дърво от другата позиция
+        *ptr = *other.ptr;
+        *other.ptr = nullptr;
+    }
 };
 
 template <typename T>
