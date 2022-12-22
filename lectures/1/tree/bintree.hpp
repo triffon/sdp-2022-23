@@ -57,6 +57,74 @@ public:
 
     T& operator*() { return get(); }
 
+    void erase() {
+        if (ptr != nullptr) {
+            left().erase();
+            right().erase();
+            delete ptr;
+        }
+    } 
+};
+
+template <typename T>
+class BinTreeMutatingPosition {
+    // указател към указателя, който сочи към възела, указващ позицията
+    BinTreeNode<T>** ptr;
+    using MP = BinTreeMutatingPosition<T>;
+    using P = BinTreePosition<T>;
+    using N = BinTreeNode<T>;
+
+public:
+    BinTreeMutatingPosition(BinTreeNode<T>*& _ptr = nullptr) : ptr(&_ptr) {}
+
+    bool valid() const {
+        assert(ptr != nullptr);
+        return *ptr != nullptr; }
+
+    operator bool() { return valid(); }
+
+    MP left() const {
+        if (!valid())
+            std::runtime_error("Опит за преместване от невалидна позиция!");
+        return (*ptr)->left;
+    }
+
+    MP operator-() const { return left(); }
+    MP& operator--() {return *this = left(); }
+
+    MP right() const {
+        if (!valid())
+            std::runtime_error("Опит за преместване от невалидна позиция!");
+        return (*ptr)->right;
+    }
+
+    MP operator+() const { return right(); }
+    MP& operator++() {return *this = right(); }
+
+    T const& get() const {
+        if (!valid())
+            std::runtime_error("Опит за достъп до данна на невалидна позиция!");
+        return (*ptr)->data;
+    }
+
+    T const& operator*() const { return get(); }
+
+    T& get() {
+        if (!valid())
+            std::runtime_error("Опит за достъп до данна на невалидна позиция!");
+        return (*ptr)->data;
+    }
+
+    T& operator*() { return get(); }
+
+    operator P() {
+        return P(*ptr);
+    } 
+
+    void createLeaf(T const& x) {
+        P(*this).erase();
+        *ptr = new N(x);
+    }
 };
 
 template <typename T>
@@ -66,19 +134,12 @@ class BinTree {
 
 public:
     using P = BinTreePosition<T>;
+    using MP = BinTreeMutatingPosition<T>;
 
 private:
     N* copy(P pos) {
         return pos ? new N(*pos, copy(-pos), copy(+pos)) : nullptr;
     }
-
-    void erase(N* node) {
-        if (node != nullptr) {
-            erase(node->left);
-            erase(node->right);
-            delete node;
-        }
-    } 
 
 public:
     BinTree() : rootNode(nullptr) {}
@@ -89,7 +150,7 @@ public:
 
     BinTree& operator=(BinTree const& bt) {
         if (this != &bt) {
-            erase(rootNode);
+            root().erase();
             rootNode = copy(bt.root());
         }
         return *this;
@@ -107,7 +168,7 @@ public:
     }
 
     ~BinTree() {
-        erase(rootNode);
+        root().erase();
     }
 
     BinTree(T const& root, BinTree&& left = BinTree(), BinTree&& right = BinTree()) {
@@ -138,6 +199,7 @@ public:
     }
 
     P root() const { return P(rootNode); }
+    MP mutatingRoot() { return MP(rootNode); }
 };
 
 #endif
