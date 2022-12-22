@@ -22,11 +22,15 @@ public:
 
     bool valid() const { return ptr != nullptr; }
 
+    operator bool() const { return valid(); }
+
     P left() const {
         if (!valid())
             std::runtime_error("Опит за преместване от невалидна позиция!");
         return ptr->left;
     }
+
+    P operator-() const { return left(); }
 
     P right() const {
         if (!valid())
@@ -34,17 +38,24 @@ public:
         return ptr->right;
     }
 
+    P operator+() const { return right(); }
+
     T const& get() const {
         if (!valid())
             std::runtime_error("Опит за достъп до данна на невалидна позиция!");
         return ptr->data;
     }
 
+    T const& operator*() const { return get(); }
+
     T& get() {
         if (!valid())
             std::runtime_error("Опит за достъп до данна на невалидна позиция!");
         return ptr->data;
     }
+
+    T& operator*() { return get(); }
+
 };
 
 template <typename T>
@@ -74,6 +85,12 @@ public:
             print(os, pos.right());
             os << ')';
         }
+    }
+
+    unsigned depth() const { return depth(root()); }
+
+    unsigned depth(P pos) const {
+        return pos ? 1 + std::max(depth(-pos), depth(+pos)) : 0;
     }
 
 
