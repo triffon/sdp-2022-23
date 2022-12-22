@@ -7,11 +7,11 @@
 #include <sstream>
 #include "bintree.hpp"
 
-using IntTree = BinTree<int>;
+using BIntTree = BinTree<int>;
 
 TEST_CASE("Извеждане на двоично дърво") {
-    IntTree t(1, IntTree(2, IntTree(3), IntTree(4)),
-                 IntTree(5, IntTree(), IntTree(6)));
+    BIntTree t(1, BIntTree(2, BIntTree(3), BIntTree(4)),
+                 BIntTree(5, BIntTree(), BIntTree(6)));
 
     std::ostringstream os;
     t.print(os);

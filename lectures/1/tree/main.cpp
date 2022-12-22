@@ -2,3 +2,4 @@
 #include "doctest.h"
 
 #include "tree_tests.hpp"
+#include "bintree_tests.hpp"
