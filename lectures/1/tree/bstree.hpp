@@ -38,6 +38,25 @@ public:
         pos.createLeaf(x);
         return true;
     }
+
+    bool remove(T const& x) {
+        MP pos = search(x);
+        if (!pos)
+            return false;
+        if (!-pos)
+            pos.transfer(+pos);
+        else if (!+pos)
+            pos.transfer( -pos);
+        else {
+            // търсим най-малкия елемент в дясното поддърво
+            MP min = +pos;
+            while (-min) --min;
+            // -min е невалидна позиция, т.е. min е позицията на минималното дърво
+            *pos = *min;
+            min.transfer( +min);
+        }
+        return true;
+    }
 };
 
 #endif
