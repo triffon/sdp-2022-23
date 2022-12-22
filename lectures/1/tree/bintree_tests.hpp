@@ -9,7 +9,7 @@
 
 using BIntTree = BinTree<int>;
 
-TEST_CASE("Извеждане и дълбочина на двоично дърво") {
+TEST_CASE("Тестове за двоично дърво") {
     BIntTree t(1, BIntTree(2, BIntTree(3), BIntTree(4)),
                  BIntTree(5, BIntTree(), BIntTree(6)));
 
@@ -37,6 +37,10 @@ TEST_CASE("Извеждане и дълбочина на двоично дърв
         *(t2->root()) = 10;
         delete t2;
         CHECK_EQ(*t.root(), 1);
+    }
+
+    SUBCASE("Сравнение") {
+        CHECK_EQ(t, BIntTree(t));
     }
 }
 

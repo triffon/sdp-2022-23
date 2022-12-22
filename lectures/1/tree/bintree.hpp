@@ -95,6 +95,17 @@ public:
         return *this;
     }
 
+    bool operator==(BinTree const& other) const {
+        return areEqual(root(), other.root());
+    }
+
+    static bool areEqual(P pos1, P pos2) {
+        return !pos1 && !pos2 ||
+               pos1 && pos2 && *pos1 == *pos2
+                    && areEqual(-pos1, -pos2)
+                    && areEqual(+pos1, +pos2);
+    }
+
     ~BinTree() {
         erase(rootNode);
     }
