@@ -23,7 +23,7 @@ private:
 
 public:
     SList* clone() const { return new SList(*this); }
-    SList* steal() { return new SList(std::move(*this)); }
+    SList* move() { return new SList(std::move(*this)); }
 
     SList() {}
 
@@ -65,7 +65,7 @@ public:
         std::clog << "Добавяме с преместване: ";
         se.print(std::clog);
         std::clog << std::endl;
-        LinkedList<SElement*>::insertLast(se.steal());
+        LinkedList<SElement*>::insertLast(se.move());
         return std::move(*this);
     }
 
