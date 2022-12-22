@@ -17,6 +17,7 @@ template <typename T>
 class BinTreePosition {
     BinTreeNode<T>* ptr;
     using P = BinTreePosition<T>;
+
 public:
     BinTreePosition(BinTreeNode<T>* _ptr = nullptr) : ptr(_ptr) {}
 
@@ -62,9 +63,41 @@ template <typename T>
 class BinTree {
     BinTreeNode<T>* rootNode;
     using N = BinTreeNode<T>;
+
 public:
     using P = BinTreePosition<T>;
+
+private:
+    N* copy(P pos) {
+        return pos ? new N(*pos, copy(-pos), copy(+pos)) : nullptr;
+    }
+
+    void erase(N* node) {
+        if (node != nullptr) {
+            erase(node->left);
+            erase(node->right);
+            delete node;
+        }
+    } 
+
+public:
     BinTree() : rootNode(nullptr) {}
+
+    BinTree(BinTree const& bt) : rootNode(nullptr) {
+        rootNode = copy(bt.root());
+    }
+
+    BinTree& operator=(BinTree const& bt) {
+        if (this != &bt) {
+            erase(rootNode);
+            rootNode = copy(bt.root());
+        }
+        return *this;
+    }
+
+    ~BinTree() {
+        erase(rootNode);
+    }
 
     BinTree(T const& root, BinTree&& left = BinTree(), BinTree&& right = BinTree()) {
         rootNode = new BinTreeNode<T>(root, left.rootNode, right.rootNode);
@@ -92,7 +125,6 @@ public:
     unsigned depth(P pos) const {
         return pos ? 1 + std::max(depth(-pos), depth(+pos)) : 0;
     }
-
 
     P root() const { return P(rootNode); }
 };

@@ -24,6 +24,20 @@ TEST_CASE("Извеждане и дълбочина на двоично дърв
         CHECK_EQ(t.depth(), 3);
     }
 
+    SUBCASE("Копиране") {
+        BIntTree* t2 = new BIntTree(t);
+        *(t2->root()) = 10;
+        delete t2;
+        CHECK_EQ(*t.root(), 1);
+    }
+
+    SUBCASE("Присвояване") {
+        BIntTree* t2 = new BIntTree;
+        *t2 = t;
+        *(t2->root()) = 10;
+        delete t2;
+        CHECK_EQ(*t.root(), 1);
+    }
 }
 
 #endif
