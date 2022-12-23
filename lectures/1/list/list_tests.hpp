@@ -1,7 +1,7 @@
 #ifndef __LIST_TESTS_HPP
 #define __LIST_TESTS_HPP
 
-#include "../../../../doctest/doctest/doctest.h"
+#include "doctest.h"
 #include "llist.hpp"
 #include "dllist.hpp"
 #include <cmath>
@@ -233,6 +233,22 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
     for(int x : l1)
         CHECK_EQ(x, i++);
     CHECK_EQ(i, 21);
+}
+
+TEST_CASE_TEMPLATE("Сливане на два списъка чрез метода за сливане на абстрактен списък",
+                    AnyList, ALL_LISTS) {
+    AnyList l1, l2;
+    for(int i = 0; i <= 10; i+=2)
+        l1.insertLast(i);
+    for(int i = 1; i <= 11; i+=2)
+        l2.insertLast(i);
+
+    l1.merge(l2);
+
+    int i =0;
+    for(int x : l1)
+        CHECK_EQ(x, i++);
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Конструкторът за копиране не споделя памет",
