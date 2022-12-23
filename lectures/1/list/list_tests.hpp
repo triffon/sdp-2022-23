@@ -1,7 +1,7 @@
 #ifndef __LIST_TESTS_HPP
 #define __LIST_TESTS_HPP
 
-#include "doctest.h"
+#include "../../../../doctest/doctest/doctest.h"
 #include "llist.hpp"
 #include "dllist.hpp"
 #include <cmath>

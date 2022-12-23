@@ -195,12 +195,12 @@ public:
     // merge с един параметър
     void merge(AbstractList const& l2) {
         P it2 = l2.begin();
-        P it1 = begin();
-        if(it1!=l1.end() && it2!=l2.end()) {
-            P previous = NULL;
-            //не желая да използвам insert before, защото ще е бавно, затова ще го правя с previous
+        P it1 = this->begin();
+        if(it1!=this->end() && it2!=l2.end()) {
+            P previous;
+            //не желая да използвам insertBefore, защото ще е бавно, затова ще го правя с previous
             while(*it1 > *it2) { // случаите, в които трябва да вкараме елементите преди началото на l1
-                if(previous == NULL) { // все още няма елемент преди началото на l1
+                if(!(previous.valid())) { // все още няма елемент преди началото на l1
                     insertFirst(*it2);
                     previous = begin();
                 }
