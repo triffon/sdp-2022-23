@@ -8,9 +8,9 @@
 template <typename T>
 struct Node
 {
-  T     fData   = T();
-  Node* fpLeft  = nullptr;
-  Node* fpRight = nullptr;
+    T       fData   = T();
+    Node*   fpLeft  = nullptr;
+    Node*   fpRight = nullptr;
 };
 
 template <typename T>
@@ -30,7 +30,7 @@ std::string printTree(const Node<T>* pTree)
         sout << '.';
     }
 
-  return sout.str();
+    return sout.str();
 }
 
 template <typename T>
