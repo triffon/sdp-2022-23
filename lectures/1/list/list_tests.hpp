@@ -240,15 +240,15 @@ TEST_CASE_TEMPLATE("Сливане на два списъка чрез мето�
     AnyList l1, l2;
     for(int i = 0; i <= 10; i+=2)
         l1.insertLast(i);
-    for(int i = 1; i <= 11; i+=2)
+    for(int i = -1; i <= 11; i+=2)
         l2.insertLast(i);
 
     l1.merge(l2);
 
-    int i =0;
+    int i = -1;
     for(int x : l1)
         CHECK_EQ(x, i++);
-    CHECK_EQ(i, 11);
+    CHECK_EQ(i, 12);
 
 }
 
