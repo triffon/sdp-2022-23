@@ -199,7 +199,7 @@ public:
         if(it1!=this->end() && it2!=l2.end()) {
             P previous;
             //не желая да използвам insertBefore, защото ще е бавно, затова ще го правя с previous
-            while(*it1 > *it2) { // случаите, в които трябва да вкараме елементите преди началото на l1
+            while(*it1 > *it2 && it2!=l2.end()) { // случаите, в които трябва да вкараме елементите преди началото на l1
                 if(!(previous.valid())) { // все още няма елемент преди началото на l1
                     insertFirst(*it2);
                     previous = begin();
@@ -207,12 +207,12 @@ public:
                 else { //Вече сме вкарали един елемент преди l1, ползваме previous и InsertNext
                     insertAfter(*it2, previous);
                     previous++; //Изместваме на елемента, който току що вкарахме
-                }
+                }\
+                it2++;
             }
             //Сега просто ще гледам с един елемент напред.
-
             //И ще вкарвам между сегашния и следващия, ако следващият е по-голям.
-            while(it2 != l2.end() && it1.next() != l1.end()){
+            while(it2 != l2.end() && it1.next() != this->end()){
                 if(*it1.next() > *it2)
                     insertAfter(*it2, it1);
 
