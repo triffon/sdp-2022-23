@@ -367,7 +367,7 @@ TEST_CASE("Разделяне на списък с нечетен брой ел�
     l.splitAssign(l2);
 
     bool used[N] = { false };
-    size_t n1 = 0, n2 = 0;
+    int n1 = 0, n2 = 0;
     for(int x : l) {
         n1++;
         CHECK(!used[x]);
@@ -380,7 +380,7 @@ TEST_CASE("Разделяне на списък с нечетен брой ел�
         used[x] = true;
     }
 
-    CHECK(n1 == n2 + 1);
+    CHECK(abs(n1 - n2) == 1);
     int i = 0;
     while (i < N && used[i++]);
     CHECK(i == N);

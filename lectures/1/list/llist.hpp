@@ -211,9 +211,16 @@ public:
 
         unsigned long long length = this->getLength();
         unsigned long long index_to_split = length/2 + length%2; //гледаме къде трябва да разделим списъка.
+
+        other.erase();  //винаги ли искаме да изтриваме паметта?
+
         if(length==0)
             return; // няма какво да се прави
-
+        if(length==1) {
+            other.front = nullptr;
+            other.back = nullptr;
+            return;
+        }
         E* new_front = front;
         E* previous = nullptr;
 
@@ -223,10 +230,8 @@ public:
             new_front = new_front->next;
             index_to_split--;
         }
-
         other.front = new_front;
         other.back = this->back;
-
 
         this->back = previous;      //слагаме новия край на първия списък
         this->back->next =nullptr;
