@@ -328,6 +328,33 @@ TEST_CASE("Разделяне на списък с четен брой елем�
     CHECK(i == N);
 }
 
+TEST_CASE("Разделяне на списък с четен брой елементи на две равни части чрез splitAssign2") {
+    const size_t N = 10;
+    LinkedList<int> l, l2;
+    for(int i = 0; i < N; i++)
+        l.insertLast(i);
+    l.splitAssign2(l2);
+
+    bool used[N] = { false };
+    size_t n1 = 0, n2 = 0;
+    for(int x : l) {
+        n1++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    for(int x : l2) {
+        n2++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    CHECK(n1 == n2);
+    int i = 0;
+    while (i < N && used[i++]);
+    CHECK(i == N);
+}
+
 
 
 TEST_CASE_TEMPLATE("Разделяне на списък с нечетен брой елементи на две равни части",
@@ -385,6 +412,35 @@ TEST_CASE("Разделяне на списък с нечетен брой ел�
     while (i < N && used[i++]);
     CHECK(i == N);
 }
+
+
+TEST_CASE("Разделяне на списък с нечетен брой елементи на две равни части чрез splitAssign2") {
+    const size_t N = 11;
+    LinkedList<int> l, l2;
+    for(int i = 0; i < N; i++)
+        l.insertLast(i);
+    l.splitAssign2(l2);
+
+    bool used[N] = { false };
+    int n1 = 0, n2 = 0;
+    for(int x : l) {
+        n1++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    for(int x : l2) {
+        n2++;
+        CHECK(!used[x]);
+        used[x] = true;
+    }
+
+    CHECK(abs(n1 - n2) == 1);
+    int i = 0;
+    while (i < N && used[i++]);
+    CHECK(i == N);
+}
+
 
 
 TEST_CASE_TEMPLATE("Разделяне на списък с нечетен брой елементи на две равни части",

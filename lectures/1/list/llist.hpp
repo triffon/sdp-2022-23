@@ -240,8 +240,8 @@ public:
 
     void splitAssign2(LinkedList& other){ // Метод на заека и костенурката
         // по-този метод, втория списък е по-дълъг в нечетните случаи.
-        E* hare=this->first;
-        E* tortoise=this->first;
+        E* hare=this->front;
+        E* tortoise=this->front;
         E* previous = nullptr;
         other.erase();
 
