@@ -202,9 +202,7 @@ public:
             current = current->prev;        // местим сегашния елемент към 'следващия', който сега е предишен.
         }
 
-        E* temp = back;
-        back = front;
-        front = temp;                   //връщаме си back и front на местата им.
+        std::swap(front, back);              //връщаме си back и front на местата им.
     }
     // TODO: splitAssign
     // TODO: mergeAssign
