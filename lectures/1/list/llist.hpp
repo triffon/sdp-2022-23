@@ -199,10 +199,10 @@ public:
         E* previous = nullptr;
         E* next = nullptr;
 
-        while(current) //Докато не стигнем края на листа - итерираме:
+        while(current) //Докато не стигнем края на списъка - итерираме:
         {
             next = current->next;      //Взимаме следващия елемент в списъка.
-            current->next = previous;  //Обръщаме пойнтъра към предишния елемент.
+            current->next = previous;  //Обръщаме указателя към предишния елемент.
             previous = current;          //Взимаме сегашния за предишния.
             current = next;              //Сегашният се мести напред и цикълът продължава.
         }

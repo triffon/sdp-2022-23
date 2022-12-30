@@ -273,7 +273,7 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
 }
 
 
-TEST_CASE("Обръщане на едносвързнан списък с един елемент чрез reverseAssign") {
+TEST_CASE("Обръщане на едносвързан списък с един елемент чрез reverseAssign") {
     LinkedList<int> l;
     l.insertLast(42);
     l.reverseAssign();
@@ -282,7 +282,7 @@ TEST_CASE("Обръщане на едносвързнан списък с еди
 }
 
 
-TEST_CASE("Обръщане на едносвързнан списък чрез reverseAssign") {
+TEST_CASE("Обръщане на едносвързан списък чрез reverseAssign") {
     LinkedList<int> l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
