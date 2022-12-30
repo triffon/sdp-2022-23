@@ -273,6 +273,15 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
 }
 
 
+TEST_CASE("Обръщане на едносвързнан списък с един елемент чрез reverseAssign") {
+    LinkedList<int> l;
+    l.insertLast(42);
+    l.reverseAssign();
+    for(int x : l)
+        CHECK_EQ(x, 42);
+}
+
+
 TEST_CASE("Обръщане на едносвързнан списък чрез reverseAssign") {
     LinkedList<int> l;
     for(int i = 1; i <= 10; i++)
