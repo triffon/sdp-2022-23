@@ -195,11 +195,11 @@ public:
     // reverseAssign
     void reverseAssign() {
         //взимаме началото и създаваме указател за предишния и следващия елемент.
-        E* current = this->begin()->ptr;
+        E* current = this->front;
         E* previous = nullptr;
         E* next = nullptr;
 
-        while(current.valid()) //Докато не стигнем края на листа - итерираме:
+        while(current) //Докато не стигнем края на листа - итерираме:
         {
             next = current->next;      //Взимаме следващия елемент в списъка.
             current->next = previous;  //Обръщаме пойнтъра към предишния елемент.
@@ -210,7 +210,7 @@ public:
         // трябва да се разменят back и front накрая, за да са си на местата.
         E* temp = back;
         back = front;
-        front = back;
+        front = temp;
     }
     // TODO: splitAssign
     // TODO: mergeAssign
