@@ -198,7 +198,26 @@ public:
         other.back = other.front = nullptr;
     }
 
-    // TODO: reverseAssign
+    // reverseAssign
+    void reverseAssign() {
+        //взимаме началото и създаваме указател за предишния и следващия елемент.
+        E* current = this->front;
+        E* previous = nullptr;
+        E* next = nullptr;
+
+        while(current) //Докато не стигнем края на списъка - итерираме:
+        {
+            next = current->next;      //Взимаме следващия елемент в списъка.
+            current->next = previous;  //Обръщаме указателя към предишния елемент.
+            previous = current;          //Взимаме сегашния за предишния.
+            current = next;              //Сегашният се мести напред и цикълът продължава.
+        }
+
+        // трябва да се разменят back и front накрая, за да са си на местата.
+        E* temp = back;
+        back = front;
+        front = temp;
+    }
     // TODO: splitAssign
     // TODO: mergeAssign
 };

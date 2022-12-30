@@ -289,6 +289,30 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
     CHECK_EQ(i, 0);
 }
 
+
+TEST_CASE("Обръщане на едносвързан списък с един елемент чрез reverseAssign") {
+    LinkedList<int> l;
+    l.insertLast(42);
+    l.reverseAssign();
+    for(int x : l)
+        CHECK_EQ(x, 42);
+}
+
+
+TEST_CASE("Обръщане на едносвързан списък чрез reverseAssign") {
+    LinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+    l.reverseAssign();
+    int i = 10;
+    for(int x : l)
+        CHECK_EQ(x, i--);
+    CHECK_EQ(i, 0);
+}
+
+
+
+
 TEST_CASE_TEMPLATE("Разделяне на списък с четен брой елементи на две равни части",
                     AnyList, ALL_LISTS) {
     const size_t N = 10;
