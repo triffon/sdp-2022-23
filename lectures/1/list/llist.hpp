@@ -190,7 +190,7 @@ public:
     unsigned long long getLength() const{
         I current = this->begin();
         unsigned long long length = 0;
-        while(current!=this->end){
+        while(current!=this->end()){
             current++;
             length++;
         }
@@ -224,11 +224,12 @@ public:
             index_to_split--;
         }
 
-        new_list.front = new_front;
-        new_list.back = this->back;
+        other.front = new_front;
+        other.back = this->back;
 
 
         this->back = previous;      //слагаме новия край на първия списък
+        this->back->next =nullptr;
     }
 
     // TODO: mergeAssign
