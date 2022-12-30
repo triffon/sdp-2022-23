@@ -237,6 +237,35 @@ public:
         this->back->next =nullptr;
     }
 
+
+    void splitAssign2(LinkedList& other){ // Метод на заека и костенурката
+        // по-този метод, втория списък е по-дълъг в нечетните случаи.
+        E* hare=this->first;
+        E* tortoise=this->first;
+        E* previous = nullptr;
+        other.erase();
+
+        while(hare && hare->next)
+        {
+            hare= hare->next->next;
+            previous = tortoise;
+            tortoise = tortoise->next;
+        }
+
+        if(previous)
+        {
+            other.front = tortoise;
+            other.back = this->back;
+            previous->next = nullptr; // късане на връзката
+            this->back = previous;
+        }
+        else
+        {
+            other.front = nullptr;
+            other.back = nullptr;
+        }
+    }
+
     // TODO: mergeAssign
 };
 
