@@ -104,6 +104,7 @@ public:
 
     LinkedList& operator=(LinkedList && other) {
         if (this != &other) {
+            this->erase();
             this->front = other.front;
             this->back = other.back;
             other.front = other.back = nullptr;
