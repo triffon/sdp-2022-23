@@ -303,8 +303,9 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
 }
 
 
-TEST_CASE("Обръщане на двойно свързан списък, чрез reverseAssign") {
-    DoubleLinkedList<int> l;
+TEST_CASE_TEMPLATE("Обръщане на списък чрез reverseAssign",
+                    AnyList, ALL_LISTS) {
+    AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
     l.reverseAssign();
@@ -314,8 +315,9 @@ TEST_CASE("Обръщане на двойно свързан списък, чр�
     CHECK_EQ(i, 0);
 }
 
-TEST_CASE("Обръщане на двойно свързан списък с един елемент, чрез reverseAssign") {
-    DoubleLinkedList<int> l;
+TEST_CASE_TEMPLATE("Обръщане на свързан списък с един елемент чрез reverseAssign",
+                    AnyList, ALL_LISTS)  {
+    AnyList l;
     for(int i = 1; i <= 1; i++)
         REQUIRE(l.insertLast(i));
     l.reverseAssign();
@@ -326,30 +328,6 @@ TEST_CASE("Обръщане на двойно свързан списък с е�
     CHECK_EQ(l.begin().get(),1);
     CHECK_EQ(l.last().get(),1);
 }
-
-
-
-TEST_CASE("Обръщане на едносвързан списък с един елемент чрез reverseAssign") {
-    LinkedList<int> l;
-    l.insertLast(42);
-    l.reverseAssign();
-    for(int x : l)
-        CHECK_EQ(x, 42);
-}
-
-
-TEST_CASE("Обръщане на едносвързан списък чрез reverseAssign") {
-    LinkedList<int> l;
-    for(int i = 1; i <= 10; i++)
-        REQUIRE(l.insertLast(i));
-    l.reverseAssign();
-    int i = 10;
-    for(int x : l)
-        CHECK_EQ(x, i--);
-    CHECK_EQ(i, 0);
-}
-
-
 
 
 TEST_CASE_TEMPLATE("Разделяне на списък с четен брой елементи на две равни части",
