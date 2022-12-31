@@ -20,9 +20,6 @@
 		},
 		{
 			"path": "tree"
-		},
-		{
-			"path": "bintree"
 		}
 	],
 	"settings": {
@@ -37,7 +34,8 @@
 			"llvm-vs-code-extensions.vscode-clangd",
 			"twxs.cmake",
 			"ms-vscode.cmake-tools",
-			"vadimcn.vscode-lldb"
+			"vadimcn.vscode-lldb",
+			"github.vscode-pull-request-github"
 		]
 	}
 }

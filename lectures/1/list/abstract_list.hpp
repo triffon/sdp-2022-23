@@ -193,8 +193,41 @@ public:
             insertLast(*it2++);
     }
 
-    // TODO: merge с един параметър
-    // l1.merge(l2)
+    // merge с един параметър
+    void merge(AbstractList const& l2) {
+        P it2 = l2.begin();
+        P it1 = this->begin();
+
+        if(it1!=this->end()) {
+            P previous;
+            //не желая да използвам insertBefore, защото ще е бавно, затова ще го правя с previous
+            while(*it1 > *it2 && it2!=l2.end()) { // случаите, в които трябва да вкараме елементите преди началото на l1
+                if(!(previous.valid())) { // все още няма елемент преди началото на l1
+                    insertFirst(*it2);
+                    previous = begin();
+                }
+                else { //Вече сме вкарали един елемент преди l1, ползваме previous и InsertNext
+                    insertAfter(*it2, previous);
+                    previous++; //Изместване на елемента, който току що вкарахме
+                }
+                it2++;
+            }
+            //Сега просто ще гледам с един елемент напред.
+            //И ще вкарвам между сегашния и следващия, ако следващият е по-голям.
+            while(it2 != l2.end() && it1.next() != this->end()){
+                if(*it1.next() > *it2)
+                {
+                    insertAfter(*it2, it1);
+                    it2++;
+                }
+                it1++; //изместваме всеки път, независимо дали е вкаран елемент или не.
+            }
+        }
+        //Ако има елементи, които не можем да вкараме вътре,
+        //значи те вече са по-големи от всеки елемент в нашия списък и просто вкарваме останалите
+        while(it2 != l2.end())
+                insertLast(*it2++);
+    }
 
     virtual ~AbstractList() {}
 };

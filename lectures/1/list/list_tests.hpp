@@ -1,6 +1,6 @@
 #ifndef __LIST_TESTS_HPP
 #define __LIST_TESTS_HPP
-
+ 
 #include "doctest.h"
 #include "llist.hpp"
 #include "dllist.hpp"
@@ -235,6 +235,23 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
     CHECK_EQ(i, 21);
 }
 
+TEST_CASE_TEMPLATE("Сливане на два списъка чрез метода за сливане на абстрактен списък чрез 1 параметър",
+                    AnyList, ALL_LISTS) {
+    AnyList l1, l2;
+    for(int i = 0; i <= 10; i+=2)
+        l1.insertLast(i);
+    for(int i = -1; i <= 11; i+=2)
+        l2.insertLast(i);
+
+    l1.merge(l2);
+
+    int i = -1;
+    for(int x : l1)
+        CHECK_EQ(x, i++);
+    CHECK_EQ(i, 12);
+
+}
+
 TEST_CASE_TEMPLATE("Конструкторът за копиране не споделя памет",
                     AnyList, ALL_LISTS) {
     AnyList l1;
@@ -271,6 +288,30 @@ TEST_CASE_TEMPLATE("Обръщане на списък",
         CHECK_EQ(x, i--);
     CHECK_EQ(i, 0);
 }
+
+
+TEST_CASE("Обръщане на едносвързан списък с един елемент чрез reverseAssign") {
+    LinkedList<int> l;
+    l.insertLast(42);
+    l.reverseAssign();
+    for(int x : l)
+        CHECK_EQ(x, 42);
+}
+
+
+TEST_CASE("Обръщане на едносвързан списък чрез reverseAssign") {
+    LinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+    l.reverseAssign();
+    int i = 10;
+    for(int x : l)
+        CHECK_EQ(x, i--);
+    CHECK_EQ(i, 0);
+}
+
+
+
 
 TEST_CASE_TEMPLATE("Разделяне на списък с четен брой елементи на две равни части",
                     AnyList, ALL_LISTS) {
