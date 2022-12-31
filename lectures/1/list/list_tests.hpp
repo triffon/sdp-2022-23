@@ -1,6 +1,6 @@
 #ifndef __LIST_TESTS_HPP
 #define __LIST_TESTS_HPP
-
+ 
 #include "doctest.h"
 #include "llist.hpp"
 #include "dllist.hpp"
@@ -30,6 +30,7 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
+
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
@@ -41,6 +42,7 @@ TEST_CASE_TEMPLATE("Последователно добавяне на елем�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertFirst(i));
+
 
     int i = 10;
     for(int x : l)
@@ -71,6 +73,7 @@ TEST_CASE("Последователно добавяне на елементи �
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertFirst(i));
 
+
     int i = 1;
     for(DoubleLinkedList<int>::I it = l.last(); it.valid(); --it)
         CHECK_EQ(*it, i++);
@@ -83,6 +86,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
     for(int i = 1; i <= 10; i += 2)
         REQUIRE(l.insertLast(i));
 
+
     // TODO: it += 2;
     for(typename AnyList::I it = l.begin(); it != l.end(); ++it, ++it)
         REQUIRE(l.insertAfter(*it + 1, it));
@@ -90,6 +94,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на четни п�
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);
     CHECK_EQ(i, 11);
 }
 
@@ -99,6 +104,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на нечетни
     for(int i = 2; i <= 10; i += 2)
         REQUIRE(l.insertLast(i));
 
+
     // TODO: it += 2;
     for(typename AnyList::I it = l.begin(); it != l.end(); ++it)
         l.insertBefore(*it - 1, it);
@@ -107,6 +113,7 @@ TEST_CASE_TEMPLATE("Включване на елементи на нечетни
     for(int x : l)
         CHECK_EQ(i++, x);
     CHECK_EQ(i, 11);
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Изключване на елементи на четни позиции с deleteAfter",
@@ -114,6 +121,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     AnyList l;
     for(int i = 1; i <= 10; i ++)
         REQUIRE(l.insertLast(i));
+
 
     int x;
     int i = 2;
@@ -131,6 +139,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на четни �
     for(int x : l)
         CHECK_EQ(i += 2, x);
     CHECK_EQ(i, 11);
+    CHECK_EQ(i, 11);
 }
 
 TEST_CASE_TEMPLATE("Последователно изтриване на последния елемент в списъка",
@@ -138,6 +147,7 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пос�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
+
 
     int x;
     for(int i = 10; i >= 1; i--) {
@@ -152,6 +162,7 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пър�
     AnyList l;
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
+
 
     int x;
     for(int i = 1; i <= 10; i++) {
@@ -190,6 +201,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на нечетн
     for(int i = 1; i <= 10; i++)
         REQUIRE(l.insertLast(i));
 
+
     int i = 1;
     int x;
     for(typename AnyList::I it = l.begin().next(); it != l.end(); i += 2,  ++it && ++it) {
@@ -201,6 +213,7 @@ TEST_CASE_TEMPLATE("Изключване на елементи на нечетн
     i = 0;
     for(int x : l)
         CHECK_EQ(i += 2, x);
+    CHECK_EQ(i, 10);
     CHECK_EQ(i, 10);
 }
 
@@ -233,6 +246,23 @@ TEST_CASE_TEMPLATE("Конкатениране на два списъка с app
     for(int x : l1)
         CHECK_EQ(x, i++);
     CHECK_EQ(i, 21);
+}
+
+TEST_CASE_TEMPLATE("Сливане на два списъка чрез метода за сливане на абстрактен списък чрез 1 параметър",
+                    AnyList, ALL_LISTS) {
+    AnyList l1, l2;
+    for(int i = 0; i <= 10; i+=2)
+        l1.insertLast(i);
+    for(int i = -1; i <= 11; i+=2)
+        l2.insertLast(i);
+
+    l1.merge(l2);
+
+    int i = -1;
+    for(int x : l1)
+        CHECK_EQ(x, i++);
+    CHECK_EQ(i, 12);
+
 }
 
 TEST_CASE_TEMPLATE("Конструкторът за копиране не споделя памет",
@@ -296,6 +326,30 @@ TEST_CASE("Обръщане на двойно свързан списък с е�
     CHECK_EQ(l.begin().get(),1);
     CHECK_EQ(l.last().get(),1);
 }
+
+
+
+TEST_CASE("Обръщане на едносвързан списък с един елемент чрез reverseAssign") {
+    LinkedList<int> l;
+    l.insertLast(42);
+    l.reverseAssign();
+    for(int x : l)
+        CHECK_EQ(x, 42);
+}
+
+
+TEST_CASE("Обръщане на едносвързан списък чрез reverseAssign") {
+    LinkedList<int> l;
+    for(int i = 1; i <= 10; i++)
+        REQUIRE(l.insertLast(i));
+    l.reverseAssign();
+    int i = 10;
+    for(int x : l)
+        CHECK_EQ(x, i--);
+    CHECK_EQ(i, 0);
+}
+
+
 
 
 TEST_CASE_TEMPLATE("Разделяне на списък с четен брой елементи на две равни части",
@@ -376,11 +430,13 @@ TEST_CASE_TEMPLATE("Сортиране на списък чрез сливане
     for(int x : {1, 5, 7, 2, 6, 4, 9, 10, 8, 3})
         l.insertLast(x);
 
+
     l = ListUtils<AnyList>::mergeSort(l);
 
     int i = 1;
     for(int x : l)
         CHECK_EQ(i++, x);
+    CHECK_EQ(i, 11);
     CHECK_EQ(i, 11);
 }
 

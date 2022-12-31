@@ -81,8 +81,14 @@ private:
     }
 public:
 
-    // TODO: голяма четворка
+    // голяма петица
     LinkedList() : front(nullptr), back(nullptr) {}
+
+    LinkedList(LinkedList && other) :
+        front(other.front),
+        back(other.back) {
+        other.front = other.back = nullptr;
+    }
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
         this->append(other);
@@ -115,7 +121,7 @@ public:
         return insertAfter(x, findPrev(pos));
     }
 
-    // включване на елемент след дадена позиция 
+    // включване на елемент след дадена позиция
     // O(1)
     bool insertAfter(T const& x, I const& pos) {
         if (this->empty()) {
@@ -130,7 +136,7 @@ public:
         return true;
     }
 
-    // изключване на елемент преди дадена позиция 
+    // изключване на елемент преди дадена позиция
     bool deleteBefore(T& x, I const& pos) {
         if (this->empty())
             return false;
@@ -162,7 +168,7 @@ public:
         return deleteAfter(x, prev);
     }
 
-    // изключване на елемент след дадена позиция 
+    // изключване на елемент след дадена позиция
     // O(1)
     bool deleteAfter(T& x, I const& pos) {
         if (this->empty())
@@ -192,7 +198,26 @@ public:
         other.back = other.front = nullptr;
     }
 
-    // TODO: reverseAssign
+    // reverseAssign
+    void reverseAssign() {
+        //взимаме началото и създаваме указател за предишния и следващия елемент.
+        E* current = this->front;
+        E* previous = nullptr;
+        E* next = nullptr;
+
+        while(current) //Докато не стигнем края на списъка - итерираме:
+        {
+            next = current->next;      //Взимаме следващия елемент в списъка.
+            current->next = previous;  //Обръщаме указателя към предишния елемент.
+            previous = current;          //Взимаме сегашния за предишния.
+            current = next;              //Сегашният се мести напред и цикълът продължава.
+        }
+
+        // трябва да се разменят back и front накрая, за да са си на местата.
+        E* temp = back;
+        back = front;
+        front = temp;
+    }
     // TODO: splitAssign
     // TODO: mergeAssign
 };
