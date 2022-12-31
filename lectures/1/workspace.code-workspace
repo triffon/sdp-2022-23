@@ -17,6 +17,12 @@
 		},
 		{
 			"path": "polylist"
+		},
+		{
+			"path": "tree"
+		},
+		{
+			"path": "bintree"
 		}
 	],
 	"settings": {
