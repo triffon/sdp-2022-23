@@ -131,7 +131,7 @@ bool equals(const LinkedList<T> &l1, const LinkedList<T> &l2)
             return false;
         }
     }
-    return (i1 == l1.end() && i2 == l2.end();
+    return (i1 == l1.end() && i2 == l2.end());
 }
 
 template <typename T>

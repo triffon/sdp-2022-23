@@ -13,7 +13,7 @@ public:
     // if (!it) ...
 
     operator bool() const { return valid(); }
-    bool operator!() const { return !valid(); } 
+    bool operator!() const { return !valid(); }
 
     // константен достъп до елемента на позицията
     virtual T const& get() const = 0;
@@ -57,17 +57,18 @@ public:
     virtual bool operator==(Position const& pos) const = 0;
     bool operator!=(Position const& pos) { return !(*this == pos); }
 
-    T const& operator*() const { return get(); } 
-    T&       operator*()       { return get(); } 
+    T const& operator*() const { return get(); }
+    T&       operator*()       { return get(); }
 };
 
 template <typename T, typename P /* extends Position<T> */>
 class AbstractList {
 protected:
     void erase() {
-        T x;
-        while (!empty())
+        while (!empty()) {
+            T x;
             deleteFirst(x);
+        }
     }
 
 public:
@@ -83,11 +84,11 @@ public:
     // включване на последен елемент
     virtual bool insertLast(T const& x) { return insertAfter(x, last()); }
 
-    // включване на елемент преди дадена позиция 
+    // включване на елемент преди дадена позиция
     virtual bool insertBefore(T const& x, P const& pos) = 0;
 
-    // включване на елемент след дадена позиция 
-    virtual bool insertAfter(T const& x, P const& pos) = 0;  
+    // включване на елемент след дадена позиция
+    virtual bool insertAfter(T const& x, P const& pos) = 0;
 
     // изключване на първи елемент
     virtual bool deleteFirst(T& x) {
@@ -101,14 +102,14 @@ public:
         return deleteAt(x, pos);
     }
 
-    // изключване на елемент преди дадена позиция 
-    virtual bool deleteBefore(T& x, P const& pos) = 0;  
+    // изключване на елемент преди дадена позиция
+    virtual bool deleteBefore(T& x, P const& pos) = 0;
 
-    // изключване на елемент на дадена позиция, унищавайки позицията 
-    virtual bool deleteAt(T& x, P& pos) = 0;  
+    // изключване на елемент на дадена позиция, унищавайки позицията
+    virtual bool deleteAt(T& x, P& pos) = 0;
 
-    // изключване на елемент след дадена позиция 
-    virtual bool deleteAfter(T& x, P const& pos) = 0;  
+    // изключване на елемент след дадена позиция
+    virtual bool deleteAfter(T& x, P const& pos) = 0;
 
     // константен достъп до елемент на дадена позиция
     virtual T const& getAt(P const& pos) const {
@@ -192,8 +193,41 @@ public:
             insertLast(*it2++);
     }
 
-    // TODO: merge с един параметър
-    // l1.merge(l2)
+    // merge с един параметър
+    void merge(AbstractList const& l2) {
+        P it2 = l2.begin();
+        P it1 = this->begin();
+
+        if(it1!=this->end()) {
+            P previous;
+            //не желая да използвам insertBefore, защото ще е бавно, затова ще го правя с previous
+            while(*it1 > *it2 && it2!=l2.end()) { // случаите, в които трябва да вкараме елементите преди началото на l1
+                if(!(previous.valid())) { // все още няма елемент преди началото на l1
+                    insertFirst(*it2);
+                    previous = begin();
+                }
+                else { //Вече сме вкарали един елемент преди l1, ползваме previous и InsertNext
+                    insertAfter(*it2, previous);
+                    previous++; //Изместване на елемента, който току що вкарахме
+                }
+                it2++;
+            }
+            //Сега просто ще гледам с един елемент напред.
+            //И ще вкарвам между сегашния и следващия, ако следващият е по-голям.
+            while(it2 != l2.end() && it1.next() != this->end()){
+                if(*it1.next() > *it2)
+                {
+                    insertAfter(*it2, it1);
+                    it2++;
+                }
+                it1++; //изместваме всеки път, независимо дали е вкаран елемент или не.
+            }
+        }
+        //Ако има елементи, които не можем да вкараме вътре,
+        //значи те вече са по-големи от всеки елемент в нашия списък и просто вкарваме останалите
+        while(it2 != l2.end())
+                insertLast(*it2++);
+    }
 
     virtual ~AbstractList() {}
 };
