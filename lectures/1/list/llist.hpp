@@ -87,7 +87,7 @@ public:
     LinkedList(LinkedList && other) :
         front(other.front),
         back(other.back) {
-        other.front = other.back = nullptr;                                    
+        other.front = other.back = nullptr;
     }
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
@@ -98,6 +98,16 @@ public:
         if (this != &other) {
             this->erase();
             this->append(other);
+        }
+        return *this;
+    }
+
+    LinkedList& operator=(LinkedList && other) {
+        if (this != &other) {
+            this->erase();
+            this->front = other.front;
+            this->back = other.back;
+            other.front = other.back = nullptr;
         }
         return *this;
     }
