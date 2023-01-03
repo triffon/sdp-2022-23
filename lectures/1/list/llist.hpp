@@ -87,7 +87,7 @@ public:
     LinkedList(LinkedList && other) :
         front(other.front),
         back(other.back) {
-        other.front = other.back = nullptr;                                    
+        other.front = other.back = nullptr;
     }
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {

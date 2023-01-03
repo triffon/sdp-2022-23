@@ -78,17 +78,31 @@ private:
     }
 public:
 
-    // голяма четворка
+    // голяма петица
     DoubleLinkedList() : front(nullptr), back(nullptr) {}
 
     DoubleLinkedList(DoubleLinkedList const& other) : front(nullptr), back(nullptr) {
         this->append(other);
     }
 
+    DoubleLinkedList(DoubleLinkedList && other) : front(other.front), back(other.back){
+        other.front = other.back = nullptr;
+    }
+
     DoubleLinkedList& operator=(DoubleLinkedList const& other) {
         if (this != &other) {
             this->erase();
             this->append(other);
+        }
+        return *this;
+    }
+
+    DoubleLinkedList& operator=(DoubleLinkedList && other){
+        if (this != &other) {
+            this->erase();
+            this->front = other.front;
+            this->back = other.back;
+            other.front = other.back = nullptr;
         }
         return *this;
     }
