@@ -1,0 +1,1 @@
+[Дъската от упражнението](https://drive.google.com/file/d/1DiMjYVrKPBPIBEm88TVWFCPt__gbEfwb/view?usp=sharing)
