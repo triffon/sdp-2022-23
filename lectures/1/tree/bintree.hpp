@@ -200,6 +200,20 @@ public:
         }
     }
 
+    void DOTprint(std::ostream& os = std::cout) const {
+        os << "digraph tree {" << std::endl;
+        DOTprint(os, root());
+        os << "}" << std::endl;
+    }
+
+    void DOTprint(std::ostream& os, P pos) const {
+        for (P child : {-pos, +pos})
+            if (child) {
+                os << *pos << " -> " << *child << ';' << std::endl;
+                DOTprint(os, child);
+            }
+    }
+
     unsigned depth() const { return depth(root()); }
 
     unsigned depth(P pos) const {
