@@ -10,6 +10,11 @@ class ListDictionary : public Dictionary<K, V>, LinkedList<KeyValuePair<K,V>> {
 public:
     using KVP = KeyValuePair<K, V>;
     using LinkedList<KVP>::insertLast;
+    using LinkedList<KVP>::empty;
+    using LinkedList<KVP>::deleteFirst;
+    using LinkedList<KVP>::deleteAfter;
+    using LinkedList<KVP>::begin;
+    using I = LinkedListIterator<KVP>;
 
     // търсене на стойност по ключ
     V* lookup(K const& key) {
@@ -34,7 +39,19 @@ public:
 
     // изтриване на стойност, свързана с ключ
     bool remove(K const& key) {
-        return false;
+        KVP temp;
+        if (empty())
+            return false;
+        I it = begin();
+        if (*it == key) {
+            deleteFirst(temp);
+            return true; 
+        }
+
+        while(it.next() && it.next().get() != key)
+            ++it;
+        
+        return deleteAfter(temp, it);
     }
 
     // списък от ключове
