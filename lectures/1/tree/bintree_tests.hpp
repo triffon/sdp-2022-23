@@ -3,6 +3,7 @@
 
 #include "doctest.h"
 
+#include <fstream>
 #include <iostream>
 #include <sstream>
 #include "bintree.hpp"
@@ -17,6 +18,8 @@ TEST_CASE("Тестове за двоично дърво") {
     SUBCASE("Извеждане") {
         std::ostringstream os;
         t.print(os);
+        std::ofstream of("tree.dot");
+        t.DOTprint(of);
         CHECK_EQ(os.str(), "(1 (2 (3 () ()) (4 () ())) (5 () (6 () ())))");
     }
 

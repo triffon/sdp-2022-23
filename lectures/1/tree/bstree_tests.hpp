@@ -15,7 +15,8 @@ TEST_CASE("Включване и търсене на елементи") {
     REQUIRE(bst.insert(6));
     REQUIRE(bst.insert(2));
 
-    // bst.print(std::clog);
+    std::ofstream of("bstree.dot");
+    bst.DOTprint(of);
 
     // не можем да включваме същия елемент повторно
     REQUIRE(!bst.insert(3));
@@ -34,6 +35,9 @@ TEST_CASE("Включване и търсене на елементи") {
     SUBCASE("Изтриване на корена") {
         CHECK(bst.remove(5));
         CHECK(!bst.search(5));
+        std::ofstream of("bstree2.dot");
+        bst.DOTprint(of);
+
         for(int x : {2, 3, 6, 7})
             CHECK_EQ(*bst.search(x), x);
     }
