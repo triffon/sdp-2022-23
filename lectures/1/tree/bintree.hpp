@@ -31,6 +31,7 @@ public:
         return ptr->left;
     }
 
+    P& operator--() {return *this = left(); }
     P operator-() const { return left(); }
 
     P right() const {
@@ -39,6 +40,7 @@ public:
         return ptr->right;
     }
 
+    P& operator++() {return *this = right(); }
     P operator+() const { return right(); }
 
     T const& get() const {
