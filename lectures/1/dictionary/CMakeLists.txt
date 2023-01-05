@@ -6,7 +6,7 @@ enable_testing()
 
 add_executable(dictionary main.cpp)
 
-include_directories( ../common ../list)
+include_directories( ../common ../list ../tree)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

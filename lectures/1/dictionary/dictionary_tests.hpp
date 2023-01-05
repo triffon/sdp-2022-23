@@ -3,11 +3,13 @@
 
 #include "doctest.h"
 #include "list_dictionary.hpp"
+#include "bst_dictionary.hpp"
 #include <string>
 
 TYPE_TO_STRING(ListDictionary<std::string, unsigned>);
+TYPE_TO_STRING(BSTDictionary<std::string, unsigned>);
 
-#define ALL_DICTIONARIES ListDictionary<std::string, unsigned>
+#define ALL_DICTIONARIES ListDictionary<std::string, unsigned>, BSTDictionary<std::string, unsigned>
 
 TEST_CASE_TEMPLATE("Добавяне на елемент в празен речник",
     AnyDictionary, ALL_DICTIONARIES) {
