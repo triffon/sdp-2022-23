@@ -3,6 +3,9 @@
 
 #include "doctest.h"
 #include "list_dictionary.hpp"
+#include <string>
+
+TYPE_TO_STRING(ListDictionary<std::string, unsigned>);
 
 #define ALL_DICTIONARIES ListDictionary<std::string, unsigned>
 
@@ -60,6 +63,31 @@ TEST_CASE_TEMPLATE("Добавяне и изтриване на елементи
         CHECK_EQ(len, 5);
     }
 
+}
+
+TEST_CASE_TEMPLATE("Добавяне и изтриване на 100 елемента",
+    AnyDictionary, ALL_DICTIONARIES) {
+    AnyDictionary dict;
+    for(int i = 1; i <= 50; i++) {
+        REQUIRE(dict.add(std::to_string(i), i));
+        REQUIRE(dict.add(std::to_string(101 - i), 101 - i));
+    }
+
+    for(int i = 1; i <= 100; i++)
+        CHECK_EQ(*dict.lookup(std::to_string(i)), i);
+
+    for(int i = 50; i > 10; i--) {
+        CHECK(dict.remove(std::to_string(i)));
+        CHECK(dict.remove(std::to_string(101 - i)));
+    }
+
+    for(int i = 11; i <= 90; i++)
+        CHECK_EQ(dict.lookup(std::to_string(i)), nullptr);
+
+    for(int i = 1; i <= 10; i++) {
+        CHECK_EQ(*dict.lookup(std::to_string(i)), i);
+        CHECK_EQ(*dict.lookup(std::to_string(101 - i)), 101 - i);
+    }
 }
 
 #endif
