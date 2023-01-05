@@ -16,6 +16,23 @@ struct KeyValuePair {
     bool operator!=(KeyValuePair const& kvp) const {
         return !(*this == kvp);
     }
+
+    bool operator<(KeyValuePair const& kvp) const {
+        return key < kvp.key;
+    }
+
+    bool operator>=(KeyValuePair const& kvp) const {
+        return !(*this < kvp);
+    }
+
+    bool operator<=(KeyValuePair const& kvp) const {
+        return !(kvp < *this);
+    }
+
+    bool operator>(KeyValuePair const& kvp) const {
+        return !(*this <= kvp);
+    }
+
 };
 
 #endif
