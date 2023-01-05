@@ -56,12 +56,18 @@ public:
 
     // списък от ключове
     LinkedList<K> keys() const {
-        return LinkedList<K>();
+        LinkedList<K> result;
+        for(KVP const& kvp : *this)
+            result.insertLast(kvp.key);
+        return result;
     }
 
     // списък от стойности
     LinkedList<V> values() const {
-        return LinkedList<V>();
+        LinkedList<V> result;
+        for(KVP const& kvp : *this)
+            result.insertLast(kvp.value);
+        return result;
     }
 
 };
