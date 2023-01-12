@@ -4,6 +4,8 @@
 #include "dictionary.hpp"
 #include "bstree.hpp"
 #include "key_value_pair.hpp"
+#include <string>
+#include <fstream>
 
 template <typename K, typename V>
 class BSTDictionary : public Dictionary<K, V>, BinSearchTree<KeyValuePair<K,V>> {
@@ -70,6 +72,14 @@ public:
         LinkedList<V> result;
         collectValues(root(), result);
         return result;
+    }
+
+    void info(std::ostream& os = std::clog) const {
+        static int count = 0;
+        std::string filename("bstdict" + std::to_string(count++) + ".dot");
+        std::ofstream dotfile(filename);
+        BinSearchTree<KVP>::DOTprint(dotfile);
+        os << "Извеждам дървото в " << filename << std::endl;
     }
 
 };

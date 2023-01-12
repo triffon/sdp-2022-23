@@ -37,8 +37,11 @@ TEST_CASE_TEMPLATE("Добавяне и изтриване на елементи
     }
 
     SUBCASE("Изтриваме успешно съществуващи елементи") {
+//        dict.info();
         REQUIRE(dict.remove("135"));
+//        dict.info();
         REQUIRE(dict.remove("15"));
+//        dict.info();
 
         CHECK_EQ(dict.lookup("135"), nullptr);
         CHECK_EQ(dict.lookup("15"), nullptr);
@@ -75,6 +78,8 @@ TEST_CASE_TEMPLATE("Добавяне и изтриване на 100 елемен
         REQUIRE(dict.add(std::to_string(101 - i), 101 - i));
     }
 
+    dict.info();
+
     for(int i = 1; i <= 100; i++)
         CHECK_EQ(*dict.lookup(std::to_string(i)), i);
 
@@ -82,6 +87,8 @@ TEST_CASE_TEMPLATE("Добавяне и изтриване на 100 елемен
         CHECK(dict.remove(std::to_string(i)));
         CHECK(dict.remove(std::to_string(101 - i)));
     }
+
+    dict.info();
 
     for(int i = 11; i <= 90; i++)
         CHECK_EQ(dict.lookup(std::to_string(i)), nullptr);

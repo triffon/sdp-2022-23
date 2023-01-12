@@ -214,7 +214,7 @@ public:
     void DOTprint(std::ostream& os, P pos) const {
         for (P child : {-pos, +pos})
             if (child) {
-                os << *pos << " -> " << *child << ';' << std::endl;
+                os << '"' << *pos << "\" -> \"" << *child << "\";" << std::endl;
                 DOTprint(os, child);
             }
     }
