@@ -4,12 +4,22 @@
 #include "doctest.h"
 #include "list_dictionary.hpp"
 #include "bst_dictionary.hpp"
+#include "linked_hash.hpp"
 #include <string>
 
-TYPE_TO_STRING(ListDictionary<std::string, unsigned>);
-TYPE_TO_STRING(BSTDictionary<std::string, unsigned>);
+unsigned lengthHashFunction(std::string const& str) {
+    return str.length();
+}
 
-#define ALL_DICTIONARIES ListDictionary<std::string, unsigned>, BSTDictionary<std::string, unsigned>
+using TestListDictionary = ListDictionary<std::string, unsigned>;
+using TestBSTDictionary = BSTDictionary<std::string, unsigned>;
+using TestHashDictionary = LinkedHashTable<std::string, unsigned, lengthHashFunction, 10>;
+
+TYPE_TO_STRING(TestListDictionary);
+TYPE_TO_STRING(TestBSTDictionary);
+TYPE_TO_STRING(TestHashDictionary);
+
+#define ALL_DICTIONARIES TestListDictionary, TestBSTDictionary, TestHashDictionary
 
 TEST_CASE_TEMPLATE("Добавяне на елемент в празен речник",
     AnyDictionary, ALL_DICTIONARIES) {
