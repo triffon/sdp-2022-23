@@ -2,3 +2,4 @@
 #include "doctest.h"
 
 #include "dictionary_tests.hpp"
+#include "set_tests.hpp"
