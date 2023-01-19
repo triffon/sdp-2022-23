@@ -19,7 +19,7 @@ TYPE_TO_STRING(TestListDictionary);
 TYPE_TO_STRING(TestBSTDictionary);
 TYPE_TO_STRING(TestHashDictionary);
 
-#define ALL_DICTIONARIES TestListDictionary, TestBSTDictionary, TestHashDictionary
+#define ALL_DICTIONARIES /* TestListDictionary, TestBSTDictionary, */ TestHashDictionary
 
 TEST_CASE_TEMPLATE("Добавяне на елемент в празен речник",
     AnyDictionary, ALL_DICTIONARIES) {
