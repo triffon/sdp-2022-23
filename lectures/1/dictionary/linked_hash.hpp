@@ -31,8 +31,11 @@ private:
         return table[hashFunction(key) % TABLE_SIZE];
     }
 
+    size_t count, buckets, collisions;
 
 public:
+    LinkedHashTable() : count(0), buckets(0), collisions(0) {}
+
     // търсене на стойност по ключ
     V* lookup(K const& key) {
         Bucket& bucket = findBucket(key);
@@ -56,6 +59,11 @@ public:
         I it = bucket.find(key);
         if (it)
             return false;
+        count++;
+        if (bucket.empty())
+            buckets++;
+        else
+            collisions++;
         return bucket.insertLast(KVP(key, value));        
     }
 
@@ -66,7 +74,13 @@ public:
         if (!it)
             return false;
         KVP tmp;
-        return bucket.deleteAt(tmp, it);
+        count--;
+        bucket.deleteAt(tmp, it);
+        if (bucket.empty())
+            buckets--;
+        else
+            collisions--;
+        return true;
     }
 
     // списък от ключове
@@ -84,7 +98,11 @@ public:
         for (Bucket const& bucket : table)
             for (KVP const& kvp : bucket)
                 result.insertLast(kvp.value);
-        return result;
+        return result;  
+    }
+
+    void info(std::ostream& os = std::clog) const {
+        os << "елементи: " << count << ", кофи: " << buckets << ", колизии: " << collisions << std::endl;
     }
 
 };

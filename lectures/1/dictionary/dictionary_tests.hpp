@@ -11,15 +11,38 @@ unsigned lengthHashFunction(std::string const& str) {
     return str.length();
 }
 
+unsigned firstElementHashFunction(std::string const& str) {
+    return str[0];
+}
+
+unsigned sumHashFunction(std::string const& str) {
+    unsigned hash = 0;
+    for (char c : str)
+        hash += c;
+    return hash;
+}
+
+unsigned betterHashFunction(std::string const& str) {
+    unsigned hash = 0;
+    unsigned i = 1;
+    for (char c : str)
+        hash += c * ((i += 5) *= 13);
+    return hash;
+}
+
+
 using TestListDictionary = ListDictionary<std::string, unsigned>;
 using TestBSTDictionary = BSTDictionary<std::string, unsigned>;
-using TestHashDictionary = LinkedHashTable<std::string, unsigned, lengthHashFunction, 10>;
+//using TestHashDictionary = LinkedHashTable<std::string, unsigned, lengthHashFunction, 10>;
+//using TestHashDictionary = LinkedHashTable<std::string, unsigned, firstElementHashFunction, 100>;
+//using TestHashDictionary = LinkedHashTable<std::string, unsigned, sumHashFunction, 100>;
+using TestHashDictionary = LinkedHashTable<std::string, unsigned, betterHashFunction, 100>;
 
 TYPE_TO_STRING(TestListDictionary);
 TYPE_TO_STRING(TestBSTDictionary);
 TYPE_TO_STRING(TestHashDictionary);
 
-#define ALL_DICTIONARIES /* TestListDictionary, TestBSTDictionary, */ TestHashDictionary
+#define ALL_DICTIONARIES TestListDictionary, TestBSTDictionary, TestHashDictionary
 
 TEST_CASE_TEMPLATE("Добавяне на елемент в празен речник",
     AnyDictionary, ALL_DICTIONARIES) {
