@@ -39,7 +39,7 @@ struct KeyValuePair {
 
 template <typename K, typename V>
 std::ostream& operator<<(std::ostream& os, KeyValuePair<K,V> const& kvp) {
-    os << '(' << kvp.key << ", " << kvp.value << ')';
+    return os << '(' << kvp.key << ", " << kvp.value << ')';
 }
 
 #endif
