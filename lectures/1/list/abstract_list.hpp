@@ -229,6 +229,13 @@ public:
                 insertLast(*it2++);
     }
 
+    P find(T const& x) const {
+        P pos = begin();
+        while (pos && *pos != x)
+            ++pos;
+        return pos;
+    }
+
     virtual ~AbstractList() {}
 };
 
