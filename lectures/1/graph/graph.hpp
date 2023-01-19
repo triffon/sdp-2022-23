@@ -2,6 +2,8 @@
 #define __GRAPH_HPP
 
 #include "llist.hpp"
+#include "lqueue.hpp"
+#include "lstack.hpp"
 #include "set.hpp"
 
 template <typename V, template <typename, typename> class Dictionary>
@@ -11,6 +13,7 @@ public:
     using VertexIterator = typename VertexList::I;
 private:
     using D = Dictionary<V, VertexList>;
+    using E = std::pair<V, V>;
 
 public:
     VertexList vertices() const { return D::keys(); }
@@ -86,6 +89,49 @@ public:
         DFS(from, to, visited, path);
         return path;
     }
+
+    VertexList BFS(V const& from, V const& to) const {
+        Set<V, Dictionary> visited;
+        VertexList path;
+        LinkedQueue<V> queue;
+        LinkedStack<E> steps;
+        queue.enqueue(from);
+        visited.insert(from);
+        while (!queue.empty() && queue.head() != to) {
+            V current = queue.dequeue();
+            for(VertexIterator succ = successors(current); succ; ++succ)
+                // проверяваме да не зациклим
+                if (!visited.contains(*succ)) {
+                    // маркираме го като обходен
+                    visited.insert(*succ);
+                    // добавяме го в опашката
+                    queue.enqueue(*succ);
+                    // запомняме реброто, по което сме минали
+                    steps.push(E{current, *succ});
+                }
+        }
+
+        if (queue.empty())
+            return path;
+
+        // queue.head() == to
+        // намерили сме път
+
+        V current = to;
+        // добавяме в пътя в обратен ред
+        path.insertFirst(current);
+        while (!steps.empty()) {
+            E edge = steps.pop();
+            if (edge.second == current) {
+                // намерихме стъпката
+                current = edge.first;
+                // добавяме в началото, за да получим пътя в правилен ред
+                path.insertFirst(current);
+            }
+        }
+        return path;
+    }
+
 
 };
 

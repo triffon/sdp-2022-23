@@ -53,6 +53,22 @@ TEST_CASE("Добавяне на върхове и ребра в граф") {
     SUBCASE("Намиране на път с DFS") {
         TestGraph::VertexList path = g.DFS(1, 6);
         TestGraph::VertexIterator vi = path.begin();
+        REQUIRE(vi.valid());
+        CHECK_EQ(*vi, 1);
+        while (vi.next()) {
+            std::clog << *vi << ' ';
+            CHECK(g.isEdge(*vi, *vi.next()));
+            ++vi;
+        }
+        std::clog << *vi << std::endl;
+        CHECK_EQ(*vi, 6);
+    }
+
+
+    SUBCASE("Намиране на път с BFS") {
+        TestGraph::VertexList path = g.BFS(1, 6);
+        TestGraph::VertexIterator vi = path.begin();
+        REQUIRE(vi.valid());
         CHECK_EQ(*vi, 1);
         while (vi.next()) {
             std::clog << *vi << ' ';
