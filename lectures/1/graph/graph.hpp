@@ -2,6 +2,7 @@
 #define __GRAPH_HPP
 
 #include "llist.hpp"
+#include "set.hpp"
 
 template <typename V, template <typename, typename> class Dictionary>
 class Graph : Dictionary<V, LinkedList<V>> {
@@ -55,6 +56,35 @@ public:
             return false;
         V tmp;
         return vl->deleteAt(tmp, vi);
+    }
+
+    bool DFS(V const& from, V const& to, Set<V, Dictionary>& visited, VertexList& path) const {
+        // обхождаме from
+        path.insertLast(from);
+        // маркираме го като обходен
+        visited.insert(from);
+
+        if (from == to)
+            // успешно дъно
+            return true;
+
+        for(VertexIterator succ = successors(from); succ; ++succ)
+            // проверяваме да не зациклим
+            if (!visited.contains(*succ) && DFS(*succ, to, visited, path))
+                return true;
+
+        // стъпка назад
+        V tmp; // = from
+        path.deleteLast(tmp);
+
+        return false;
+    }
+
+    VertexList DFS(V const& from, V const& to) const {
+        Set<V, Dictionary> visited;
+        VertexList path;
+        DFS(from, to, visited, path);
+        return path;
     }
 
 };
