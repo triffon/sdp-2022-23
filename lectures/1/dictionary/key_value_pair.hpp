@@ -1,6 +1,8 @@
 #ifndef __KEY_VALUE_PAIR_HPP
 #define __KEY_VALUE_PAIR_HPP
 
+#include <iostream>
+
 template <typename K, typename V>
 struct KeyValuePair {
     K key;
@@ -34,5 +36,10 @@ struct KeyValuePair {
     }
 
 };
+
+template <typename K, typename V>
+std::ostream& operator<<(std::ostream& os, KeyValuePair<K,V> const& kvp) {
+    return os << '(' << kvp.key << ", " << kvp.value << ')';
+}
 
 #endif

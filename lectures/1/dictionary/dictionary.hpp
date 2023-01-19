@@ -1,6 +1,7 @@
 #ifndef __DICTIONARY_HPP
 #define __DICTIONARY_HPP
 
+#include <iostream>
 #include "llist.hpp"
 
 template <typename K, typename V>
@@ -30,6 +31,9 @@ public:
 
     // списък от стойности
     virtual LinkedList<V> values() const = 0;
+
+    // информация за речника
+    virtual void info(std::ostream& os = std::clog) const {}
 
     virtual ~Dictionary() {}
 };

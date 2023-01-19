@@ -23,6 +23,9 @@
 		},
 		{
 			"path": "dictionary"
+		},
+		{
+			"path": "graph"
 		}
 	],
 	"settings": {

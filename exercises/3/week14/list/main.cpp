@@ -1,5 +1,4 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "doctest.h"
 
-#include "dictionary_tests.hpp"
-#include "set_tests.hpp"
+#include "list_highorder_tests.hpp"

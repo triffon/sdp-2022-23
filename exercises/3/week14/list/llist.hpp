@@ -81,14 +81,8 @@ private:
     }
 public:
 
-    // голяма петица
+    // TODO: голяма четворка
     LinkedList() : front(nullptr), back(nullptr) {}
-
-    LinkedList(LinkedList && other) :
-        front(other.front),
-        back(other.back) {
-        other.front = other.back = nullptr;                                    
-    }
 
     LinkedList(LinkedList const& other) : front(nullptr), back(nullptr) {
         this->append(other);
@@ -121,7 +115,7 @@ public:
         return insertAfter(x, findPrev(pos));
     }
 
-    // включване на елемент след дадена позиция
+    // включване на елемент след дадена позиция 
     // O(1)
     bool insertAfter(T const& x, I const& pos) {
         if (this->empty()) {
@@ -136,7 +130,7 @@ public:
         return true;
     }
 
-    // изключване на елемент преди дадена позиция
+    // изключване на елемент преди дадена позиция 
     bool deleteBefore(T& x, I const& pos) {
         if (this->empty())
             return false;
@@ -160,9 +154,7 @@ public:
             // опит за изтриване на първия елемент
             x = *pos;
             front = front->next;
-            if (front == nullptr)
-                // това беше последният елемент
-                back = nullptr;
+            back = nullptr;
             delete pos.ptr;
             return true;
         }
@@ -170,7 +162,7 @@ public:
         return deleteAfter(x, prev);
     }
 
-    // изключване на елемент след дадена позиция
+    // изключване на елемент след дадена позиция 
     // O(1)
     bool deleteAfter(T& x, I const& pos) {
         if (this->empty())
@@ -194,105 +186,14 @@ public:
     I last()  const { return I(back); }
     I end()   const { return I(); }
 
-    //O(n) по време, O(1) по памет
-    unsigned long long getLength() const{
-        I current = this->begin();
-        unsigned long long length = 0;
-        while(current!=this->end()){
-            current++;
-            length++;
-        }
-        return length;
-    }
-
     void appendAssign(LinkedList& other) {
         back->next = other.front;
         back = other.back;
         other.back = other.front = nullptr;
     }
 
-    // reverseAssign
-    void reverseAssign() {
-        //взимаме началото и създаваме указател за предишния и следващия елемент.
-        E* current = this->front;
-        E* previous = nullptr;
-        E* next = nullptr;
-
-        while(current) //Докато не стигнем края на списъка - итерираме:
-        {
-            next = current->next;      //Взимаме следващия елемент в списъка.
-            current->next = previous;  //Обръщаме указателя към предишния елемент.
-            previous = current;          //Взимаме сегашния за предишния.
-            current = next;              //Сегашният се мести напред и цикълът продължава.
-        }
-
-        // трябва да се разменят back и front накрая, за да са си на местата.
-        E* temp = back;
-        back = front;
-        front = temp;
-    }
-
-    // O(n) по време
-    // splitAssign
-    void splitAssign(LinkedList& other){
-
-        unsigned long long length = this->getLength();
-        unsigned long long index_to_split = length/2 + length%2; //гледаме къде трябва да разделим списъка.
-
-        other.erase();  //винаги ли искаме да изтриваме паметта?
-
-        if(length==0)
-            return; // няма какво да се прави
-        if(length==1) {
-            other.front = nullptr;
-            other.back = nullptr;
-            return;
-        }
-        E* new_front = front;
-        E* previous = nullptr;
-
-        while(index_to_split!=0){
-            if(index_to_split==1)
-                previous = new_front; //взимаме предишния елемент преди да итерираме
-            new_front = new_front->next;
-            index_to_split--;
-        }
-        other.front = new_front;
-        other.back = this->back;
-
-        this->back = previous;      //слагаме новия край на първия списък
-        this->back->next =nullptr;
-    }
-
-
-    void splitAssign2(LinkedList& other){ // Метод на заека и костенурката
-        // по-този метод, втория списък е по-дълъг в нечетните случаи.
-        E* hare=this->front;
-        E* tortoise=this->front;
-        E* previous = nullptr;
-        other.erase();
-
-        while(hare && hare->next)
-        {
-            hare= hare->next->next;
-            previous = tortoise;
-            tortoise = tortoise->next;
-        }
-
-        if(previous)
-        {
-            other.front = tortoise;
-            other.back = this->back;
-            previous->next = nullptr; // късане на връзката
-            this->back = previous;
-        }
-        else
-        {
-            other.front = nullptr;
-            other.back = nullptr;
-        }
-    }
-
+    // TODO: reverseAssign
+    // TODO: splitAssign
     // TODO: mergeAssign
 };
 
