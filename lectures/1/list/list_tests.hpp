@@ -156,8 +156,19 @@ TEST_CASE_TEMPLATE("Последователно изтриване на пър�
     int x;
     for(int i = 1; i <= 10; i++) {
         REQUIRE(l.deleteFirst(x));
+        CHECK(l.insertLast(i + 10));
         CHECK_EQ(x, i);
     }
+
+    int i = 11;
+    for(int x : l)
+        CHECK_EQ(x, i++);
+    CHECK_EQ(i, 21);
+
+    for(int i = 1; i <= 10; i++) {
+        REQUIRE(l.deleteFirst(x));
+    }
+
     CHECK(l.empty());
 }
 

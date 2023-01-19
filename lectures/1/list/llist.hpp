@@ -160,7 +160,9 @@ public:
             // опит за изтриване на първия елемент
             x = *pos;
             front = front->next;
-            back = nullptr;
+            if (front == nullptr)
+                // това беше последният елемент
+                back = nullptr;
             delete pos.ptr;
             return true;
         }
