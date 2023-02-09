@@ -1,0 +1,6 @@
+ploshtad
+ploshtad banka a
+ploshtad mall i
+mall kino a
+mall banicharnica n
+banicharnica kino i
