@@ -58,15 +58,15 @@ void printCharacterOccurences(std::string str)
 //  - short day name to long day name
 std::string fullDayOfWeek(std::string shortDayOfWeek)
 {
-    std::unordered_map<std::string, std::string> shortToFullDayOfWeek;
-    shortToFullDayOfWeek["MON"] = "MONDAY";
-    shortToFullDayOfWeek["TUE"] = "TUESDAY";
-    shortToFullDayOfWeek["WED"] = "WEDNESDAY";
-    shortToFullDayOfWeek["THU"] = "THURSDAY";
-    shortToFullDayOfWeek["FRI"] = "FRIDAY";
-    shortToFullDayOfWeek["SAT"] = "SATURDAY";
-    shortToFullDayOfWeek["SUN"] = "SUNDAY";
-
+    std::unordered_map<std::string, std::string> shortToFullDayOfWeek = {
+        {"MON", "MONDAY"},
+        {"TUE", "TUESDAY"},
+        {"WED", "WEDNESDAY"},
+        {"THU", "THURSDAY"},
+        {"FRI", "FRIDAY"},
+        {"SAT", "SATURDAY"},
+        {"SUN", "SUNDAY"},
+    };
     return shortToFullDayOfWeek[shortDayOfWeek];
 }
 
@@ -76,10 +76,12 @@ std::string fullDayOfWeek(std::string shortDayOfWeek)
 //      Quantity
 //      UnitPrice
 //
+
 // Game of life (set, map, array)
 
 int main()
 {
     printCharacterOccurences("lorem ipsum is simply dummy text of the printing");
+    std::cout << fullDayOfWeek("MON") << std::endl;
     return 0;
 }
