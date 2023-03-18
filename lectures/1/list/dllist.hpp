@@ -189,7 +189,21 @@ public:
         other.back = other.front = nullptr;
     }
 
-    // TODO: reverseAssign
+    // reverseAssign
+    void reverseAssign(){
+        E* current = front;
+        E* previous = nullptr;              //взимаме два елемента, които са и нужни
+
+        while(current)                      // итерираме, докато не е nullptr
+        {
+            previous = current->prev;       // взимаме предишния.
+            current->prev = current->next;  // местим указателя за предишния елемент напред.
+            current->next = previous;       // местим указателя за следващия елемент назад.
+            current = current->prev;        // местим сегашния елемент към 'следващия', който сега е предишен.
+        }
+
+        std::swap(front, back);              //връщаме си back и front на местата им.
+    }
     // TODO: splitAssign
     // TODO: mergeAssign
 
